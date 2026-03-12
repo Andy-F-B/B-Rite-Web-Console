@@ -1,0 +1,7 @@
+// no-log.br — suppress logging (*sf*)
+// called via: *sf*; <no-log>
+// suppresses all action logging for current script run.
+// writes single entry: "user ran no-log." to mLog.
+
+edit; *sv*; (mLog); append; "user ran no-log."
+return; null

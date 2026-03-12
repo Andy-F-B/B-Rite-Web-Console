@@ -1,0 +1,10 @@
+// sf_new.br — create new file or structure (*sf*)
+// called via: *sf*; <new>; "[path and name]"; "file type"
+// arg1 = full path and filename, arg2 = file type (.br / .md / .txt)
+// creates new empty file at specified path.
+
+// create file at {arg1} with extension from {arg2}
+// if folder path does not exist — create folder structure first
+// write one-line log entry to mLog
+
+return; pt; "created: {arg1}"

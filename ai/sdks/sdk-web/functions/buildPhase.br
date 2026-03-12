@@ -1,0 +1,7 @@
+// buildPhase.br — implement feature per task
+// call: *dev* !sdk|003| br : { run; <buildPhase>; "feature name" } :
+// arg1 = feature name or "next". output → [root/app/], [root/components/], [root/lib/] per handbook 8.1
+
+read; [root/ai/sdks/sdk-web/variables.br]
+do; [root/ai/sdks/sdk-web/prompts/master-builder-prompt.md]
+prompt; 'Execute build phase. Feature (arg1): {arg1}. Read task from [root/ai/tasks/]. If anchors missing, read from [root/ai/sdks/sdk-web/context/]. Implement per master builder prompt. Output to [root/app/], [root/components/], [root/lib/].'

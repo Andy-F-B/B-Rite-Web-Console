@@ -1,0 +1,7 @@
+// systemVersion.br — return current b-rite language version
+// called via: br{f} : { run; <systemVersion> } :
+// no args. returns version in plain text.
+
+read; [root/ai/b-rite/lang/version.br]
+
+return; pt; "b-rite language version {current}"

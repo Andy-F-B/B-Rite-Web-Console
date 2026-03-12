@@ -1,0 +1,18 @@
+// at.br — resolve location of target
+// called via: br{f} : { run; <at>; "target" } :
+// arg1 = the thing whose location, path, or position is being sought
+// use when intent is to find, resolve, or return where something is
+
+fetch; v; (brain)
+fetch; [root/ai/b-rite/variables.br]
+fetch; [root/ai/b-rite/functions/functions.br]
+
+// search for {arg1} across:
+// - variables.br [paths] and [files] blocks
+// - functions.br entries
+// - project root folder structure
+
+// return the resolved path or location of {arg1}
+// if not found — run error_vf.br
+
+return; pt

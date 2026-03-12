@@ -1,0 +1,34 @@
+// sf_fileIntegrity.br — scan native/protected/system files for integrity (*sf*)
+// called via: *dev* br{sf} : { run; *sf*; <fileIntegrity> } :
+// purpose: ensure folder not missing info, documents, or altered info. cross-reference with fileIntegrityScan.md.
+// if issues found: write [root/ai/file-integrity-###.txt] with report. ### = date or sequence.
+// requires *dev* or !ADMIN! *dev*.
+
+read; [root/ai/b-rite/functions/fileIntegrityScan.md]
+fetch; [root/ai/b-rite/br-ignore.br]
+fetch; [root/ai/b-rite/variables.br]
+fetch; [root/ai/b-rite/sdk-registry.br]
+fetch; [root/ai/b-rite/plugin-registry.br]
+fetch; [root/ai/brain.md]
+fetch; [root/ai/b-rite/b-rite.md]
+
+// compare current state to fileIntegrityScan.md:
+// - all protected files exist
+// - core b-rite files exist
+// - variables.br [system] [paths] match expected keys
+// - plugin-registry entries point to existing plugin folders
+// - sdk-registry entries point to existing sdk folders
+// - brain.md has expected sections (plugins, sdks, archived)
+// - b-rite.md has expected sections
+// - each installed plugin has: brain-block, variables.br, functions.br, install.br
+// - each installed sdk has: brain-block, variables.br, functions.br, install.br
+
+// if any missing or altered: write [root/ai/file-integrity-{date}.txt] with:
+// - list of missing files
+// - list of altered/unexpected content
+// - list of extra files (optional)
+// - recommendation
+
+// if all ok: return; pt; "file integrity check passed — no issues found."
+
+return; pt

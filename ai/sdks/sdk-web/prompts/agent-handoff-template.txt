@@ -1,0 +1,20 @@
+# AGENT HANDOFF — [SECTION]
+Section: [Product | Specs | Anchors | Tasks | Migrations | UI | Backend | Security | Audit | Preview]
+Status: SKIPPED — user declined current agent.
+
+## What is missing
+[list what must be generated]
+
+## Context to gather
+- Read: [list files to read]
+- Output target: [path]
+
+## Integration rules
+- [rules for connecting to other files]
+- [naming, imports, conventions]
+
+## Deliverable
+Return a downloadable .txt file with:
+1. Instructions to integrate the new agent's code into the project
+2. File paths and merge points
+3. Verification steps

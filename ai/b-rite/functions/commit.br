@@ -1,0 +1,9 @@
+// commit.br — git commit flow
+// called via: br{f} : { run; <commit>; "your message" } :
+// arg1 = commit message — required, must be quoted at call
+
+git add .
+git commit -m "{arg1}"
+git push origin main
+
+return; pt; "committed and pushed: {arg1}"

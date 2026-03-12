@@ -1,0 +1,6 @@
+// autoScriptAdmin.br — *sf* launch brite-ADMIN-auto.ahk
+// called via: br{sf} : { run; *sf*; <autoScriptAdmin> } :
+// finds and runs [root/ai/type scripts/brite-ADMIN-auto.ahk]
+// AI: execute the .ahk file via Start-Process or shell before returning
+
+return; pt; "Use ctrl+alt+esc to close the program"

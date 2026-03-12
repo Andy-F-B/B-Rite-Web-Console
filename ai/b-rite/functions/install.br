@@ -1,0 +1,45 @@
+// install.br — *sf* add SDK or addon to project
+// called via: br{sf} : { run; *sf*; <install>; [path/to/install-doc] } :
+// or: *dev* br{sf} : { run; *sf*; <install>; [path] } :
+// requires: *dev* or !ADMIN! *dev* (system function)
+
+// ─────────────────────────────────────────
+// step 1 — validate install doc
+// ─────────────────────────────────────────
+
+// arg1 = file path [ ] to the SDK install doc. user must link AI to this location.
+
+read; [{arg1}]
+
+// if file not found:
+//   return ERROR — install doc not found at [arg1]. reason: file does not exist.
+
+// install docs MUST have this at the top (first 5 lines):
+//   br : { read; pt; 'Install Doc' } :
+// if not detected:
+//   return ERROR — invalid install doc. reason: missing required header "br : { read; pt; 'Install Doc' } :"
+
+// ─────────────────────────────────────────
+// step 2 — execute install doc
+// ─────────────────────────────────────────
+
+// follow the instructions in the install doc. typically:
+// - copy files to [root/ai/sdks/] or specified location
+// - add brain block to brain.md
+// - update variables.br if needed
+// - update b-rite.md and affected docs per install doc
+
+// ─────────────────────────────────────────
+// step 3 — update language docs
+// ─────────────────────────────────────────
+
+// update b-rite.md with any new syntax (e.g. !sdk|###|)
+// update lang.md installed sdks table
+// update brain.md if new sdk activated
+// update sdk-builder.md if install process changes
+
+// ─────────────────────────────────────────
+// step 4 — confirm
+// ─────────────────────────────────────────
+
+return; pt; "SDK/addon installed. docs updated. see mLog for details."

@@ -1,0 +1,7 @@
+// previewPhase.br — HTML previews for device frames
+// call: *dev* !sdk|003| br : { run; <previewPhase>; "feature or page" }; { run; <previewPhase>; "feature"; "multi" } :
+// arg1 = feature/page name. arg2 = "multi" for multi-device. output → [root/UI/] per handbook 9.5, 9.6
+
+read; [root/ai/sdks/sdk-web/variables.br]
+do; [root/ai/sdks/sdk-web/prompts/preview-phase-prompt.md]
+prompt; 'Execute preview phase. Arg1: {arg1}. Arg2: {arg2}. Follow preview-phase-prompt. Output to [root/UI/].'

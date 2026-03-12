@@ -1,0 +1,34 @@
+// nFunction.br — create new function
+// devKit recommended for full access.
+//
+// usage a — new from scratch:
+// br{f} : { run; <nFunction>; 'function name'; 'what it does' } :
+// arg1 = function name (lowercase, camelCase if two words)
+// arg2 = plain description of what the function does
+//
+// usage b — new from copy:
+// br{f} : { run; <nFunction>; c; of; <existingFn>; 'new name'; 'modifications' } :
+
+// step 1: determine if this is a new function or copy
+// if copy — run *sf*; <copy> on source function file first
+
+// step 2: create new .br file at [root/ai/b-rite/functions/{arg1}.br]
+// stub contents:
+//   // {arg1}.br — {arg2}
+//   // called via: br{f} : { run; <{arg1}> } :
+//   // args: none
+//   [function body — edit this]
+//   return; null
+
+// step 3: add entry to functions.br index:
+//   <{arg1}>
+//   path: [root/ai/b-rite/functions/{arg1}.br]
+//   action: run
+//   args: none
+//   notes: {arg2}
+
+// step 4: add entry to lang.md current standard functions table
+
+// step 5: write one-line log entry to mLog
+
+return; pt; "function created: <{arg1}> — edit [root/ai/b-rite/functions/{arg1}.br] to build it out."

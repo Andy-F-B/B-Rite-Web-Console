@@ -1,0 +1,116 @@
+================================================================================
+SDK-WEB — CORE FEATURES PLAN
+================================================================================
+Features from AI App Development Handbook. Custom functions required for each.
+Run <nFunction> or create .br files to implement. Use this as the creation checklist.
+
+================================================================================
+PHASE FUNCTIONS (REQUIRE CUSTOM .br FILES)
+================================================================================
+
+| Function         | Purpose                              | Custom? | Notes                                    |
+|------------------|--------------------------------------|---------|------------------------------------------|
+| <sdkWebSetup>    | Install + connect + verify           | YES     | Returns setup instructions. Create first.|
+| <specPhase>      | Interview → generate all spec files  | YES     | Runs handbook interview prompt.          |
+| <anchorPhase>    | Generate context anchors             | YES     | Creates product/arch/db/security anchors.|
+| <taskPhase>      | Task breakdown from specs            | YES     | Creates task files in ai/tasks/.         |
+| <migrationPhase> | Database migrations                  | YES     | Generates SQL, applies checklist.        |
+| <buildPhase>     | Next.js + Supabase + Vercel build    | YES     | Implements features per task files.     |
+| <auditPhase>     | Security, RLS, a11y audit            | YES     | Runs checklist + security prompts.      |
+| <previewPhase>   | HTML previews → [root/UI/]           | YES     | Mobile, tablet, desktop device frames.   |
+
+================================================================================
+CREATION ORDER
+================================================================================
+
+1. sdkWebSetup.br    — Must exist first. Returns setup text. No args.
+2. specPhase.br      — arg1 = app idea (interpretive string)
+3. anchorPhase.br    — Reads specs, generates anchors. Optional arg: feature name.
+4. taskPhase.br      — arg1 = feature name or "all"
+5. migrationPhase.br — arg1 = table/feature or "plan"
+6. buildPhase.br     — arg1 = feature name or "next"
+7. auditPhase.br    — arg1 = optional scope (feature name or "full")
+8. previewPhase.br   — arg1 = feature/page name; arg2 = optional "multi" for multi-device
+
+================================================================================
+FUNCTION STUBS — WHAT EACH MUST DO
+================================================================================
+
+<sdkWebSetup>
+  - Read this setup-procedure.txt
+  - Return plain-text setup instructions (install, register, verify)
+  - No file writes
+
+<specPhase>
+  - Run handbook Full Product Interview Prompt (Section 1B)
+  - OR: if arg provided, use as seed for spec generation
+  - Output: product.md, architecture.md, database.md, ui.md, api.md, rules.md, 
+    security.md, debug.md, checklist.md, lessons.md, migrations.md, 
+    migration_checklist.md → [root/ai/specs/]
+  - Create [root/ai/context/] and [root/ai/tasks/] if missing
+
+<anchorPhase>
+  - Read product.md, architecture.md, database.md, security.md
+  - Generate product_anchor.md, architecture_anchor.md, database_anchor.md, 
+    security_anchor.md → [root/ai/context/]
+  - Keep each anchor 3–20 lines (handbook 4.2)
+
+<taskPhase>
+  - Read specs and task_template.md
+  - For each feature in product/features: create [feature].md in [root/ai/tasks/]
+  - Follow handbook task structure (Section 6.1): GOAL, DATABASE, UI, VALIDATION, 
+    BACKEND, BEHAVIOR, API ACTIONS, DONE WHEN, NOTES
+
+<migrationPhase>
+  - Read database.md, security.md, migration_checklist.md
+  - Generate numbered migration files → [root/db/migrations/]
+  - Apply migration_checklist.md before finalizing
+  - Update schema.sql
+
+<buildPhase>
+  - Read task file(s), anchors, brain.md
+  - Implement: migration (if needed) → lib queries → components → pages
+  - Follow handbook Master Builder Prompt (Section 8.1) workflow
+  - Output → [root/app/], [root/components/], [root/lib/]
+
+<auditPhase>
+  - Run Security Audit prompt (Section 8.5)
+  - Run Checklist Verification (Section 8.5)
+  - Run Performance Audit if requested
+  - Return prioritized report
+
+<previewPhase>
+  - Read ui.md, design_tokens (if present)
+  - Generate mobile_preview.html (390px) or responsive_preview.html (multi-frame)
+  - Output → [root/UI/]
+  - Per handbook 9.5, 9.6
+
+================================================================================
+FEATURES THAT USE EXISTING B-RITE FUNCTIONS (NO CUSTOM NEEDED)
+================================================================================
+
+| Action              | Use                          |
+|---------------------|------------------------------|
+| Create task file    | <task> (core b-rite)         |
+| Debug               | <debug> (core b-rite)        |
+| Full repo audit     | <audit> (core b-rite)       |
+| Commit              | <commit> (core b-rite)       |
+
+================================================================================
+RUN COMMAND TO CREATE FUNCTIONS
+================================================================================
+
+To scaffold all phase functions, run (with devKit = 1):
+
+  *dev* br{f} : { run; <nFunction>; "sdkWebSetup"; 'Returns sdk-web setup instructions. Read setup-procedure.txt and variables.br.' } :
+  *dev* br{f} : { run; <nFunction>; "specPhase"; 'Interview or generate all ai spec files per handbook. Arg: app idea.' } :
+  ... (repeat for each)
+
+Or create the .br files manually in [root/ai/sdks/sdk-web/functions/] and add 
+entries to [root/ai/sdks/sdk-web/functions.br].
+
+Note: nFunction creates core b-rite functions. SDK functions live in sdk-web/functions/
+and are indexed in sdk-web/functions.br. The SDK brain-block tells AI to read 
+sdk-web/functions.br when !sdk|003| is used.
+
+================================================================================

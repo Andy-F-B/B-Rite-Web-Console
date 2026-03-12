@@ -1,0 +1,57 @@
+// b-rite variables
+// auto-managed. AI writes to this file when v write commands are issued.
+// do not manually edit [system] block without *dev* or !ADMIN! *dev*.
+// sv = system variable — protected core. v = permanent user variable.
+
+[system]
+root = [WEB PROJECT]
+error_nf = [root/ai/b-rite/errors/error_nf.br]
+error_vf = [root/ai/b-rite/errors/error_vf.br]
+error = [root/ai/b-rite/errors/error.br]
+mLog = [root/ai/b-rite/master_changelog.br]
+options = [root/ai/b-rite/options.br]
+brIgnore = [root/ai/b-rite/br-ignore.br]
+lang = [root/ai/b-rite/lang/lang.md]
+install = [root/ai/b-rite/functions/install.br]
+sdkRegistry = [root/ai/b-rite/sdk-registry.br]
+pluginRegistry = [root/ai/b-rite/plugin-registry.br]
+directory = [root/ai/b-rite/functions/directory.br]
+index = [root/ai/b-rite/functions/index.br]
+archive = [root/ai/b-rite/functions/sf_archive.br]
+fileIntegrity = [root/ai/b-rite/functions/sf_fileIntegrity.br]
+autoScript = [root/ai/b-rite/functions/autoScript.br]
+autoScriptAdmin = [root/ai/b-rite/functions/autoScriptAdmin.br]
+autoScriptDev = [root/ai/b-rite/functions/autoScriptDev.br]
+autoScriptWebSDK = [root/ai/b-rite/functions/autoScriptWebSDK.br]
+systemVersion = [root/ai/b-rite/functions/systemVersion.br]
+systemUpdates = [root/ai/b-rite/functions/systemUpdates.br]
+
+[paths]
+tasks = [root/ai/tasks/]
+specs = [root/ai/specs/]
+migrations = [root/db/migrations/]
+functions = [root/ai/b-rite/functions/]
+brite = [root/ai/b-rite/]
+sdks = [root/ai/sdks/]
+plugins = [root/ai/plugins/]
+archived = [root/archived/]
+typeScripts = [root/ai/type scripts/]
+versions = [root/ai/b-rite/lang/versions/]
+
+[files]
+brain = [root/ai/brain.md]
+packageGuide = [root/PACKAGE.md]
+taskTemplate = [root/ai/tasks/task_template.md]
+taskPrompt = [root/ai/b-rite/functions/task.br]
+commitPrompt = [root/ai/b-rite/functions/commit.br]
+debugPrompt = [root/ai/b-rite/functions/debug.br]
+auditPrompt = [root/ai/b-rite/functions/audit.br]
+help = [root/ai/help/help.br]
+helpLog = [root/ai/help/help-log.md]
+lastPrompt = [root/ai/b-rite/functions/lastPrompt.br]
+versionFile = [root/ai/b-rite/lang/version.br]
+
+[values]
+projectName = "B-Rite Web App"
+
+// user-defined variables added below this line

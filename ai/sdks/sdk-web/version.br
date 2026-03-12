@@ -1,0 +1,6 @@
+// sdk-web version
+// synced with b-rite language version. update when b-rite version changes and sdk-web is updated.
+
+[version]
+sdkWeb = 0.2
+briteCompatible = 0.2

@@ -1,0 +1,93 @@
+// sdk-web function index
+// call via: *dev* !sdk|003| br : { run; <functionName> } :
+// all functions live in [root/ai/sdks/sdk-web/functions/]
+
+<sdkWebSetup>
+path: [root/ai/sdks/sdk-web/functions/sdkWebSetup.br]
+action: run
+args: none
+notes: returns setup instructions. read setup-procedure.txt and variables.br.
+
+<quickStart>
+path: [root/ai/sdks/sdk-web/functions/quickStart.br]
+action: run
+args: none
+notes: project kickstart — full folder structure + spec files (handbook Phase 1-2).
+
+<specPhase>
+path: [root/ai/sdks/sdk-web/functions/specPhase.br]
+action: run
+args: arg1 = app idea (interpretive string, optional)
+notes: interview or generate all ai spec files. output → [root/ai/specs/].
+
+<anchorPhase>
+path: [root/ai/sdks/sdk-web/functions/anchorPhase.br]
+action: run
+args: opt arg1 = feature name
+notes: generate context anchors from specs. output → [root/ai/context/].
+
+<taskPhase>
+path: [root/ai/sdks/sdk-web/functions/taskPhase.br]
+action: run
+args: arg1 = feature name or "all"
+notes: task breakdown from specs. output → [root/ai/tasks/].
+
+<migrationPhase>
+path: [root/ai/sdks/sdk-web/functions/migrationPhase.br]
+action: run
+args: arg1 = table/feature or "plan"
+notes: generate migrations. output → [root/db/migrations/].
+
+<buildPhase>
+path: [root/ai/sdks/sdk-web/functions/buildPhase.br]
+action: run
+args: arg1 = feature name or "next"
+notes: implement feature per task. output → app/, components/, lib/.
+
+<auditPhase>
+path: [root/ai/sdks/sdk-web/functions/auditPhase.br]
+action: run
+args: opt arg1 = scope (feature or "full")
+notes: security, RLS, checklist verification.
+
+<previewPhase>
+path: [root/ai/sdks/sdk-web/functions/previewPhase.br]
+action: run
+args: arg1 = feature/page name; opt arg2 = "multi" for multi-device
+notes: HTML previews. output → [root/UI/].
+
+<runSinglePhase>
+path: [root/ai/sdks/sdk-web/functions/runSinglePhase.br]
+action: run
+args: arg1 = spec | anchor | task | migration | build | audit | preview
+notes: run one phase by name.
+
+<runPhases>
+path: [root/ai/sdks/sdk-web/functions/runPhases.br]
+action: run
+args: arg1 = comma-separated phases (e.g. "spec,anchor,task")
+notes: run selected phases in order.
+
+<runFullPipeline>
+path: [root/ai/sdks/sdk-web/functions/runFullPipeline.br]
+action: run
+args: none
+notes: run all phases in handbook order.
+
+<agentHandoff>
+path: [root/ai/sdks/sdk-web/functions/agentHandoff.br]
+action: run
+args: arg1 = section name (Product, Specs, UI, Backend, etc.)
+notes: generate handoff template when user declines agent.
+
+<masterProgramMaker>
+path: [root/ai/sdks/sdk-web/functions/masterProgramMaker.br]
+action: run
+args: none
+notes: full workflow with agent-switch option per section.
+
+<projectVersion>
+path: [root/ai/sdks/sdk-web/functions/projectVersion.br]
+action: run
+args: none
+notes: return sdk-web and b-rite version info.

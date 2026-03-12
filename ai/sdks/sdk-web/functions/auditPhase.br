@@ -1,0 +1,7 @@
+// auditPhase.br — security, RLS, checklist verification
+// call: *dev* !sdk|003| br : { run; <auditPhase> }; { run; <auditPhase>; "feature or full" } :
+// arg1 = optional scope. output → [root/UI/dev-output/] or pt
+
+read; [root/ai/sdks/sdk-web/variables.br]
+do; [root/ai/sdks/sdk-web/prompts/security-audit-prompt.md]
+prompt; 'Execute audit phase. Scope (arg1): {arg1}. Run security audit and checklist verification. Read security.md, checklist.md from [root/ai/specs/]. If missing, use [root/ai/sdks/sdk-web/specs/]. Output prioritized report to [root/UI/dev-output/] or return as pt.'

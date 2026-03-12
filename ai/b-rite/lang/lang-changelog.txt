@@ -1,0 +1,47 @@
+B-RITE LANGUAGE CHANGELOG
+=========================
+tracks language evolution — new tokens, functions, variables, deprecated items.
+human readable. updated manually or via *sf* <log>.
+
+---
+
+[v0.2] — current
+- added <systemVersion> — return language version
+- added <systemUpdates> — apply syntax updates from version file (additive)
+- added <nSystemFunction>, <nSystemVariable> — create *sf* *sv* (require !ADMIN! *dev*)
+- added version.br, lang/versions/, lang-evolution-checklist.md
+- added sdk-syntax-update.md, plugin-syntax-update.md templates
+- added <package> — guided packaging for SDKs, plugins, templates
+- added PACKAGE.md — packaging guide
+- added token map: v, vT, sv, f, fT, sf with camelCase modifier framework
+- added *dev* token — requires devKit = 1
+- added !ADMIN! token — full access level
+- added devKit on/off section to b-rite.md
+- added inter mode section to b-rite.md
+- added logging system — mLog, *sf* <log>, *sf* <no-log>
+- added br-ignore.br — protected file list
+- added options.br — user-configurable settings
+- added nFunction, nVariable, devKit, nSDK dev functions
+- added at, for semantic helper functions
+- added system functions: delete, move, copy, new
+- added file type conventions: .br / .md / .txt
+- added null behaviour clarification
+- added empty string rules
+- added path [ ] enforcement rule
+- added sdk architecture: sdk-podcast, sdk-film
+- added lang.md and lang-changelog.txt
+- casing rules locked: lowercase names, camelCase two-word, uppercase in strings only
+- sv redefined as system variable (previously "saved variable" — now v = permanent user variable)
+
+[v0.1] — initial
+- core language spec
+- ten core commands
+- entry points br, br{f}, br{v}
+- wrapping rules: [ ] ( ) < > " " ' '
+- anchor values A1-Z9
+- catch, catch; strict
+- opt modifier
+- scope and memory rules
+- three error files
+- four starter functions: task, commit, debug, audit
+- hello world established

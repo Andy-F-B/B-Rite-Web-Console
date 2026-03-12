@@ -1,0 +1,16 @@
+// audit.br — full repository audit
+// called via: br{f} : { run; <audit> } :
+// no args required.
+
+read; v; (brain)
+fetch; [root/ai/specs/security.md]
+fetch; [root/ai/specs/database.md]
+fetch; [root/ai/specs/checklist.md]
+
+// audit and report — severity: CRITICAL / HIGH / MEDIUM / LOW
+// security: RLS, open policies, data leaks, storage buckets
+// performance: missing indexes, N+1 queries, pagination
+// architecture: deviations from brain.md rules
+// completeness: missing error/loading/empty states
+
+return; md

@@ -1,0 +1,18 @@
+// error.br — general error handler
+// triggered when file is empty, malformed, arg missing or unwrapped,
+// chain exceeds three levels, or any unclassified failure occurs.
+
+// identify most likely cause:
+// - required argument missing or not wrapped in "" or ''
+// - empty "" string (syntax error)
+// - .br file is empty or contains invalid syntax
+// - do called on a .br file (must use run)
+// - run called on a .md or .txt file (must use do)
+// - function chain exceeded three levels
+// - catch called with no preceding ask or prompt
+// - *dev* used without devKit = 1
+// - bare path without [ ] wrappers
+// - script block incomplete (missing } : or malformed structure)
+// 4. do not continue the original script
+
+return; pt; "b-rite error — general failure. check for missing arguments, incorrect command/file type pairing, bare paths without [ ], incomplete script block (missing } :), or invalid syntax."

@@ -1,0 +1,225 @@
+// b-rite function index
+// pointer model — all instruction content lives in dedicated .br files.
+// call with: br{f} : { run; <functionName> } :
+// arguments must always be wrapped in "" or ''.
+// <f> = standard function. *sf* = system function — protected.
+
+// ─────────────────────────────────────────
+// system functions — protected (*sf*)
+// ─────────────────────────────────────────
+
+*sf* <no-log>
+path: [root/ai/b-rite/functions/no-log.br]
+action: run
+args: none
+notes: suppresses logging for current script run. writes "user ran no-log." to mLog.
+
+*sf* <log>
+path: [root/ai/b-rite/functions/log.br]
+action: run
+args: arg1 = log entry name ("" required; '' AI names from context)
+notes: creates detailed named log entry in mLog.
+
+*sf* <delete>
+path: [root/ai/b-rite/functions/sf_delete.br]
+action: run
+args: arg1 = file path to delete
+notes: always prompts user to confirm before executing. cannot delete br-ignore listed files without !ADMIN! *dev*.
+
+*sf* <move>
+path: [root/ai/b-rite/functions/sf_move.br]
+action: run
+args: arg1 = source path, arg2 = destination path
+notes: moves file from source to destination. updates any variables pointing to old path.
+
+*sf* <copy>
+path: [root/ai/b-rite/functions/sf_copy.br]
+action: run
+args: arg1 = source path, arg2 = destination path or new name
+notes: copies file or text. used internally by nFunction and fT.
+
+*sf* <new>
+path: [root/ai/b-rite/functions/sf_new.br]
+action: run
+args: arg1 = file path and name, arg2 = file type
+notes: creates new file or folder structure.
+
+*sf* <help>
+path: [root/ai/help/help.br]
+action: run
+args: opt arg1 = user context note in ' '
+notes: troubleshooting assistant. pre-satisfies diagnostic questions from context note. logs every session to help-log.md. callable via br{sf} or return; sf; <help>.
+
+*sf* <install>
+path: [root/ai/b-rite/functions/install.br]
+action: run
+args: arg1 = path [ ] to SDK install doc
+notes: add SDK/addon to project. user links to install doc. install docs must have br : { read; pt; 'Install Doc' } : at top. updates b-rite.md and affected docs. requires *dev* or !ADMIN! *dev*.
+
+*sf* <directory>
+path: [root/ai/b-rite/functions/directory.br]
+action: run
+args: arg1 = interpretive context in ' '
+notes: search for existing feature, file, or path. returns best match with path and description.
+
+*sf* <index>
+path: [root/ai/b-rite/functions/index.br]
+action: run
+args: arg1 = interpretive context in ' '
+notes: check if something exists (e.g. sdk installed, files present). returns exists/missing.
+
+*sf* <archive>
+path: [root/ai/b-rite/functions/sf_archive.br]
+action: run
+args: arg1 = file path to move to [root/archived] — OR — doc name for txt; arg2 = optional content when archiving text
+notes: move file to [root/archived] or create txt with archived content. archived files are never called; kept for future. requires *dev* or !ADMIN! *dev*.
+
+*sf* <fileIntegrity>
+path: [root/ai/b-rite/functions/sf_fileIntegrity.br]
+action: run
+args: none
+notes: scan native/protected/system files for integrity. cross-references fileIntegrityScan.md. if issues: writes [root/ai/file-integrity-###.txt]. requires *dev* or !ADMIN! *dev*.
+
+*sf* <systemVersion>
+path: [root/ai/b-rite/functions/systemVersion.br]
+action: run
+args: none
+notes: returns current b-rite language version in plain text.
+
+*sf* <systemUpdates>
+path: [root/ai/b-rite/functions/systemUpdates.br]
+action: run
+args: arg1 = path [ ] to version update file (e.g. br-v-0-3.md)
+notes: apply language syntax updates from file. additive unless {DELETE} specified. core *sf* *sv* changes require !ADMIN! *dev*. prompts version choice, HTML guide, SDK/plugin propagation.
+
+*sf* <autoScript>
+path: [root/ai/b-rite/functions/autoScript.br]
+action: run
+args: none
+notes: launches [root/ai/type scripts/brite-auto.ahk]. returns "Use ctrl+alt+esc to close the program".
+
+*sf* <autoScriptAdmin>
+path: [root/ai/b-rite/functions/autoScriptAdmin.br]
+action: run
+args: none
+notes: launches [root/ai/type scripts/brite-ADMIN-auto.ahk]. returns "Use ctrl+alt+esc to close the program".
+
+*sf* <autoScriptDev>
+path: [root/ai/b-rite/functions/autoScriptDev.br]
+action: run
+args: none
+notes: launches [root/ai/type scripts/brite-dev-auto.ahk]. returns "Use ctrl+alt+esc to close the program".
+
+*sf* <autoScriptWebSDK>
+path: [root/ai/b-rite/functions/autoScriptWebSDK.br]
+action: run
+args: none
+notes: launches [root/ai/type scripts/brite-webSDK.ahk]. returns "Use ctrl+alt+esc to close the program".
+
+// ─────────────────────────────────────────
+// core functions
+// ─────────────────────────────────────────
+
+<start>
+path: [root/ai/b-rite/functions/start.br]
+action: run
+args: none
+notes: onboarding and system setup. configures root, project name, all options (devKit, interMode, guessingMode, confirmDelete, logActions, returnType, catchMode), SDK/plugin install, existing project review, post-setup help.
+
+<task>
+path: [root/ai/b-rite/functions/task.br]
+action: run
+args: arg1 = filename (e.g. "task_0001")
+notes: full task creation flow. surfaces all fields at once. user answers in one message. writes completed task file.
+
+<commit>
+path: [root/ai/b-rite/functions/commit.br]
+action: run
+args: arg1 = commit message
+notes: stage all, commit with message, push to main.
+
+<debug>
+path: [root/ai/b-rite/functions/debug.br]
+action: run
+args: none
+notes: read last error, cross-reference brain.md rules, return plain text summary.
+
+<audit>
+path: [root/ai/b-rite/functions/audit.br]
+action: run
+args: none
+notes: full repository audit against spec files. returns prioritised issue report.
+
+<at>
+path: [root/ai/b-rite/functions/at.br]
+action: run
+args: arg1 = target whose location is being sought
+notes: resolves and returns the location or path of a named file, symbol, or reference.
+
+<for>
+path: [root/ai/b-rite/functions/for.br]
+action: run
+args: arg1 = subject or target the prior request applies to
+notes: performs the prior action with the specified target.
+
+<lastPrompt>
+path: [root/ai/b-rite/functions/lastPrompt.br]
+action: run
+args: arg1 = 'Agent' or 'User' — which message to reference; can add ' - instruction'
+notes: references most recent prompt in chat. use for meta operations (execute, summarize).
+
+// ─────────────────────────────────────────
+// dev functions — active when devKit = 1
+// ─────────────────────────────────────────
+
+<nFunction>
+path: [root/ai/b-rite/functions/nFunction.br]
+action: run
+args: arg1 = function name | or: c; of; <existingFn>; arg1 = new name; arg2 = modifications
+notes: creates new function stub and adds entry to functions.br index. devKit recommended.
+
+<nVariable>
+path: [root/ai/b-rite/functions/nVariable.br]
+action: run
+args: arg1 = variable name, arg2 = value or path
+notes: creates new variable and adds entry to variables.br.
+
+<devKit>
+path: [root/ai/b-rite/functions/devKit.br]
+action: run
+args: none
+notes: language development dashboard. lists all functions, variables, current options. requires devKit = 1.
+
+<nSDK>
+path: [root/ai/b-rite/functions/nSDK.br]
+action: run
+args: arg1 = sdk name, arg2 = sdk description
+notes: scaffolds new sdk folder with all required stubs. requires devKit = 1.
+
+<nSystemFunction>
+path: [root/ai/b-rite/functions/nSystemFunction.br]
+action: run
+args: arg1 = function name, arg2 = description
+notes: create new *sf* (system function). REQUIRES !ADMIN! *dev*. prompts version choice, updates brain, fileIntegrityScan, lang, changelog.
+
+<nSystemVariable>
+path: [root/ai/b-rite/functions/nSystemVariable.br]
+action: run
+args: arg1 = variable name, arg2 = value or path
+notes: create new *sv* (system variable). REQUIRES !ADMIN! *dev*. prompts version choice, updates brain, fileIntegrityScan, lang, changelog.
+
+<createAutoType>
+path: [root/ai/b-rite/functions/createAutoType.br]
+action: run
+args: none
+notes: copies brite-auto.ahk, creates new .ahk in type scripts. catches filename (must contain brite) and text to auto-type. only Send text varies; core mechanics unchanged. see [root/ai/type scripts/auto-type-rules.txt]. requires *dev* or !ADMIN! *dev*.
+
+<package>
+path: [root/ai/b-rite/functions/package.br]
+action: run
+args: none
+notes: guided packaging for SDKs, plugins, or project templates. prompts type, item, export directory. creates folder structure and copies files per PACKAGE.md. requires *dev* or !ADMIN! *dev*.
+
+// ─────────────────────────────────────────
+// add custom functions below
+// ─────────────────────────────────────────

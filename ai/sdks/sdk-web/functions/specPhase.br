@@ -1,0 +1,7 @@
+// specPhase.br — interview or generate all ai spec files
+// call: *dev* !sdk|003| br : { run; <specPhase>; 'app idea' } :
+// arg1 = app idea seed (optional). output → [root/ai/specs/] per handbook 2.1
+
+read; [root/ai/sdks/sdk-web/variables.br]
+do; [root/ai/sdks/sdk-web/prompts/spec-phase-prompt.md]
+prompt; 'Execute the spec phase. App idea seed (arg1): {arg1}. If arg1 is empty, conduct full interview. If arg1 provided, use as seed and generate specs. First-run: use templates from [root/ai/sdks/sdk-web/specs/] when target files missing. Output to [root/ai/specs/].'

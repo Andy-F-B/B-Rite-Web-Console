@@ -1,0 +1,27 @@
+// package.br — create distributable package (template, SDK, plugin, or project)
+// called via: *dev* br{f} : { run; <package> } :
+// requires *dev* or !ADMIN! *dev*.
+// prompts user through packaging flow, creates export folder, copies files per PACKAGE.md.
+
+read; [root/PACKAGE.md]
+read; v; (variables)
+
+return; pt; "packaging — guided flow. answer the questions below."
+
+ask; (A1); "package type — enter one: template (native b-rite, no SDKs/plugins) | sdk (single SDK folder) | plugin (single plugin folder) | project (native + selected SDKs/plugins)"
+ask; (A2); "which item? — for template: native. for sdk: folder name (e.g. sdk-web). for plugin: folder name (e.g. plugin-podcast). for project: list SDKs and plugins to include (e.g. sdk-web, plugin-podcast) or native only"
+ask; (A3); "export directory — full path where packaged output should go (e.g. [root/packages/b-rite-native-0.2/] or [root/Desktop/my-sdk-package/]). include trailing slash."
+
+catch; strict
+
+// on catch:
+// 1. create export directory if it does not exist. use *sf* <new> with [A3]package-manifest.txt and .txt to create folder, or write any file to [A3] to force creation.
+// 2. per A1:
+//    TEMPLATE: create structure per PACKAGE.md native template. copy ai/b-rite/ (excluding project-specific: autoScriptWebSDK, createAutoType if desired), ai/help/, ai/tasks/, ai/plugins/ (empty), ai/sdks/ (sdk-builder.md only), ai/archived/ (empty), ai/brain.md (minimal). copy ai/type scripts/. strip sdk-registry and plugin-registry to empty [registry]. strip master_changelog [log] entries. strip help-log entries. set variables.br root = [B-RITE PROJECT], projectName = "B-RITE PROJECT".
+//    SDK: copy [root/ai/sdks/{A2}/] entire folder to [A3]{A2}/]
+//    PLUGIN: copy [root/ai/plugins/{A2}/] entire folder to [A3]{A2}/]
+//    PROJECT: same as template but include SDK/plugin folders from A2. update sdk-registry and plugin-registry with included codes. update brain.md with included SDK/plugin sections.
+// 3. copy PACKAGE.md to export root
+// 4. return; pt; "package created at [A3]. contents: [brief list]. see PACKAGE.md in output for distribution notes."
+
+return; pt; "package created. see mLog for details."

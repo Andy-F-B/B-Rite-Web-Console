@@ -1,0 +1,14 @@
+// nVariable.br — create new variable
+// br{f} : { run; <nVariable>; 'variable name'; 'value or path' } :
+// arg1 = variable name (lowercase, camelCase if two words)
+// arg2 = value or path (wrap paths in [ ], values in " " or ' ')
+
+// step 1: validate {arg1} — not two characters (would conflict with anchor values)
+// step 2: validate {arg2} — paths must use [ ], strings must use " " or ' '
+// step 3: determine correct block in variables.br ([paths] / [files] / [values])
+// step 4: write entry to variables.br under correct block:
+//   ({arg1}) = {arg2}
+// step 5: add entry to lang.md current user variables table
+// step 6: write one-line log entry to mLog
+
+return; pt; "variable created: ({arg1}) = {arg2}"

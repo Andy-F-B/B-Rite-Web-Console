@@ -1,0 +1,6 @@
+// runFullPipeline.br — run all phases in handbook order
+// call: *dev* !sdk|003| br : { run; <runFullPipeline> } :
+
+read; [root/ai/sdks/sdk-web/variables.br]
+read; [root/ai/sdks/sdk-web/setup-procedure.txt]
+prompt; 'Execute full pipeline per setup-procedure section 6. Run in order: 1) specPhase (ask for app idea if not provided), 2) anchorPhase, 3) taskPhase "all", 4) migrationPhase "plan" then per-table, 5) buildPhase per feature, 6) auditPhase, 7) previewPhase "main" "multi". Execute each phase. After each, confirm before next. First-run: use SDK templates when target files missing.'

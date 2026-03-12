@@ -1,0 +1,24 @@
+// br-ignore.br — protected file list
+// files listed here cannot be altered or deleted by any b-rite command
+// under standard OR devKit + *dev* operation.
+// only !ADMIN! + *dev* can touch listed files.
+// THIS FILE ITSELF cannot be altered by any b-rite command at any permission level.
+// manual editing only.
+// !ADMIN! definition is permanent and cannot be redefined by any script.
+
+[protected]
+[root/ai/b-rite/br-ignore.br]
+[root/ai/b-rite/b-rite.md]
+[root/ai/b-rite/errors/error_nf.br]
+[root/ai/b-rite/errors/error_vf.br]
+[root/ai/b-rite/errors/error.br]
+[root/ai/brain.md]
+[root/ai/help/help.br]
+[root/ai/help/help-log.md]
+
+[protected-tokens]
+// the following tokens are permanently defined and cannot be redefined by any script
+*dev*
+!ADMIN!
+*sv*
+*sf*

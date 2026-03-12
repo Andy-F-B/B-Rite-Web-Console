@@ -1,0 +1,17 @@
+// directory.br — *sf* search for existing feature
+// called via: br{sf} : { run; *sf*; <directory>; 'context' } :
+// arg1 = interpretive context — what the user is looking for
+
+fetch; [root/ai/b-rite/variables.br]
+fetch; [root/ai/b-rite/functions/functions.br]
+fetch; [root/ai/b-rite/lang/lang.md]
+
+// search across: variables.br [paths] [files], functions.br, lang.md, folder structure, filenames
+// interpret arg1 — expand to search terms
+// match against search set (keyword/semantic)
+// rank by relevance
+
+// return best match: [path] — [one-line description]
+// if no match: no match for '{arg1}'. try <at> with exact name.
+
+return; pt

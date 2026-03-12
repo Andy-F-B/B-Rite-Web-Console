@@ -1,0 +1,147 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #0a0a0a;
+  --surface: #141414;
+  --border: #262626;
+  --text: #e5e5e5;
+  --muted: #737373;
+  --accent: #22c55e;
+  --error: #ef4444;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-mono);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Console layout */
+.console-nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 12px 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.console-nav a {
+  color: var(--text);
+}
+
+.console-nav a:hover {
+  color: var(--accent);
+}
+
+/* Script editor */
+.script-editor {
+  padding: 24px;
+}
+
+.editor-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.editor-toolbar button {
+  padding: 8px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-mono);
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.editor-toolbar button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.editor-wrapper {
+  position: relative;
+}
+
+.editor-wrapper textarea {
+  width: 100%;
+  min-height: 300px;
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  resize: vertical;
+  border-radius: 4px;
+}
+
+.editor-wrapper textarea.has-errors {
+  border-color: var(--error);
+  box-shadow: 0 0 0 1px var(--error);
+}
+
+.editor-wrapper textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.error-list {
+  margin-top: 12px;
+  padding: 12px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid var(--error);
+  border-radius: 4px;
+}
+
+.error-item {
+  padding: 4px 0;
+  border-left: 3px solid var(--error);
+  padding-left: 8px;
+  margin-bottom: 4px;
+  font-size: 13px;
+  color: #fca5a5;
+}
+
+.error-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Forms */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="url"] {
+  padding: 8px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-mono);
+  border-radius: 4px;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+button {
+  font-family: var(--font-mono);
+}

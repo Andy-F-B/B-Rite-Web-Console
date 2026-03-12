@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B-Rite Web App — Mobile Preview</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --secondary: #10b981;
+      --background: #ffffff;
+      --surface: #f3f4f6;
+      --text: #111827;
+      --muted: #6b7280;
+      --font: Inter, system-ui, sans-serif;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --spacing-md: 16px;
+      --spacing-lg: 24px;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: var(--font); background: var(--background); max-width: 390px; margin: 0 auto; min-height: 100vh; padding: var(--spacing-lg); }
+    nav { display: flex; flex-wrap: wrap; gap: var(--spacing-md); margin-bottom: var(--spacing-lg); padding: var(--spacing-md); background: var(--surface); border-radius: var(--radius-md); }
+    nav a { color: var(--primary); text-decoration: none; font-weight: 500; }
+    nav a:hover { text-decoration: underline; }
+    h1 { font-size: 1.25rem; margin: 0 0 var(--spacing-md); color: var(--text); }
+    p { color: var(--muted); margin: 0 0 var(--spacing-md); font-size: 14px; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/login">Sign in</a>
+    <a href="/signup">Sign up</a>
+    <a href="/profile">Profile</a>
+  </nav>
+  <main>
+    <h1>B-Rite Web App</h1>
+    <p>Welcome. Sign in or sign up to manage your profile.</p>
+  </main>
+</body>
+</html>

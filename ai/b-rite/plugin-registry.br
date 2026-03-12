@@ -1,0 +1,6 @@
+// plugin-registry.br — maps plugin codes to paths
+// used by !plugin|###| syntax (when implemented). parallel to sdk-registry.br.
+// format: code = [path to plugin directory]
+// code: 3-digit numeric (001, 002, …)
+
+[registry]

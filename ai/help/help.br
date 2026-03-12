@@ -1,0 +1,95 @@
+// help.br — b-rite help and troubleshooting system (*sf*)
+// location: [root/ai/help/help.br]
+//
+// callable two ways — both are valid:
+//   br{sf} : { run; *sf*; <help> } :
+//   br : { return; sf; <help> } :
+//   br : { return; sf; <help>; 'user context note here' } :
+//
+// with context note:
+//   *dev* br : { return; sf; <help>; 'I cannot edit syntax in [file]. tried a lot.' } :
+//
+// if the user includes a context note in ' ':
+//   - read the note before asking any questions
+//   - identify which troubleshooting questions are already answered by the note
+//   - do not ask those questions — skip them silently
+//   - only ask what remains unanswered
+//
+// after session — always write to help-log.md regardless of outcome.
+
+// ─────────────────────────────────────────
+// step 1 — read context
+// ─────────────────────────────────────────
+
+read; [root/ai/b-rite/b-rite.md]
+read; [root/ai/b-rite/options.br]
+read; [root/ai/help/help-log.md]
+
+// if {arg1} is present (user context note):
+//   parse note and pre-satisfy any of the diagnostic questions below that are answered
+//   proceed directly to first unanswered question
+
+// ─────────────────────────────────────────
+// step 2 — diagnostic questions
+// ask only those not already answered by context note
+// ─────────────────────────────────────────
+
+ask; opt; (A1); "what were you trying to do? describe the goal in plain english."
+ask; opt; (A2); "what command or script did you run? paste it here if you have it."
+ask; opt; (A3); "what happened — error message, wrong output, or nothing at all?"
+ask; opt; (A4); "which file or function is involved? include the path if you know it."
+ask; opt; (A5); "have you changed anything recently — new function, variable, or option?"
+
+catch
+
+// ─────────────────────────────────────────
+// step 3 — diagnose
+// ─────────────────────────────────────────
+
+// cross-reference collected context against:
+// - b-rite.md — syntax rules, wrapping rules, token rules, command rules
+// - options.br — current devKit and interMode settings
+// - help-log.md — prior known issues for patterns or repeats
+// - br-ignore.br if file access is the issue
+
+// diagnose the most likely cause:
+// - syntax error (missing wrapper, wrong casing, unwrapped arg)
+// - wrong entry point for the command being used
+// - file or variable not found
+// - permission level insufficient (*dev* needed, devKit off)
+// - file is br-ignore protected
+// - function chain exceeded 3 levels
+// - wrong file type for command (run vs do)
+// - catch without preceding ask/prompt
+
+// ─────────────────────────────────────────
+// step 4 — respond
+// ─────────────────────────────────────────
+
+// return plain english explanation:
+// 1. what the issue is
+// 2. exactly what to change or fix — be specific
+// 3. corrected script example if applicable
+// 4. one-line note on how to avoid this in future
+
+// if issue cannot be diagnosed from given context:
+//   ask; (B1); "can you share the exact script and the exact error or result you saw?"
+//   catch
+//   re-diagnose with B1
+
+// ─────────────────────────────────────────
+// step 5 — log session
+// ─────────────────────────────────────────
+
+// write entry to [root/ai/help/help-log.md]:
+// - timestamp
+// - user context note (if provided)
+// - questions asked (skipped questions noted)
+// - diagnosis reached
+// - solution provided
+// - resolved: yes / no / unclear
+
+// if issue represents a new error pattern not previously logged:
+//   flag it in log as [NEW PATTERN] — may warrant a new error file or spec note
+
+return; pt

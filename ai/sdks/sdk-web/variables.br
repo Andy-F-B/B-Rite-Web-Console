@@ -1,0 +1,44 @@
+// sdk-web variables
+// paths resolve relative to root. read this file when !sdk|003| is active.
+// wiring: SDK templates live here; outputs go to target paths below.
+
+[system]
+handbook = [root/AI_App_Development_Handbook_V2_1_fixed.txt]
+webSdkDocs = [root/Web SDK Launch Instr PT.md]
+
+[paths]
+// SDK-internal (templates)
+specs = [root/ai/sdks/sdk-web/specs/]
+context = [root/ai/sdks/sdk-web/context/]
+tasks = [root/ai/sdks/sdk-web/tasks/]
+functions = [root/ai/sdks/sdk-web/functions/]
+prompts = [root/ai/sdks/sdk-web/prompts/]
+uiSchema = [root/ai/sdks/sdk-web/ui-schema/]
+
+// Target paths (where outputs go at runtime)
+aiSpecs = [root/ai/specs/]
+aiContext = [root/ai/context/]
+aiTasks = [root/ai/tasks/]
+uiPreviews = [root/UI/]
+output = [root/UI/dev-output/]
+dbMigrations = [root/db/migrations/]
+app = [root/app/]
+components = [root/components/]
+lib = [root/lib/]
+featurePacks = [root/feature-packs/]
+
+[stack]
+nextjs, supabase, vercel
+
+[breakpoints]
+mobile = 600
+tablet = 1024
+laptop = 1440
+desktop = 1920
+
+[phases]
+spec, anchor, task, migration, build, audit, preview
+
+[files]
+setupProcedure = [root/ai/sdks/sdk-web/setup-procedure.txt]
+coreFeaturesPlan = [root/ai/sdks/sdk-web/core-features-plan.txt]

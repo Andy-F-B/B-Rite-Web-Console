@@ -1,0 +1,14 @@
+// log.br — detailed log entry (*sf*)
+// called via: *sf*; <log>; "entry name"  or  *sf*; <log>; ' '
+// arg1 = log entry name ("" required with text | '' AI names from context)
+// empty "" = syntax error. '' with no text = AI names from context.
+
+// create detailed log entry:
+// - timestamp
+// - entry name from {arg1}
+// - full description of actions taken in this script run
+// - files created, edited, or deleted
+// - any errors encountered
+
+edit; *sv*; (mLog); append; "[detailed] {arg1} — {summary of actions}"
+return; null

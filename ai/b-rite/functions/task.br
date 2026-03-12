@@ -1,0 +1,19 @@
+// task.br — task creation flow
+// called via: br{f} : { run; <task>; "task_0001" } :
+// arg1 = filename for the output task file
+// all fields required unless marked opt.
+// user answers all prompts in one message.
+
+read; v; (taskTemplate)
+
+ask; (A1); "task name"
+ask; (A2); "one sentence goal"
+ask; (A3); 'tables involved'
+ask; (A4); 'UI components needed'
+ask; (A5); "done when — list completion conditions"
+ask; opt; (A6); 'additional notes or edge cases'
+
+catch; strict
+
+write; v; [root/ai/tasks/{arg1}.md]
+return; md

@@ -1,0 +1,35 @@
+// systemUpdates.br — apply language syntax updates from version file
+// called via: br : { run; <systemUpdates>; [path/to/br-v-X-X.md] } :
+// or: !sdk|###| br : { run; <systemUpdates>; [sdk/path/to/update.md] } : (SDK context)
+// or: !plugin|###| br : { run; <systemUpdates>; [plugin/path/to/update.md] } : (plugin context)
+// arg1 = path [ ] to the update file.
+// update file may contain !ADMIN! override at top — allows non-admin to run for additive updates.
+// when changing core *sf* or *sv*: requires !ADMIN! *dev*. prompts version choice and HTML guide.
+
+read; [root/ai/b-rite/lang/version.br]
+read; [{arg1}]
+
+// step 1: if in main b-rite context (not !sdk| or !plugin|):
+//   - compare file version to (current). if file version <= current and no new content: return; pt; "most up to date already installed."
+//   - if file has higher version or new content: proceed.
+
+// step 2: if update file contains changes to core *sf* or *sv* (add, delete, alter):
+//   - require !ADMIN! *dev*. if not present: return ERROR — system-level changes require !ADMIN! *dev*.
+//   - ask: "Current version is {current}. Save to current version, or create new version {current+1}?"
+//   - if save to current: apply changes, no version bump.
+//   - if new version: ensure [root/archived/lang/] exists (create if not). copy version.br to [root/archived/lang/version-{old}.br]. then update version.br current = {current+1}.
+//   - ask: "Would you like an updated HTML guide?" if yes: generate HTML from sources. source: [root/ai/b-rite/b-rite.md] + [root/ai/b-rite/quick-start/b-rite-cheatsheet.md]. output: [root/B-Rite-Guide.html] or [root/UI/dev-output/B-Rite-Guide.html].
+
+// step 3: apply MAIN section instructions. document is ADDITIVE unless line contains {DELETE} -> (target).
+//   - {DELETE} -> (target) = remove that item from target file.
+//   - all other instructions = add or edit per instruction.
+
+// step 4: after main install complete, ask: "Would you like to detect and update syntax on any SDKs or plugins?"
+//   - if yes: for each [root/ai/sdks/*/] and [root/ai/plugins/*/] (subfolders with install.br), apply SDK or PLUGIN section from main update file. rule: "analyze changes. update syntax only if needed. if below does not affect any .br code or functions, do not alter."
+//   - if SDK had user-input changes: ask "Would you like an updated SDK guide?"
+//   - if no: return; pt; "main update complete. run !sdk|###| or !plugin|###| br : { run; <systemUpdates>; [path] } : for each SDK/plugin to update manually."
+
+// step 5: if in SDK context (!sdk|###|): apply SDK section only. update sdk files per instructions.
+// step 6: if in plugin context (!plugin|###|): apply PLUGIN section only. update plugin files per instructions.
+
+return; pt; "system updates applied. see mLog for details."

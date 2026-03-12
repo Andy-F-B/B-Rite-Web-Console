@@ -1,0 +1,14 @@
+// error_nf.br — file not found
+// triggered automatically when a referenced file cannot be located.
+
+// 1. return the path that was not found
+// 2. check variables.br — confirm path is correctly defined
+// 3. suggest most likely cause:
+//    - path missing [ ] wrappers
+//    - path defined incorrectly in variables.br
+//    - file has been moved or renamed
+//    - file has not been created yet
+// 4. do not continue the original script
+// 5. do not guess or substitute an alternative file
+
+return; pt; "b-rite error — file not found. check the path in variables.br and confirm the file exists. paths must be wrapped in [ ]."

@@ -1,0 +1,7 @@
+// migrationPhase.br — generate database migrations
+// call: *dev* !sdk|003| br : { run; <migrationPhase>; "table or plan" } :
+// arg1 = table/feature name or "plan". output → [root/db/migrations/] per handbook 5
+
+read; [root/ai/sdks/sdk-web/variables.br]
+do; [root/ai/sdks/sdk-web/prompts/migration-phase-prompt.md]
+prompt; 'Execute migration phase. Arg1: {arg1}. Follow migration-phase-prompt. Output to [root/db/migrations/].'

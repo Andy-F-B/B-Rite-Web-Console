@@ -1,0 +1,87 @@
+SDK-WEB — B-RITE USAGE GUIDE
+============================
+How to use the web SDK in the context of b-rite. Custom functions, master commands, agent handoff.
+
+---
+
+INVOCATION
+----------
+All sdk-web functions require: *dev* !sdk|003| br : { ... } :
+
+---
+
+PHASE FUNCTIONS (SINGLE)
+------------------------
+*dev* !sdk|003| br : { run; <specPhase>; 'my app idea' } :
+*dev* !sdk|003| br : { run; <anchorPhase> } :
+*dev* !sdk|003| br : { run; <taskPhase>; "all" } :
+*dev* !sdk|003| br : { run; <migrationPhase>; "table_name" } :
+*dev* !sdk|003| br : { run; <buildPhase>; "feature_name" } :
+*dev* !sdk|003| br : { run; <auditPhase> } :
+*dev* !sdk|003| br : { run; <previewPhase>; "page"; "multi" } :
+
+---
+
+MASTER FUNCTIONS
+----------------
+Run one phase by name:
+  *dev* !sdk|003| br : { run; <runSinglePhase>; "spec" } :
+
+Run selected phases (comma-separated):
+  *dev* !sdk|003| br : { run; <runPhases>; "spec,anchor,task" } :
+
+Run full pipeline (all phases in order):
+  *dev* !sdk|003| br : { run; <runFullPipeline> } :
+
+Master program maker (with agent-switch per section):
+  br : { run; <masterProgramMaker> } :
+
+Agent handoff (when user declines current agent for a section):
+  *dev* !sdk|003| br : { run; <agentHandoff>; "UI" } :
+
+---
+
+CHANGING ONE PART
+-----------------
+To add a task only:
+  *dev* !sdk|003| br : { run; <taskPhase>; "new_feature" } :
+
+To change one spec:
+  Edit [root/ai/specs/product.md] (or other spec) directly, then run:
+  *dev* !sdk|003| br : { run; <anchorPhase> } :  (to refresh anchors)
+
+To run only migrations:
+  *dev* !sdk|003| br : { run; <migrationPhase>; "plan" } :
+
+---
+
+AGENT SWITCH WORKFLOW
+---------------------
+When using <masterProgramMaker>, at each section you are asked:
+  "Use current agent for [section], or switch to another agent?"
+
+If you choose switch:
+  1. Section marked SKIPPED
+  2. agent-handoff-[section].txt written to [root/UI/dev-output/]
+  3. File contains: what's missing, context to gather, integration rules
+  4. Give that file to another agent
+  5. Other agent returns downloadable .txt with integration instructions
+
+---
+
+QUICK-START (HANDBOOK PHASES 1-6)
+---------------------------------
+To initialize a new project from scratch, run:
+  *dev* !sdk|003| br : { run; <runFullPipeline> } :
+
+Or run the Project Kickstart prompt (see prompts/quick-start-prompt.md).
+
+---
+
+FILES REFERENCE
+---------------
+setup-procedure.txt   — folder structure, wiring
+core-features-plan.txt — functions + creation order
+sdk-guide.txt         — purpose, install, functions list
+variables.br          — paths
+functions.br          — function index

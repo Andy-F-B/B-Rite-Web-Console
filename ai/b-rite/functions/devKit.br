@@ -1,0 +1,24 @@
+// devKit.br — language development dashboard
+// called via: br{f} : { run; <devKit> } :
+// requires devKit = 1 in options.br.
+// surfaces current language state for development work.
+
+read; [root/ai/b-rite/lang/lang.md]
+read; [root/ai/b-rite/variables.br]
+read; [root/ai/b-rite/functions/functions.br]
+read; [root/ai/b-rite/options.br]
+read; [root/ai/b-rite/br-ignore.br]
+
+// return a formatted dashboard showing:
+// - current devKit and interMode status
+// - all registered functions (sf and standard)
+// - all registered variables (sv and v)
+// - protected files list from br-ignore.br
+// - installed sdks
+// - available dev actions:
+//   <nFunction> — create new function
+//   <nVariable> — create new variable
+//   <nSDK> — scaffold new sdk
+//   *dev* — enable for system file access
+
+return; pt

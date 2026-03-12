@@ -1,0 +1,12 @@
+// master_changelog.br — action log
+// auto-written by AI on every script execution unless no-log is active.
+// format: [timestamp] action — one line per entry.
+// detailed entries created by *sf* <log>.
+// do not manually edit past entries.
+
+[log]
+// entries written below this line
+[2025-03-12] <start> — setup complete. root=WEB PROJECT, projectName=B-Rite Web App. options updated. sdk-web installed. help invoked.
+[2025-03-12] <quickStart> — project kickstart complete. folder structure, specs, schema, auth feature pack created.
+[2025-03-12] <runFullPipeline> — full pipeline complete. spec, anchor, task, migration, build, audit, preview phases executed.
+[2025-03-12] <runFullPipeline> — B-Rite Console built. Editor, downloads, auth, brite-parser, HTML preview to dev-output, BR logo, privacy.

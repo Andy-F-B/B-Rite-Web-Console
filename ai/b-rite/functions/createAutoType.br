@@ -1,0 +1,28 @@
+// createAutoType.br — create new auto-type AHK script from brite-auto.ahk template
+// called via: br{f} : { run; <createAutoType> } :
+// catches from user: filename (must contain "brite"), and what text to auto-type.
+// hard rules: brite in filename, brite in popup names, core mechanics unchanged, only Send text varies.
+// requires *dev* or !ADMIN! *dev* for file write.
+// see [root/ai/type scripts/auto-type-rules.txt] for full rules.
+// automatically creates matching *sf* function and [system] variable for launching the new autoType.
+
+read; [root/ai/type scripts/brite-auto.ahk]
+read; [root/ai/b-rite/functions/autoScript.br]
+
+ask; (A1); "filename for new script (must contain 'brite', e.g. brite-myphrase.ahk)"
+ask; (A2); "exact text to auto-type when Ctrl+Alt+B is pressed"
+
+catch; strict
+
+// validate: (A1) must contain "brite" (case-insensitive). if not, return error and halt.
+// ensure (A1) ends with .ahk — if not, append .ahk
+// build new .ahk: copy brite-auto.ahk structure. replace only the Send block content with (A2). CRITICAL: user text (A2) must be LITERAL — use AHK Send {Text} mode so ! + ^ # etc. type as characters, not key modifiers. Exception: only if user explicitly explains they are providing AHK script code (e.g. {Enter}), treat as script. Otherwise, wrap user text in Send, {Text}(A2) or split on newlines: Send, {Text}part1; Send, {Shift Down}{Enter}{Shift Up}; Send, {Text}part2; etc. preserve MsgBox titles "B-Rite", ^!b, ^!Esc, all other lines.
+
+write; [root/ai/type scripts/(A1)]
+
+// derive function name: strip "brite-" prefix and ".ahk" from (A1). suffix = remainder. function name = "autoScript" + suffix (camelCase, first letter of suffix upper). e.g. brite-webSDK.ahk → autoScriptWebSDK.
+// create new function file at [root/ai/b-rite/functions/autoScript{Suffix}.br]: copy autoScript.br structure, replace .ahk path with [root/ai/type scripts/(A1)].
+// add *sf* <autoScript{Suffix}> entry to functions.br (after other autoScript entries). path: [root/ai/b-rite/functions/autoScript{Suffix}.br]. notes: launches [root/ai/type scripts/(A1)]. returns "Use ctrl+alt+esc to close the program".
+// add autoScript{Suffix} = [root/ai/b-rite/functions/autoScript{Suffix}.br] to variables.br [system] block (after other autoScript entries).
+
+return; pt; "Created [root/ai/type scripts/(A1)], autoScript{Suffix}.br, and added to functions.br + variables.br. Use ctrl+alt+esc to close the program."

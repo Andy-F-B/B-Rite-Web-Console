@@ -1,0 +1,22 @@
+br : { read; pt; 'Install Doc' } :
+
+SDK-WEB INSTALL DOC
+===================
+
+1. Copy sdk-web folder to [root/ai/sdks/sdk-web/] if not present.
+
+2. Add to [root/ai/b-rite/sdk-registry.br]:
+   003 = [root/ai/sdks/sdk-web/]
+
+3. (Optional) Paste sdk-web-brain-block.md content into brain.md under "installed sdks".
+
+4. Update brain.md installed sdks table:
+   sdk-web — [root/ai/sdks/sdk-web/]
+
+5. Verify:
+   *dev* !sdk|003| br : { run; <sdkWebSetup> } :
+
+6. For language syntax updates: copy br-v-X-X.md from [root/ai/b-rite/lang/versions/] into this folder, then run:
+   !sdk|003| br : { run; <systemUpdates>; [root/ai/sdks/sdk-web/br-v-X-X.md] } :
+
+If <sdkWebSetup> returns setup instructions, install is complete.

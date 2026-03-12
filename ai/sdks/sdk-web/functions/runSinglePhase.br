@@ -1,0 +1,7 @@
+// runSinglePhase.br — run one phase by name
+// call: *dev* !sdk|003| br : { run; <runSinglePhase>; "phaseName" } :
+// arg1 = spec | anchor | task | migration | build | audit | preview
+
+read; [root/ai/sdks/sdk-web/variables.br]
+read; [root/ai/sdks/sdk-web/functions.br]
+prompt; 'Execute the single phase: {arg1}. Read and run the corresponding phase file: spec→specPhase.br, anchor→anchorPhase.br, task→taskPhase.br (arg "all"), migration→migrationPhase.br (arg "plan"), build→buildPhase.br (arg "next"), audit→auditPhase.br, preview→previewPhase.br (args "main" "multi"). Execute that phase now with its default args.'

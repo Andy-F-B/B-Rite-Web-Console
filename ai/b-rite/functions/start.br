@@ -1,0 +1,78 @@
+// start.br — system onboarding and setup
+// called via: br{f} : { run; <start> } :
+// no args required.
+// reads brain.md, confirms system is live, asks user to configure all options and optional SDK/plugin install.
+
+read; v; (brain)
+read; [root/ai/b-rite/b-rite.md]
+read; v; (options)
+read; v; (variables)
+
+return; pt; "b-rite system initialising."
+
+// ─────────────────────────────────────────
+// existing project — review only (no changes)
+// ─────────────────────────────────────────
+
+return; pt; "EXISTING PROJECT: If this is an existing project and you only want the AI to review your current setup (no file edits): read variables.br, options.br, and brain.md. Then answer A11: existing project; information correct. AI will review and confirm — no changes made. If you want to edit only specific items: put 'existing project' at the end of your response, then list ONLY what to change (e.g. A4 interMode 1, A10 add sdk-web). AI will change only those items and leave everything else as-is."
+
+// ─────────────────────────────────────────
+// project identity
+// ─────────────────────────────────────────
+
+ask; (A1); "root folder name — the top-level project folder containing /ai/, /src/, etc. enter just the folder name. this drives all paths in b-rite."
+ask; (A2); "project name — used in docs and references only (not in code). enter 'same' to match root, or a different display name (e.g. My Awesome App)."
+
+// ─────────────────────────────────────────
+// mode options
+// ─────────────────────────────────────────
+
+ask; (A3); "devKit — enables language dev tools (*dev*, <nFunction>, <nVariable>, <devKit>). yes or no?"
+ask; (A4); "interMode — 0 = strict parsing (AI halts on minor errors) | 1 = relaxed (AI infers). enter 0 or 1."
+ask; (A5); "guessingMode — when ambiguous: 0 = AI always asks | 1 = AI infers and proceeds. enter 0 or 1."
+
+// ─────────────────────────────────────────
+// behaviour options
+// ─────────────────────────────────────────
+
+ask; (A6); "confirmDelete — 0 = skip confirmation on delete | 1 = always confirm before delete. enter 0 or 1."
+ask; (A7); "logActions — 0 = suppress all logging | 1 = log all actions to mLog. enter 0 or 1."
+
+// ─────────────────────────────────────────
+// default options (only apply when not specified in script)
+// ─────────────────────────────────────────
+
+ask; (A8); "returnType — default when you do not specify return in a script. pt (plain text), md, txt, or html. enter one. default: pt. if you write return; md in a script, that overrides for that script."
+ask; (A9); "catchMode — default when you write 'catch' without 'strict'. default = flags missing, continues. strict = stops if required fields missing. enter default or strict. if you write catch; strict in a script, that overrides for that script."
+
+// ─────────────────────────────────────────
+// SDKs and plugins
+// ─────────────────────────────────────────
+
+ask; (A10); "SDKs and plugins — place folders in [root/ai/sdks/] (SDKs) or [root/ai/plugins/] (plugins) before setup. SDK needs: install.br, sdk-name-brain-block.md, variables.br, functions.br, sdk-guide.txt. Plugin needs: install.br, plugin-name-brain-block.md, variables.br, functions.br, guide.txt. RESPONSE FORMAT: enter the exact folder name. SDKs: sdk-web, sdk-custom. Plugins: plugin-podcast, plugin-film. Multiple: comma-separated (sdk-web, plugin-podcast). System matches to [root/ai/sdks/{name}/install.br] or [root/ai/plugins/{name}/install.br] and runs <install>. Enter none if none."
+
+// ─────────────────────────────────────────
+// existing project confirmation
+// ─────────────────────────────────────────
+
+ask; (A11); "existing project? — if you only want review (no changes), answer: existing project; information correct. if you want to change only some items, put existing project at end of your response and list only those (e.g. A4 interMode 1). if this is a new setup, leave blank or enter: new setup."
+ask; (A12); "after setup (new only): run <help> to learn first steps? yes or no. if existing project review, enter skip."
+
+catch; strict
+
+// on catch:
+// 1. check A11 — if "existing project; information correct" (and no change list):
+//    read variables.br, options.br, brain.md. return summary of current config. no file edits. stop.
+
+// 2. if "existing project" with change list: only apply the listed changes. leave all other answers as current file values.
+
+// 3. if new setup (A11 blank or "new setup"):
+//    a. variables.br — root = [{A1}], projectName = "{A2}" (if A2 = same, use A1)
+//    b. options.br — interMode, devKit (yes→1), guessingMode, confirmDelete, logActions, returnType, catchMode
+//    c. if A10 != none: for each item (comma or space separated), trim whitespace. if starts with sdk-: run *dev* br{sf} : { run; *sf*; <install>; [root/ai/sdks/{item}/install.br] } :. if starts with plugin-: run *dev* br{sf} : { run; *sf*; <install>; [root/ai/plugins/{item}/install.br] } :
+//    d. if A12 = yes: run *sf* <help>
+//    e. if A12 = no or skip: return; pt; "setup complete. agent ready for use."
+
+// 4. if existing project with changes: after applying, return; pt; "changes applied. agent ready for use."
+
+return; pt; "setup complete. root = [{A1}]. projectName = {A2}. options updated. SDKs/plugins installed if listed. agent ready for use."

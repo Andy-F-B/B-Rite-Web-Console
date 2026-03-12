@@ -1,0 +1,7 @@
+// runPhases.br — run selected phases in order
+// call: *dev* !sdk|003| br : { run; <runPhases>; "spec,anchor,task" } :
+// arg1 = comma-separated phase names
+
+read; [root/ai/sdks/sdk-web/variables.br]
+read; [root/ai/sdks/sdk-web/functions.br]
+prompt; 'Execute phases in order: {arg1}. For each phase name (spec, anchor, task, migration, build, audit, preview), read and run the corresponding phase file. Use default args. Execute sequentially. After each phase, confirm completion before proceeding to next.'

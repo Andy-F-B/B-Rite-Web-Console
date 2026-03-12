@@ -1,0 +1,16 @@
+// sf_delete.br — delete with confirmation (*sf*)
+// called via: *sf*; <delete>; "[file path]"
+// arg1 = file path to delete
+// always prompts user to confirm before executing.
+// cannot delete files listed in br-ignore.br without !ADMIN! *dev*.
+
+// check if {arg1} is listed in br-ignore.br
+// if yes and no !ADMIN! — halt; return system warning
+
+ask; (A1); "confirm delete: {arg1} — this cannot be undone. type YES to confirm."
+catch; strict
+
+// if A1 = YES — proceed with delete
+// if A1 != YES — halt; return "delete cancelled."
+
+return; pt; "deleted: {arg1}"

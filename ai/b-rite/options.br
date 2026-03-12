@@ -1,0 +1,16 @@
+// b-rite options
+// user-configurable settings. AI reads this on every br call.
+// edit values directly. do not alter key names.
+
+[mode]
+interMode = 0       // 0 = strict parsing (default) | 1 = relaxed, AI infers on minor errors
+devKit = 1          // 0 = off (default) | 1 = on — enables *dev* token and dev functions
+
+[behaviour]
+guessingMode = 0    // 0 = AI always asks on ambiguity | 1 = AI infers and proceeds (default)
+confirmDelete = 1   // 0 = skip confirmation on delete | 1 = always confirm (default)
+logActions = 1      // 0 = suppress all logging | 1 = log all actions to mLog (default)
+
+[defaults]
+returnType = pt     // default return type when not specified
+catchMode = default // default | strict

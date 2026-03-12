@@ -1,0 +1,6 @@
+// version.br — current b-rite language version
+// read by <systemVersion> and <systemUpdates>.
+// updated when new version is created via <systemUpdates>.
+
+[version]
+current = 0.2

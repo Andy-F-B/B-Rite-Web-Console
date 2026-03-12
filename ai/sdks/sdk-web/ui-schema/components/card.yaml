@@ -1,0 +1,18 @@
+# card.yaml — per handbook 10.3
+component: Card
+variants:
+  - default
+  - elevated
+  - outlined
+props:
+  title: optional string
+  children: slot
+  action: optional event
+layout_rules:
+  mobile:
+    padding: 16
+    full_width: true
+  tablet:
+    padding: 20
+  desktop:
+    padding: 24

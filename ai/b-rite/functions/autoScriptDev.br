@@ -1,0 +1,6 @@
+// autoScriptDev.br — *sf* launch brite-dev-auto.ahk
+// called via: br{sf} : { run; *sf*; <autoScriptDev> } :
+// finds and runs [root/ai/type scripts/brite-dev-auto.ahk]
+// AI: execute the .ahk file via Start-Process or shell before returning
+
+return; pt; "Use ctrl+alt+esc to close the program"

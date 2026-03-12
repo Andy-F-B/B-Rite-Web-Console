@@ -1,0 +1,7 @@
+// agentHandoff.br — generate handoff template when user declines agent
+// call: *dev* !sdk|003| br : { run; <agentHandoff>; "section" } :
+// arg1 = Product | Specs | Anchors | Tasks | Migrations | UI | Backend | Security | Audit | Preview
+
+read; [root/ai/sdks/sdk-web/variables.br]
+read; [root/ai/sdks/sdk-web/prompts/agent-handoff-template.txt]
+prompt; 'Section {arg1} was skipped — user declined current agent. Generate handoff file using agent-handoff-template.txt. Fill in: what is missing, context to gather, integration rules, deliverable instructions. Write to [root/UI/dev-output/agent-handoff-{arg1}.txt]. Make it downloadable and ready for another agent to use.'

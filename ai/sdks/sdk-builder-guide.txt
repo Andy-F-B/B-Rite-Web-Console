@@ -1,0 +1,69 @@
+SDK BUILDER GUIDE
+=================
+b-rite — AI Nav DSL
+how to create, install, and use domain sdks.
+
+---
+
+WHAT IS AN SDK
+--------------
+an sdk is an optional domain package for b-rite.
+the core language handles any AI workflow.
+an sdk packages that workflow for a specific domain (web dev, podcast, filmmaking, etc).
+
+once installed, you get ready-made functions and variables for that domain.
+you don't have to write everything from scratch.
+
+---
+
+INSTALLED SDKS
+--------------
+sdk-web        — AI-driven web app dev (Next.js, Supabase, Vercel)
+sdk-podcast    — (archived: migrated to plugin)
+sdk-film       — (archived: migrated to plugin)
+
+---
+
+HOW TO INSTALL AN SDK
+----------------------
+1. open the sdk folder: /ai/sdks/sdk-name/
+2. open sdk-name-brain-block.md
+3. copy the contents and paste into your brain.md
+4. open sdk-name/variables.br and update any paths to match your project
+5. that's it. the sdk functions are now available.
+
+call any sdk function with:
+   br{f} : { run; <functionName> } :
+
+---
+
+HOW TO CREATE A NEW SDK
+------------------------
+quickest way — use nSDK:
+   br{f} : { run; <nSDK>; "sdk-name"; 'what this sdk covers' } :
+
+this scaffolds all required files. then edit each one.
+
+for complex SDKs (template folders, setup-procedure, core-features-plan), add
+specs/, context/, tasks/, prompts/ manually. see sdk-builder.md.
+
+or manually — see sdk-builder.md for the full format guide.
+
+---
+
+SDK FOLDER STRUCTURE
+---------------------
+/ai/sdks/
+├── sdk-builder.md            — AI-readable build instructions
+├── sdk-builder-guide.txt     — this file
+├── sdk-web/                  — web app dev (handbook, Next.js, Supabase)
+└── [sdk-name]/               — other domain sdks
+
+---
+
+NOTES
+-----
+- sdks never modify the core b-rite language
+- sdks can be removed by deleting their brain block from brain.md
+- functions in an sdk use the same syntax as core functions
+- you can have multiple sdks active at once

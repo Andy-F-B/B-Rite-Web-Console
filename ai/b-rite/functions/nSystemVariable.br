@@ -1,0 +1,20 @@
+// nSystemVariable.br — create new *sv* (system variable)
+// called via: !ADMIN! *dev* br{f} : { run; <nSystemVariable>; 'variable name'; 'value or path' } :
+// REQUIRES !ADMIN! *dev* — system-level changes cannot run without admin.
+// arg1 = variable name (lowercase, camelCase if two words)
+// arg2 = value or path (wrap paths in [ ], values in " " or ' ')
+
+// if !ADMIN! *dev* not present: return ERROR — nSystemVariable requires !ADMIN! *dev*.
+
+// step 1: ask "Current version is {current}. Save to current version, or create new version {current+1}?"
+// step 2: if new version: ensure [root/archived/lang/] exists. copy version.br to [root/archived/lang/version-{old}.br]. update version.br. if save: proceed.
+// step 3: add ({arg1}) = {arg2} to variables.br [system]
+// step 4: update brain.md if it references system vars
+// step 5: update fileIntegrityScan.md system vars list
+// step 6: update lang.md current system variables table
+// step 7: add to lang-changelog.txt
+// step 8: if user-facing: update quick-start/b-rite-cheatsheet.md
+// step 9: ask "Would you like an updated HTML guide?" if yes: generate from b-rite.md + cheatsheet → [root/B-Rite-Guide.html] or [root/UI/dev-output/B-Rite-Guide.html]
+// step 10: write mLog entry
+
+return; pt; "system variable created: *sv* ({arg1}) = {arg2}"

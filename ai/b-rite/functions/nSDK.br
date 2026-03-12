@@ -1,0 +1,42 @@
+// nSDK.br — scaffold new sdk
+// called via: br{f} : { run; <nSDK>; "sdk name"; 'description' } :
+// arg1 = sdk name (lowercase, hyphenated if two words e.g. "sdk-myDomain")
+// arg2 = plain description of what this sdk covers
+// requires devKit = 1.
+
+// step 1: create folder structure:
+//   [root/ai/sdks/{arg1}/]
+//   [root/ai/sdks/{arg1}/functions/]
+
+// step 2: create stub files:
+
+// install.br
+//   br : { read; pt; 'Install Doc' } :
+//   [step-by-step install instructions — copy files, add brain block, update variables]
+
+// {arg1}-brain-block.md
+//   # {arg1} — brain.md block
+//   paste this section into brain.md when this sdk is active.
+//   [domain context, key functions, variable paths]
+
+// variables.br
+//   // {arg1} variables
+//   [system], [paths], [files], [values] blocks — stubs only
+
+// functions.br
+//   // {arg1} function index
+//   stubs only — user populates
+
+// sdk-guide.txt
+//   {arg1} SDK — user guide
+//   purpose: {arg2}
+//   installation, variables, functions, usage examples
+
+// sdk-syntax-update.md
+//   copy from [root/ai/sdks/sdk-syntax-update.md] or create with: place version update file (br-v-X-X.md) here. run !sdk|###| br : { run; <systemUpdates>; [root/ai/sdks/{arg1}/br-v-X-X.md] } :
+
+// step 3: assign next code in sdk-registry.br (001, 002, …) and add entry for new SDK
+// step 4: add entry to lang.md installed sdks table
+// step 5: write one-line log entry to mLog
+
+return; pt; "sdk scaffolded: {arg1} — edit files in [root/ai/sdks/{arg1}/] to build it out."

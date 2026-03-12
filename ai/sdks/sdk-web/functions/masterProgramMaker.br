@@ -1,0 +1,6 @@
+// masterProgramMaker.br — full workflow with agent-switch option
+// call: br : { run; <masterProgramMaker> } :
+
+read; [root/ai/sdks/sdk-web/variables.br]
+read; [root/ai/sdks/sdk-web/prompts/agent-handoff-template.txt]
+prompt; 'Master Program Maker workflow. For each section (Product/Interview, Specs, Anchors, Tasks, Migrations, UI, Backend, Security, Audit, Preview): 1) Ask: "Use current agent for [section], or switch to another agent?" 2) If current: run the phase. 3) If switch: mark section skipped, run <agentHandoff> for that section, write handoff to [root/UI/dev-output/agent-handoff-[section].txt]. 4) Continue to next section. Start with Product/Interview (specPhase).'

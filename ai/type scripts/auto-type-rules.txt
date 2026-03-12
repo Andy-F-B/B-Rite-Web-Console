@@ -1,0 +1,21 @@
+B-Rite Auto-Type Script Rules
+============================
+
+When creating new auto-type .ahk scripts via <createAutoType> or manually:
+
+HARD RULES (cannot be changed):
+- "brite" must appear in the filename (e.g. brite-auto.ahk, brite-myphrase.ahk)
+- "B-Rite" must appear in the popup when launching and when closing
+- Core mechanics must stay the same: Ctrl+Alt+B for autotype, Ctrl+Alt+Esc to exit
+- Script structure: MsgBox on start, hotkey block, escape block
+
+ONLY THIS CAN CHANGE:
+- The actual text output — i.e. what gets sent when Ctrl+Alt+B is pressed (the Send line)
+
+LITERAL OUTPUT (critical):
+- User-provided text (A2) must ALWAYS be sent as LITERAL. Use AHK Send {Text} mode so ! + ^ # etc. are typed as characters, not key modifiers.
+- The only exception: if the user explicitly explains they are providing AHK script code (e.g. {Enter}, {Tab}), then treat as script. Otherwise, treat all user text as literal output.
+- Prevents bad keybinds, accidental Alt/Shift/Ctrl triggers, or unintended actions.
+
+Template: [root/ai/type scripts/brite-auto.ahk]
+Created by: <createAutoType> — br{f} : { run; <createAutoType> } :

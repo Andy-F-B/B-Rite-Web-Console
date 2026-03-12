@@ -1,0 +1,8 @@
+// sdk-registry.br — maps SDK codes to paths
+// used by !sdk|###| syntax. read this file when resolving !sdk|###| etc.
+// format: code = [path to SDK directory]
+// code: 3-digit numeric (001, 002, …)
+// note: podcast and film migrated to plugins. see plugin-registry.br.
+
+[registry]
+003 = [root/ai/sdks/sdk-web/]

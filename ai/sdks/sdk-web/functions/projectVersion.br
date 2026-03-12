@@ -1,0 +1,8 @@
+// projectVersion.br — return project/SDK version info
+// call: *dev* !sdk|003| br : { run; <projectVersion> } :
+// no args. returns version summary in plain text.
+
+read; [root/ai/sdks/sdk-web/version.br]
+read; [root/ai/b-rite/lang/version.br]
+
+return; pt; "sdk-web {sdkWeb} | b-rite {current}"

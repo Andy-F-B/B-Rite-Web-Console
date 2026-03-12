@@ -1,0 +1,21 @@
+// debug.br — debug flow
+// called via: br{f} : { run; <debug> } :
+// no args required.
+// reads error context, cross-references brain.md rules, returns summary.
+
+read; v; (brain)
+fetch; [root/ai/specs/debug.md]
+fetch; [root/ai/specs/lessons.md]
+
+// read last known error state and cross-reference against:
+// - brain.md development rules
+// - debug.md procedure
+// - lessons.md known AI mistakes
+
+// identify:
+// 1. error source — UI, query, or database
+// 2. which brain.md rule is relevant
+// 3. whether this error appears in lessons.md
+// 4. suggested fix with minimal file scope
+
+return; pt; summary

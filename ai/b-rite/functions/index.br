@@ -1,0 +1,19 @@
+// index.br — *sf* check if something exists
+// called via: br{sf} : { run; *sf*; <index>; 'what to verify' } :
+// arg1 = interpretive context — what to verify exists (e.g. sdk installed, files present)
+
+fetch; [root/ai/b-rite/sdk-registry.br]
+fetch; [root/ai/b-rite/plugin-registry.br]
+fetch; [root/ai/b-rite/variables.br]
+fetch; [root/ai/b-rite/functions/functions.br]
+
+// interpret arg1 — sdk check, plugin check, file check, or feature check
+// if sdk: verify [root/ai/sdks/sdk-name/] exists; variables.br, functions.br, brain-block, install.br
+// if plugin: verify [root/ai/plugins/plugin-name/] exists; variables.br, functions.br, brain-block, install.br
+// if file/feature: search variables.br, functions.br, folder structure
+
+// if all found: exists — [list of verified paths]
+// if any missing: missing — [list of missing items]
+// if ambiguous: checked: [X, Y, Z]. result: [exists/missing].
+
+return; pt

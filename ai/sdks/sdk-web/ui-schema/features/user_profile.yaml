@@ -1,0 +1,29 @@
+# user_profile.yaml — per handbook 10.4 (web only)
+feature: User Profile
+platforms:
+  - web
+layout:
+  mobile:
+    type: stacked
+    avatar_size: 80px
+  tablet:
+    type: two-column
+    avatar_size: 100px
+  desktop:
+    type: sidebar
+    avatar_size: 120px
+components:
+  - Avatar
+  - Username
+  - Bio
+  - FollowButton
+  - MessageButton
+  - ActivityFeed
+actions:
+  - follow_user
+  - send_message
+  - edit_profile
+data_model:
+  source_table: profiles
+  fields:
+    - id, name, bio, avatar_url, created_at

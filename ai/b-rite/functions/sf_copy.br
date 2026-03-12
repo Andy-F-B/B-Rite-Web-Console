@@ -1,0 +1,11 @@
+// sf_copy.br — copy file or text (*sf*)
+// called via: *sf*; <copy>; "[source]"; "[destination or new name]"
+// arg1 = source path or text, arg2 = destination path or new name
+// used internally by nFunction and fT creation.
+
+// copy content of {arg1} to {arg2}
+// if {arg2} is a new name in same folder — duplicate in place with new name
+// if {arg2} is a new path — create copy at that path
+// write one-line log entry to mLog
+
+return; pt; "copied: {arg1} → {arg2}"

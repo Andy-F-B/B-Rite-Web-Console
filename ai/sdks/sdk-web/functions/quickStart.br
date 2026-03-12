@@ -1,0 +1,6 @@
+// quickStart.br — run project kickstart (handbook Phase 1-2)
+// call: *dev* !sdk|003| br : { run; <quickStart> } :
+
+read; [root/ai/sdks/sdk-web/variables.br]
+do; [root/ai/sdks/sdk-web/prompts/project-kickstart-prompt.md]
+prompt; 'Execute project kickstart. Generate full folder structure and all spec files per project-kickstart-prompt. Output to project root. Use SDK templates from specs/, context/, tasks/.'

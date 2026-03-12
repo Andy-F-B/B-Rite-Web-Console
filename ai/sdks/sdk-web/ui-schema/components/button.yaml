@@ -1,0 +1,23 @@
+# button.yaml — per handbook 10.3
+component: Button
+variants:
+  - primary
+  - secondary
+  - destructive
+  - ghost
+props:
+  label: string
+  icon: optional string
+  disabled: boolean default false
+  loading: boolean default false
+  action: event
+layout_rules:
+  mobile:
+    width: full
+    height: 48px
+  tablet:
+    width: auto
+    height: 44px
+  desktop:
+    width: auto
+    height: 40px

@@ -1,0 +1,7 @@
+// taskPhase.br — task breakdown from specs
+// call: *dev* !sdk|003| br : { run; <taskPhase>; "feature name or all" } :
+// arg1 = feature name or "all". output → [root/ai/tasks/] per handbook 6.1
+
+read; [root/ai/sdks/sdk-web/variables.br]
+do; [root/ai/sdks/sdk-web/prompts/task-phase-prompt.md]
+prompt; 'Execute task phase. Arg1: {arg1}. Follow task-phase-prompt. Output to [root/ai/tasks/].'

@@ -1,0 +1,11 @@
+// lastPrompt.br — reference most recent prompt in chat
+// called via: br{f} : { run; <lastPrompt>; 'Agent' } : or { run; <lastPrompt>; 'User' } :
+// arg1 = 'Agent' — most recent agent output | 'User' — most recent user message
+// can include additional instructions: 'Agent - Execute prompt' | 'User - summarize'
+
+// AI uses conversation context to retrieve the specified message.
+// if 'Agent - Execute prompt': treat agent's last message as a prompt and execute it
+// if 'User - ...': apply instruction to user's last message
+
+// return or execute per arg1 instruction
+return; pt

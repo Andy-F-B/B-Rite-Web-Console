@@ -1,0 +1,12 @@
+// sf_archive.br — move file or archive content to [root/archived] (*sf*)
+// called via: *dev* br{sf} : { run; *sf*; <archive>; "[file path]" } :
+// or: *dev* br{sf} : { run; *sf*; <archive>; "doc-name"; 'content to archive' } :
+// arg1 = file path to move to [root/archived] — OR — doc name for txt (when archiving text/feature)
+// arg2 = optional; when arg1 is doc name, the content to archive (interpretive or literal)
+// archived files are never called by b-rite; kept for future reference. requires *dev* or !ADMIN! *dev*.
+
+// mode 1 — arg1 is a path (contains [ or /): run *sf* <move>; arg1; [root/archived/]. create [root/archived/] if missing.
+// mode 2 — arg1 is a doc name (no path): create [root/archived/{arg1}.txt] with arg2 as content. if no arg2: ask; (A1); "content to archive"; catch; then use A1.
+// ensure [root/archived/] exists before writing.
+
+return; pt; "archived: {arg1}"

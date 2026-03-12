@@ -1,0 +1,7 @@
+// sdkWebSetup.br — returns setup instructions, ensures [root/ai/specs/] exists
+// call: *dev* !sdk|003| br : { run; <sdkWebSetup> } :
+
+read; [root/ai/sdks/sdk-web/setup-procedure.txt]
+read; [root/ai/sdks/sdk-web/variables.br]
+run; *sf*; <new>; [root/ai/specs/]
+return; pt; 'SDK-WEB SETUP: 1) Add 003 = [root/ai/sdks/sdk-web/] to sdk-registry.br. 2) Optional: paste sdk-web-brain-block.md into brain.md. 3) Invoke via *dev* !sdk|003| br : { run; <functionName> } :. 4) Full procedure: [root/ai/sdks/sdk-web/setup-procedure.txt]. 5) Core features plan: [root/ai/sdks/sdk-web/core-features-plan.txt].'

@@ -1,0 +1,15 @@
+// error_vf.br — variable or function not found
+// triggered when a called variable or function cannot be resolved.
+
+// 1. return the variable or function name that was not found
+// 2. check:
+//    - variables.br — is the variable defined under the correct block?
+//    - functions.br — is the function listed with correct name and path?
+// 3. suggest most likely cause:
+//    - name misspelled at call site
+//    - entry missing from variables.br or functions.br
+//    - wrong entry point used (br{f} called but needed br{v})
+//    - function name not lowercase
+// 4. do not continue the original script
+
+return; pt; "b-rite error — variable or function not found. check variables.br or functions.br. confirm the entry exists and is correctly named. all names must be lowercase or camelCase."

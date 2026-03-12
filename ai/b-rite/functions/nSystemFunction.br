@@ -1,0 +1,22 @@
+// nSystemFunction.br — create new *sf* (system function)
+// called via: !ADMIN! *dev* br{f} : { run; <nSystemFunction>; 'function name'; 'what it does' } :
+// REQUIRES !ADMIN! *dev* — system-level changes cannot run without admin.
+// arg1 = function name (lowercase, camelCase if two words)
+// arg2 = plain description
+
+// if !ADMIN! *dev* not present: return ERROR — nSystemFunction requires !ADMIN! *dev*.
+
+// step 1: ask "Current version is {current}. Save to current version, or create new version {current+1}?"
+// step 2: if new version: ensure [root/archived/lang/] exists. copy version.br to [root/archived/lang/version-{old}.br]. update version.br. if save: proceed.
+// step 3: create [root/ai/b-rite/functions/sf_{arg1}.br] or [root/ai/b-rite/functions/{arg1}.br] per convention
+// step 4: add *sf* <{arg1}> to functions.br
+// step 5: add (arg1) to variables.br [system] if it needs a path variable
+// step 6: update brain.md system functions list
+// step 7: update fileIntegrityScan.md system vars if new sv added
+// step 8: update lang.md current system functions table
+// step 9: add to lang-changelog.txt
+// step 10: if user-facing: update quick-start/b-rite-cheatsheet.md
+// step 11: ask "Would you like an updated HTML guide?" if yes: generate from b-rite.md + cheatsheet → [root/B-Rite-Guide.html] or [root/UI/dev-output/B-Rite-Guide.html]
+// step 12: write mLog entry
+
+return; pt; "system function created: *sf* <{arg1}> — edit [root/ai/b-rite/functions/sf_{arg1}.br]"

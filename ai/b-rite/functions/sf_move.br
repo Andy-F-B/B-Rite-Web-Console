@@ -1,0 +1,14 @@
+// sf_move.br — move file (*sf*)
+// called via: *sf*; <move>; "[source]"; "[destination]"
+// arg1 = source path, arg2 = destination path
+// moves file and updates any variables pointing to old path.
+
+// check if {arg1} is listed in br-ignore.br
+// if yes and no !ADMIN! — halt; return system warning
+
+// move file from {arg1} to {arg2}
+// scan variables.br for any v or sv pointing to {arg1}
+// if found — update to {arg2}
+// write one-line log entry to mLog
+
+return; pt; "moved: {arg1} → {arg2}"

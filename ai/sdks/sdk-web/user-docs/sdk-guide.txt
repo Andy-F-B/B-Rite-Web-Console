@@ -1,0 +1,84 @@
+SDK-WEB — USER GUIDE
+====================
+version: 0.2 (compatible with b-rite language 0.2)
+AI-driven web app development per AI App Development Handbook V2.
+Stack: Next.js + Supabase + Vercel. Web only (phones, tablets, desktop — responsive).
+
+---
+
+PURPOSE
+-------
+sdk-web encodes the handbook workflow into b-rite. Run phase functions to:
+1. Generate spec files from interview
+2. Create context anchors
+3. Break features into tasks
+4. Generate migrations
+5. Build features
+6. Audit security and checklist
+7. Generate HTML previews
+
+---
+
+INSTALLATION
+------------
+1. sdk-web lives at [root/ai/sdks/sdk-web/]
+2. Register: add 003 = [root/ai/sdks/sdk-web/] to sdk-registry.br
+3. Optional: paste sdk-web-brain-block.md into brain.md
+4. Verify: *dev* !sdk|003| br : { run; <sdkWebSetup> } :
+
+---
+
+INVOCATION
+----------
+*dev* !sdk|003| br : { run; <specPhase>; 'my app idea' } :
+*dev* !sdk|003| br : { run; <anchorPhase> } :
+*dev* !sdk|003| br : { run; <taskPhase>; "all" } :
+*dev* !sdk|003| br : { run; <migrationPhase>; "table_name" } :
+*dev* !sdk|003| br : { run; <buildPhase>; "feature_name" } :
+*dev* !sdk|003| br : { run; <auditPhase> } :
+*dev* !sdk|003| br : { run; <previewPhase>; "page"; "multi" } :
+
+---
+
+FUNCTIONS
+---------
+<sdkWebSetup>   — setup instructions
+<specPhase>     — interview → specs (arg: app idea seed)
+<anchorPhase>   — context anchors (arg: optional feature)
+<taskPhase>     — task files (arg: feature name or "all")
+<migrationPhase> — migrations (arg: table or "plan")
+<buildPhase>    — implement feature (arg: feature name)
+<auditPhase>    — security + checklist (arg: optional scope)
+<previewPhase>  — HTML previews (arg1: page; arg2: "multi" for multi-device)
+
+---
+
+FILES
+-----
+setup-procedure.txt  — folder structure, wiring, b-rite integration
+core-features-plan.txt — features + custom functions
+variables.br — paths (specs, context, templates, targets)
+functions.br — function index
+version.br — sdk-web 0.2, briteCompatible 0.2
+sdk-syntax-update.md — template for language updates
+
+---
+
+OUTPUTS
+-------
+Specs → [root/ai/specs/]
+Anchors → [root/ai/context/]
+Tasks → [root/ai/tasks/]
+Migrations → [root/db/migrations/]
+App code → [root/app/], [root/components/], [root/lib/]
+Previews → [root/UI/]
+Reports → [root/UI/dev-output/]
+
+---
+
+LANGUAGE UPDATES
+----------------
+When b-rite language evolves, apply syntax updates to sdk-web:
+1. Copy br-v-X-X.md from [root/ai/b-rite/lang/versions/] into this SDK folder
+2. Run: !sdk|003| br : { run; <systemUpdates>; [root/ai/sdks/sdk-web/br-v-X-X.md] } :
+3. systemUpdates applies the SDK section only; updates .br files if the change affects them

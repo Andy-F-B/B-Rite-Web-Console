@@ -1,0 +1,7 @@
+// anchorPhase.br — generate context anchors from specs
+// call: *dev* !sdk|003| br : { run; <anchorPhase> }; { run; <anchorPhase>; "feature name" } :
+// arg1 = optional feature name for feature-specific anchor. output → [root/ai/context/] per handbook 4.2
+
+read; [root/ai/sdks/sdk-web/variables.br]
+do; [root/ai/sdks/sdk-web/prompts/anchor-phase-prompt.md]
+prompt; 'Execute the anchor phase. First-run safety: if [root/ai/specs/product.md] does not exist, read from [root/ai/sdks/sdk-web/specs/] instead. Same for architecture, database, security. Generate four anchors to [root/ai/context/]. Feature scope (arg1): {arg1}.'

@@ -1,0 +1,42 @@
+# design_tokens.yaml — web breakpoints only
+# Source: AI App Development Handbook 10.2
+# Reference when generating any UI
+
+colors:
+  primary: "#2563eb"
+  secondary: "#10b981"
+  background: "#ffffff"
+  surface: "#f3f4f6"
+  text: "#111827"
+  muted: "#6b7280"
+  destructive: "#ef4444"
+
+typography:
+  font_family: Inter
+  scale:
+    mobile: 14
+    tablet: 16
+    desktop: 18
+  weights:
+    body: 400
+    medium: 500
+    bold: 700
+
+spacing:
+  xs: 4
+  sm: 8
+  md: 16
+  lg: 24
+  xl: 40
+  2xl: 64
+
+border_radius:
+  sm: 4
+  md: 8
+  lg: 16
+
+breakpoints:
+  mobile: 600
+  tablet: 1024
+  laptop: 1440
+  desktop: 1920

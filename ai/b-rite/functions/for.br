@@ -1,0 +1,15 @@
+// for.br — apply prior action to target
+// called via: br{f} : { run; <for>; "target" } :
+// arg1 = the subject or target the prior request applies to
+// use when performing the prior action with a specific target
+
+// read context of prior block or instruction
+// apply that action with {arg1} as the subject
+
+// example: search for X — <for> would take "X" as arg1 and apply the search
+// example: write for Y — <for> would take "Y" as arg1 and scope the write to Y
+
+// if prior action cannot be inferred — ask; (A1); "what action should be applied to {arg1}?"
+// catch
+
+return; pt
