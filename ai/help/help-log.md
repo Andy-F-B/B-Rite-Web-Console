@@ -21,7 +21,18 @@ if the same issue appears 3+ times — consider adding a dedicated error handler
 
 ---
 
+### 2025-03-12 — Vercel build error
 
+**date:** 2025-03-12
+**context note from user:** error building in vercel
+**questions asked:** none (pre-satisfied by context)
+**questions skipped:** A1 (deploy goal), A3 (build failed)
+**diagnosis:** Most likely missing env vars in Vercel. lib/env.ts throws if NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY are missing/placeholder.
+**solution provided:** Add both vars to Vercel → Settings → Environment Variables; enable for Production, Preview, Development; redeploy.
+**corrected script:** —
+**resolved:** unclear (awaiting user confirmation)
+**pattern flag:** —
+**notes:** Common Next.js + Supabase deployment pattern.
 
 ---
 

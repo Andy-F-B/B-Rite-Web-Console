@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { Suspense, useState, useEffect } from 'react'
 import { ScriptEditor } from '@/components/ScriptEditor'
 import { createClient } from '@/lib/supabase'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -11,7 +11,7 @@ const AUTO_TYPE_SCRIPTS = [
   { id: 'help', name: 'Help', content: 'br{sf} : { run; *sf*; <help> } :' },
 ]
 
-export default function ConsolePage() {
+function ConsoleContent() {
   const [selectedScript, setSelectedScript] = useState('default')
   const [editorContent, setEditorContent] = useState(AUTO_TYPE_SCRIPTS[0].content)
   const router = useRouter()
@@ -82,5 +82,13 @@ export default function ConsolePage() {
       </div>
       <ScriptEditor content={editorContent} onContentChange={setEditorContent} onSave={handleSave} />
     </main>
+  )
+}
+
+export default function ConsolePage() {
+  return (
+    <Suspense fallback={<main><p style={{ padding: 24 }}>Loading...</p></main>}>
+      <ConsoleContent />
+    </Suspense>
   )
 }

@@ -40,3 +40,8 @@
 - Specs filled from web-app-summary.txt
 - UI branding updated to "B-Rite Console" per brite-console-preview.html
 - Colors/layout already matched (globals.css)
+
+## Build Fixes (2025-03-12)
+- lib/supabase-server.ts, middleware.ts: typed cookiesToSet (fix implicit any)
+- app/console/page.tsx: useSearchParams wrapped in Suspense boundary
+- Build: PASS
