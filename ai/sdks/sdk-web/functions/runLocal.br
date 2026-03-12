@@ -1,0 +1,6 @@
+// runLocal.br — run app locally for testing
+// call: *dev* !sdk|003| br : { run; <runLocal> } :
+
+read; [root/ai/sdks/sdk-web/variables.br]
+
+return; pt; "Run locally: npm install && npm run dev. Open http://localhost:3000. Ensure .env.local has NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY."

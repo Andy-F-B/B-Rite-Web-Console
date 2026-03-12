@@ -3,4 +3,9 @@
 
 read; [root/ai/sdks/sdk-web/variables.br]
 read; [root/ai/sdks/sdk-web/setup-procedure.txt]
-prompt; 'Execute full pipeline per setup-procedure section 6. Run in order: 1) specPhase (ask for app idea if not provided), 2) anchorPhase, 3) taskPhase "all", 4) migrationPhase "plan" then per-table, 5) buildPhase per feature, 6) auditPhase, 7) previewPhase "main" "multi". Execute each phase. After each, confirm before next. First-run: use SDK templates when target files missing.'
+
+ask; opt; (B1); "[B1] — Reference directories of files, docs, or folders to use as context. Format: [B1] - [path/to/file.or.folder] Brief explanation (e.g. I want to incorporate the same style of UI). If omitted, agent interprets and uses as guideline."
+
+catch
+
+prompt; 'Execute full pipeline per setup-procedure section 6. User reference (B1): {B1}. If B1 provided: read those paths and incorporate per user instruction. Run in order: 0) npmInstall — run <npmInstall> first (ensures deps installed). 1) specPhase (A1/A2 choice), 2) anchorPhase, 3) taskPhase "all", 4) migrationPhase "plan" then per-table, 5) buildPhase per feature, 6) auditPhase, 7) previewPhase "main" "multi". 8) Optional: ask if user wants to push to GitHub; if yes, run <gitSetup>. Execute each phase. After each, confirm before next. First-run: use SDK templates when target files missing.'

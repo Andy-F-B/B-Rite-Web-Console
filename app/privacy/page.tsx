@@ -7,7 +7,7 @@ export default function PrivacyPage() {
       <section style={{ marginBottom: 24 }}>
         <h3 style={{ marginBottom: 12, color: 'var(--accent)' }}>Information We Collect</h3>
         <p style={{ color: 'var(--text)', lineHeight: 1.6 }}>
-          B-Rite Console collects account information (email, name) when you sign up. Scripts and saved items you create are stored and associated with your account.
+          This app collects account information (email, name) when you sign up. Scripts and saved items you create are stored and associated with your account.
         </p>
       </section>
 

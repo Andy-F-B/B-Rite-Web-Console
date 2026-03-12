@@ -1,8 +1,10 @@
 # PRODUCT SPEC
 
-This application is:
+<!-- Filled from B1: web-app-summary.txt -->
 
-**B-Rite Console** — A web-based IDE for writing, validating, and managing b-rite scripts. Sleek, tech-focused, black console aesthetic.
+## B-Rite Console
+
+A web-based IDE for writing, validating, and managing b-rite scripts. Sleek, tech-focused, black console aesthetic.
 
 Users can:
 - Create account and sign in

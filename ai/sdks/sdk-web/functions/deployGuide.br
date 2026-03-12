@@ -1,0 +1,15 @@
+// deployGuide.br — deployment walkthrough (git, Vercel, Supabase)
+// call: *dev* !sdk|003| br : { run; <deployGuide> } :
+
+read; [root/ai/sdks/sdk-web/variables.br]
+
+return; pt; "DEPLOY GUIDE — Steps: 1) Push to Git. 2) Connect Vercel. 3) Create Supabase project, run migrations. 4) Add env vars to Vercel. 5) Redeploy."
+
+ask; (A1); "Supabase Project URL (from Project Settings → API):"
+ask; (A2); "Supabase anon/public key (from Project Settings → API):"
+
+catch
+
+// on catch: create .env.example with A1 and A2 in correct format
+prompt; 'Create [root/.env.example] with exact content (use values from catch): Line 1: NEXT_PUBLIC_SUPABASE_URL={A1} Line 2: NEXT_PUBLIC_SUPABASE_ANON_KEY={A2} No quotes around values. One variable per line.'
+return; pt; "Created [root/.env.example]. Copy to .env.local for local dev. Add same vars to Vercel → Settings → Environment Variables. Run migrations in Supabase SQL Editor: db/migrations/001_initial_schema.sql, 002_*.sql."

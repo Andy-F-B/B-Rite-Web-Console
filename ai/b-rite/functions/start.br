@@ -64,10 +64,11 @@ catch; strict
 // 1. check A11 — if "existing project; information correct" (and no change list):
 //    read variables.br, options.br, brain.md. return summary of current config. no file edits. stop.
 
-// 2. if "existing project" with change list: only apply the listed changes. leave all other answers as current file values.
+// 2. if "existing project" with change list: only apply the listed changes. leave all other answers as current file values. if A2 (project name) is in the change list, also run a2 (update UI previews).
 
 // 3. if new setup (A11 blank or "new setup"):
 //    a. variables.br — root = [{A1}], projectName = "{A2}" (if A2 = same, use A1)
+//    a2. UI previews — when projectName changes: update [root/UI/mobile_preview.html] and [root/UI/responsive_preview.html]. Replace all instances of the current app name in <title> and <h1> (e.g. "b-rite-web-app" or "B-Rite-Web-App") with the new project name as slug (spaces→hyphens, e.g. "My App" → "my-app"). Update both files if they exist.
 //    b. options.br — interMode, devKit (yes→1), guessingMode, confirmDelete, logActions, returnType, catchMode
 //    c. if A10 != none: for each item (comma or space separated), trim whitespace. if starts with sdk-: run *dev* br{sf} : { run; *sf*; <install>; [root/ai/sdks/{item}/install.br] } :. if starts with plugin-: run *dev* br{sf} : { run; *sf*; <install>; [root/ai/plugins/{item}/install.br] } :
 //    d. if A12 = yes: run *sf* <help>

@@ -116,6 +116,18 @@ action: run
 args: none
 notes: launches [root/ai/type scripts/brite-webSDK.ahk]. returns "Use ctrl+alt+esc to close the program".
 
+*sf* <autoScriptAdminWebSDK>
+path: [root/ai/b-rite/functions/autoScriptAdminWebSDK.br]
+action: run
+args: none
+notes: launches [root/ai/type scripts/brite-webSDK-ADMIN-auto.ahk]. returns "Use ctrl+alt+esc to close the program".
+
+*sf* <autoScriptDevWebSDK>
+path: [root/ai/b-rite/functions/autoScriptDevWebSDK.br]
+action: run
+args: none
+notes: launches [root/ai/type scripts/brite-webSDK-dev.auto.ahk]. returns "Use ctrl+alt+esc to close the program".
+
 // ─────────────────────────────────────────
 // core functions
 // ─────────────────────────────────────────

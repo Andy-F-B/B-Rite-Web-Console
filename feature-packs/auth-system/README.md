@@ -1,16 +1,35 @@
 # Auth System Feature Pack
 
-Reusable auth module for B-Rite Web App.
+Reusable auth module. Sign up, sign in, profile management via Supabase Auth.
 
-## Contents
+## Plug-In Instructions
 
-- Sign up / sign in flows
-- Profile management
-- Session handling via Supabase Auth
+### 1. Components (already in project if using quickStart)
 
-## Usage
+- `SignInForm`, `SignUpForm`, `ProfileForm`, `SignOutButton`
+- Location: `components/`
 
-Copy components and lib functions into your project. Configure Supabase env vars.
+### 2. Pages
+
+- `/login` — SignInForm
+- `/signup` — SignUpForm  
+- `/profile` — ProfileForm (protected)
+
+### 3. Lib
+
+- `lib/supabase.ts` — browser client
+- `lib/supabase-server.ts` — server client
+- `lib/schemas/profile.schema.ts` — Zod validation
+
+### 4. Database
+
+- `profiles` table with RLS (SELECT/UPDATE own row)
+- Migration: `db/migrations/001_initial_schema.sql`
+
+### 5. Env
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
 ## Dependencies
 

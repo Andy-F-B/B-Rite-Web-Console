@@ -1,23 +1,29 @@
 # UI SPEC
 
+<!-- Filled from B1: web-app-summary.txt, brite-console-preview.html -->
+
 ## Pages
-- /app/page.tsx — Home / Console landing
-- /app/login/page.tsx — Sign in
-- /app/signup/page.tsx — Sign up
-- /app/profile/page.tsx — User profile
-- /app/console/page.tsx — Main editor (b-rite script)
-- /app/downloads/page.tsx — Downloads (template, SDK, plugins)
-- /app/saved/page.tsx — User saved scripts/items
-- /app/privacy/page.tsx — Privacy policy
+- / — Landing, nav to Editor/Downloads
+- /login — Sign in form
+- /signup — Sign up form
+- /profile — User profile (protected)
+- /console — Main b-rite script editor
+- /downloads — Template, SDK, plugin install section
+- /saved — User saved scripts
+- /privacy — Privacy policy
 
 ## Components
-- BRLogo — simple BR logo
-- ScriptEditor — b-rite editor with syntax validation, auto-format, red underlines
-- AutoTypeSelector — choose pre-loaded auto-type script
-- DownloadsSection — template, SDK, plugin install
-- NavBar — console-style nav
+- BRLogo — Simple BR logo (green on black)
+- ConsoleNav — Top nav (Editor, Downloads, Saved, Privacy, Sign in/up)
+- ScriptEditor — Textarea with Format, Auto-fill, Save; syntax validation; error list
+- SignInForm, SignUpForm, ProfileForm, SignOutButton
+- AutoTypeSelector — Dropdown for pre-loaded scripts (Default, Task, Help)
 
-## Design
-- Black console-like cursor aesthetic
-- Sleek, tech-focused, simple
-- Monospace font for editor
+## Design (from B1 preview)
+- Black console (#0a0a0a), green accent (#22c55e)
+- Monospace (JetBrains Mono)
+- Minimal, tech-focused
+- Surface: #141414, border: #262626, muted: #737373, error: #ef4444
+
+## Navigation
+Main nav: BR logo | B-Rite Console | Editor | Downloads | Saved | Privacy | Sign in | Sign up

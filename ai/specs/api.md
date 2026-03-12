@@ -1,17 +1,13 @@
 # API SPEC
 
-<!-- Template: install to [root/ai/specs/api.md] -->
-<!-- Source: AI App Development Handbook 2.6 -->
+<!-- Filled from B1: web-app-summary.txt -->
 
-List all API actions as function signatures.
+## API Routes
+- /api/downloads/template — B-Rite script template .br
+- /api/downloads/sdk — Web SDK readme
 
+## Lib functions
 - getProfile(id) → profile
 - updateProfile(id, fields) → profile
-- createScript(userId, title, content) → script
-- listScripts(userId) → script[]
-- createSavedItem(userId, type, name, content?) → saved_item
-- listSavedItems(userId, type?) → saved_item[]
-- create[Entity](params) → entity
-- update[Entity](id, fields) → entity
-- delete[Entity](id) → void
-- list[Entities](filter?) → entity[]
+- validateBrite(content) → validation result
+- formatBrite(content) → formatted string

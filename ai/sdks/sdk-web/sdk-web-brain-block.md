@@ -13,7 +13,7 @@ spec templates live in sdk-web/specs/, context/, tasks/. outputs go to [root/ai/
 
 key functions:
 - <sdkWebSetup>   — how to install and connect sdk-web to b-rite
-- <specPhase>     — interview → specs
+- <specPhase>     — A1 interview or A2 paste prompt → specs
 - <anchorPhase>   — context anchors
 - <taskPhase>     — task breakdown
 - <migrationPhase> — migrations
@@ -22,6 +22,11 @@ key functions:
 - <previewPhase>  — HTML previews → [root/UI/]
 - <runSinglePhase> — run one phase by name
 - <runPhases>     — run selected phases
-- <runFullPipeline> — run all phases in order
-- <masterProgramMaker> — full workflow with agent-switch
+- <runFullPipeline> — all phases, B1 ref option
+- <masterProgramMaker> — agent-switch per section, B1 ref option
 - <agentHandoff>  — generate handoff when user declines agent
+- <deployGuide>   — Git, Vercel, Supabase walkthrough
+- <createFeaturePack> — scaffold feature pack
+- <runLocal> — run app locally (npm run dev)
+- <npmInstall>   — run npm install in project root (once per project)
+- <gitSetup>     — initial git setup + push (provide remote URL)

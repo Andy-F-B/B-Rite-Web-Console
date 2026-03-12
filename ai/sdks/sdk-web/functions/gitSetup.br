@@ -1,0 +1,14 @@
+// gitSetup.br — initial git setup and push to remote
+// call: *dev* !sdk|003| br : { run; <gitSetup> } :
+// user creates repo on GitHub first (empty), then provides the clone URL.
+
+read; [root/ai/sdks/sdk-web/variables.br]
+
+return; pt; "GIT SETUP — Create an empty repo on GitHub first. Copy the clone URL (https or ssh). Then run this function and paste it."
+ask; (A1); "Remote URL — the Git clone URL (e.g. https://github.com/username/repo-name.git):"
+
+catch
+
+// on catch: execute git init, remote add, add, commit, push
+prompt; 'Execute in [root] in order: 1) If .git does not exist: git init. 2) If remote origin does not exist: git remote add origin {A1}. Else: git remote set-url origin {A1}. 3) git add . 4) git status. 5) If there are changes to commit: git commit -m "Initial commit from template". 6) git push -u origin main (or master if that is the default branch). If push fails (auth, reject, no upstream): report the error. Suggest: user may need to authenticate (gh auth, SSH keys, or token), or ensure repo exists and is empty on GitHub.'
+return; pt; "Git setup complete. Remote: {A1}. If push failed, run manually: git push -u origin main. Ensure you are authenticated (GitHub CLI, SSH, or token)."

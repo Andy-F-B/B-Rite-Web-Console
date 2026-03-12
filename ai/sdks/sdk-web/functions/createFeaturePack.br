@@ -1,0 +1,17 @@
+// createFeaturePack.br — scaffold new feature pack in feature-packs/
+// call: *dev* !sdk|003| br : { run; <createFeaturePack> } :
+
+read; [root/ai/sdks/sdk-web/variables.br]
+
+ask; (A1); "Feature pack name (e.g. auth-system, notifications, teams). Use kebab-case."
+ask; (A2); "Brief description of what this feature pack does."
+
+catch; strict
+
+// create [root/feature-packs/{A1}/] with:
+// - README.md (name, description, usage)
+// - features.md (components, lib, pages, RLS notes)
+// - .gitkeep if needed
+
+prompt; 'Create feature pack at [root/feature-packs/{A1}/]. Create README.md with: # {A1} — {A2}. Usage: Copy components and lib into project. Create features.md with: ## Components, ## Lib, ## Pages, ## RLS. Use kebab-case for folder name.'
+return; pt; "Created [root/feature-packs/{A1}/] with README.md and features.md. Add components and lib as you build."

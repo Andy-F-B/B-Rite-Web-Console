@@ -34,7 +34,7 @@ returns boolean as $$
   select role = 'admin' from public.profiles where id = auth.uid();
 $$ language sql security definer stable;
 
--- B-Rite Console tables
+-- scripts, saved_items, plugins tables
 create table scripts (
   id uuid primary key default gen_random_uuid(),
   user_id uuid references auth.users(id) on delete cascade not null,

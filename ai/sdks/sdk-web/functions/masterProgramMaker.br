@@ -3,4 +3,9 @@
 
 read; [root/ai/sdks/sdk-web/variables.br]
 read; [root/ai/sdks/sdk-web/prompts/agent-handoff-template.txt]
-prompt; 'Master Program Maker workflow. For each section (Product/Interview, Specs, Anchors, Tasks, Migrations, UI, Backend, Security, Audit, Preview): 1) Ask: "Use current agent for [section], or switch to another agent?" 2) If current: run the phase. 3) If switch: mark section skipped, run <agentHandoff> for that section, write handoff to [root/UI/dev-output/agent-handoff-[section].txt]. 4) Continue to next section. Start with Product/Interview (specPhase).'
+
+ask; opt; (B1); "[B1] — Reference directories of files, docs, or folders to use as context. Format: [B1] - [path/to/file.or.folder] Brief explanation (e.g. I want to incorporate the same style of UI). If omitted, agent interprets and uses as guideline."
+
+catch
+
+prompt; 'Master Program Maker workflow. User reference (B1): {B1}. If B1 provided: read those paths and incorporate per user instruction. First: run <npmInstall> to ensure dependencies are installed. Then for each section (Product/Interview, Specs, Anchors, Tasks, Migrations, UI, Backend, Security, Audit, Preview): 1) Ask: "Use current agent for [section], or switch to another agent?" 2) If current: run the phase. 3) If switch: mark section skipped, run <agentHandoff> for that section, write handoff to [root/UI/dev-output/agent-handoff-[section].txt]. 4) Continue to next section. Start with Product/Interview (specPhase). After Preview: ask if user wants to push to GitHub; if yes, run <gitSetup>.'

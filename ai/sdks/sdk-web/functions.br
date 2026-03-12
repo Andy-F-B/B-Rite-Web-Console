@@ -91,3 +91,33 @@ path: [root/ai/sdks/sdk-web/functions/projectVersion.br]
 action: run
 args: none
 notes: return sdk-web and b-rite version info.
+
+<deployGuide>
+path: [root/ai/sdks/sdk-web/functions/deployGuide.br]
+action: run
+args: none
+notes: deployment walkthrough. asks for Supabase URL and anon key, writes .env.example with correct format. use after feature is ready.
+
+<createFeaturePack>
+path: [root/ai/sdks/sdk-web/functions/createFeaturePack.br]
+action: run
+args: none
+notes: scaffold new feature pack in feature-packs/. asks for name and description. creates README.md and features.md.
+
+<runLocal>
+path: [root/ai/sdks/sdk-web/functions/runLocal.br]
+action: run
+args: none
+notes: instructions to run app locally (npm run dev). use to test UI without hosting.
+
+<npmInstall>
+path: [root/ai/sdks/sdk-web/functions/npmInstall.br]
+action: run
+args: none
+notes: run npm install in project root. execute in terminal. once per project after clone or when deps change.
+
+<gitSetup>
+path: [root/ai/sdks/sdk-web/functions/gitSetup.br]
+action: run
+args: none
+notes: initial git setup and push. asks for remote URL. runs init, remote add, add, commit, push. user creates empty repo on GitHub first.

@@ -1,0 +1,7 @@
+// npmInstall.br — install npm dependencies for the project
+// call: *dev* !sdk|003| br : { run; <npmInstall> } :
+
+read; [root/ai/sdks/sdk-web/variables.br]
+
+prompt; 'Execute in terminal from [root]: npm install. Confirm when complete. If errors (e.g. network, node version), report and suggest user run manually. Required once per project after clone or when dependencies change.'
+return; pt; "npm install executed. Check output above for success or errors."

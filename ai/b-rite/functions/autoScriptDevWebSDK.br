@@ -1,0 +1,5 @@
+// autoScriptDevWebSDK.br — *sf* launch brite-webSDK-dev.auto.ahk
+// called via: br{sf} : { run; *sf*; <autoScriptDevWebSDK> } :
+// AI: execute [root/ai/type scripts/brite-webSDK-dev.auto.ahk] via Start-Process or shell
+
+return; pt; "Use ctrl+alt+esc to close the program."

@@ -42,3 +42,6 @@ spec, anchor, task, migration, build, audit, preview
 [files]
 setupProcedure = [root/ai/sdks/sdk-web/setup-procedure.txt]
 coreFeaturesPlan = [root/ai/sdks/sdk-web/core-features-plan.txt]
+deployGuide = [root/ai/sdks/sdk-web/functions/deployGuide.br]
+npmInstall = [root/ai/sdks/sdk-web/functions/npmInstall.br]
+gitSetup = [root/ai/sdks/sdk-web/functions/gitSetup.br]

@@ -171,6 +171,7 @@ e) FUNCTIONS
 
 When creating a NEW web project from scratch:
 
+0. Run <npmInstall> — ensure dependencies installed (once per project)
 1. Run <specPhase> with app idea → generates [root/ai/specs/] spec files
 2. Run <anchorPhase> → generates [root/ai/context/] anchors
 3. Run <taskPhase> for each feature → generates [root/ai/tasks/] task files
@@ -178,6 +179,7 @@ When creating a NEW web project from scratch:
 5. Run <buildPhase> → generates app/, components/, lib/
 6. Run <auditPhase> → security and checklist verification
 7. Run <previewPhase> → generates [root/UI/] HTML previews
+8. (Optional) Run <gitSetup> — push to GitHub (provide remote URL)
 
 Templates in sdk-web/specs/, context/, tasks/ are used as defaults when the 
 target folders are empty. Once a project has its own specs, the SDK reads 

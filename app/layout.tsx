@@ -4,7 +4,7 @@ import { ConsoleNav } from '@/components/ConsoleNav'
 
 export const metadata: Metadata = {
   title: 'B-Rite Console',
-  description: 'Write, validate, and manage b-rite scripts',
+  description: 'Write, validate, and manage b-rite scripts. Auto-formatting, syntax validation, and downloads for the official template and SDK.',
 }
 
 export default function RootLayout({

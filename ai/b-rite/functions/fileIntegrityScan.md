@@ -26,7 +26,7 @@
 [root/ai/b-rite/br-ignore.br] — [protected] [protected-tokens]
 
 ## system vars (variables.br [system])
-root error_nf error_vf error mLog options brIgnore lang install sdkRegistry pluginRegistry directory index archive fileIntegrity autoScript autoScriptAdmin autoScriptDev autoScriptWebSDK systemVersion systemUpdates
+root error_nf error_vf error mLog options brIgnore lang install sdkRegistry pluginRegistry directory index archive fileIntegrity autoScript autoScriptAdmin autoScriptDev autoScriptWebSDK autoScriptAdminWebSDK autoScriptDevWebSDK systemVersion systemUpdates
 
 ## paths (variables.br [paths])
 tasks specs migrations functions brite sdks plugins archived typeScripts versions

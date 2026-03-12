@@ -4,4 +4,6 @@
 
 read; [root/ai/sdks/sdk-web/variables.br]
 do; [root/ai/sdks/sdk-web/prompts/spec-phase-prompt.md]
-prompt; 'Execute the spec phase. App idea seed (arg1): {arg1}. If arg1 is empty, conduct full interview. If arg1 provided, use as seed and generate specs. First-run: use templates from [root/ai/sdks/sdk-web/specs/] when target files missing. Output to [root/ai/specs/].'
+ask; (A0); "Would you like to [A1] — Have the agent interview you for the specs, idea and planning? or [A2] — Paste or type an existing prompt and have the agent auto-fill the information? Respond with [A1] - yes or [A2] and paste your prompt."
+catch
+prompt; 'Execute the spec phase. User chose (A0): {A0}. If A1: conduct full interview per handbook. If A2: parse pasted prompt and generate specs from it. App idea seed (arg1): {arg1}. First-run: use templates from [root/ai/sdks/sdk-web/specs/] when target files missing. Output to [root/ai/specs/].'

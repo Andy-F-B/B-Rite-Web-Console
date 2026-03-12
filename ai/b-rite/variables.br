@@ -23,6 +23,8 @@ autoScript = [root/ai/b-rite/functions/autoScript.br]
 autoScriptAdmin = [root/ai/b-rite/functions/autoScriptAdmin.br]
 autoScriptDev = [root/ai/b-rite/functions/autoScriptDev.br]
 autoScriptWebSDK = [root/ai/b-rite/functions/autoScriptWebSDK.br]
+autoScriptAdminWebSDK = [root/ai/b-rite/functions/autoScriptAdminWebSDK.br]
+autoScriptDevWebSDK = [root/ai/b-rite/functions/autoScriptDevWebSDK.br]
 systemVersion = [root/ai/b-rite/functions/systemVersion.br]
 systemUpdates = [root/ai/b-rite/functions/systemUpdates.br]
 
@@ -52,6 +54,6 @@ lastPrompt = [root/ai/b-rite/functions/lastPrompt.br]
 versionFile = [root/ai/b-rite/lang/version.br]
 
 [values]
-projectName = "B-Rite Web App"
+projectName = "B-Rite-Web-App"
 
 // user-defined variables added below this line

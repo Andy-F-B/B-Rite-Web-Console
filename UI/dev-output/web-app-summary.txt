@@ -1,0 +1,72 @@
+================================================================================
+WEB APP SUMMARY — B-Rite Console
+================================================================================
+
+WHAT YOU'RE BUILDING
+-------------------
+B-Rite Console — A web-based IDE for writing, validating, and managing b-rite scripts. Sleek, tech-focused, black console aesthetic.
+
+Users can:
+- Create account and sign in
+- Write b-rite scripts in an editor with auto-formatting, auto-fill, capitalization fixes
+- See syntax errors underlined in red (code-based validation, not LLM)
+- Choose pre-loaded auto-type scripts
+- Download: official B-Rite script template, v2 web SDK, install plugins
+- Save scripts, SDKs, plugins, and outputs to their account
+
+================================================================================
+UI COMPONENTS
+================================================================================
+
+Pages:
+- / (home) — Landing, nav to Editor/Downloads
+- /login — Sign in form
+- /signup — Sign up form
+- /profile — User profile (protected)
+- /console — Main b-rite script editor
+- /downloads — Template, SDK, plugin install section
+- /saved — User saved scripts
+- /privacy — Privacy policy
+
+Components:
+- BRLogo — Simple BR logo (green on black)
+- ConsoleNav — Top nav (Editor, Downloads, Saved, Privacy, Sign in/up)
+- ScriptEditor — Textarea with Format, Auto-fill, Save; syntax validation; error list
+- SignInForm, SignUpForm, ProfileForm, SignOutButton
+- AutoTypeSelector — Dropdown for pre-loaded scripts (Default, Task, Help)
+
+Design:
+- Black console (#0a0a0a), green accent (#22c55e)
+- Monospace (JetBrains Mono)
+- Minimal, tech-focused
+
+================================================================================
+BACKEND COMPONENTS
+================================================================================
+
+Lib:
+- lib/supabase.ts — Browser Supabase client
+- lib/supabase-server.ts — Server Supabase client
+- lib/profile.ts — getProfile, updateProfile
+- lib/brite-parser.ts — validateBrite, formatBrite (code-based syntax check)
+- lib/schemas/profile.schema.ts — Zod for profile updates
+- lib/database.types.ts — Generated types
+
+API Routes:
+- /api/downloads/template — B-Rite script template .br
+- /api/downloads/sdk — Web SDK readme
+
+Database (Supabase):
+- profiles — id, email, name, role, avatar
+- scripts — user_id, title, content
+- saved_items — user_id, type, name, content, metadata
+- plugins — name, description, install_path (catalog)
+
+Auth:
+- Supabase Auth (email/password)
+- RLS on all tables
+- handle_new_user trigger, is_admin() helper
+
+================================================================================
+SOURCE: ai/specs/product.md, ui.md, api.md, database.md; UI/dev-output/brite-console-preview.html
+================================================================================

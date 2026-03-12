@@ -1,4 +1,4 @@
--- B-Rite Console: scripts, saved_items, plugins
+-- scripts, saved_items, plugins
 
 create table scripts (
   id uuid primary key default gen_random_uuid(),
