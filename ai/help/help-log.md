@@ -49,6 +49,20 @@ if the same issue appears 3+ times — consider adding a dedicated error handler
 
 ---
 
+### 2025-03-12 — Configuration Error persists after Vercel env setup
+
+**date:** 2025-03-12
+**context note from user:** Error from opening console on site again; Configuration Error — Missing NEXT_PUBLIC_SUPABASE_URL. User has added vars to Vercel for all envs and redeployed; error persists.
+**questions asked:** none (pre-satisfied)
+**questions skipped:** A1 (open console), A3 (config error), A4 (console page, env), A5 (recent changes)
+**diagnosis:** NEXT_PUBLIC_* vars are inlined at build time. A normal redeploy may reuse cached build artifacts. If vars were added after the first deploy, or if cache wasn't cleared, the client bundle can still have undefined values.
+**solution provided:** 1) Visit /api/debug-config on the live site — if hasUrl/hasKey are false, vars aren't reaching the server; fix Vercel env names/scope. 2) If hasUrl/hasKey are true but console still fails, the client bundle was built without vars — Vercel → Deployments → ⋮ on latest deploy → Redeploy → enable "Clear build cache". 3) Confirm which URL you're testing (Production vs Preview) and that vars exist for that environment.
+**resolved:** unclear
+**pattern flag:** —
+**notes:** Recurring env issue. debug-config API added for this scenario.
+
+---
+
 ### [entry template]
 
 **date:** yyyy-mm-dd

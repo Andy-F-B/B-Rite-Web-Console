@@ -1,0 +1,16 @@
+# Bug Log
+
+This file only generates or updates when the User specifically instructs the agent to edit the bug log or add something to it.
+
+---
+
+## Entry — 2025-03-12
+
+**<commit> arg1 interpretation**
+
+When using `run; <commit>; 'generate'`, the agent took the literal string "generate" as the commit message instead of interpreting the content inside the single quotes.
+
+- `"generate"` (double quotes) = literal — correctly outputs the word "generate" as the commit message.
+- `'generate'` (single quotes) = interpretive — should be expanded by the AI before use. The user likely intended "generate" to mean "generate an appropriate commit message based on the staged changes" rather than the literal word.
+
+**Note:** Update commit.br or the b-rite spec so that when arg1 is an interpretive string like `'generate'`, the agent generates a commit message from the diff/changes instead of using the literal expansion.
