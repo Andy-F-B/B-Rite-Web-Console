@@ -3,40 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>B-Rite-Web-App — Mobile Preview</title>
+  <title>B-Rite Console — Mobile Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #2563eb;
-      --secondary: #10b981;
-      --background: #ffffff;
-      --surface: #f3f4f6;
-      --text: #111827;
-      --muted: #6b7280;
-      --font: Inter, system-ui, sans-serif;
-      --radius-sm: 4px;
-      --radius-md: 8px;
-      --spacing-md: 16px;
-      --spacing-lg: 24px;
+      --bg: #0a0a0a;
+      --surface: #141414;
+      --border: #262626;
+      --text: #e5e5e5;
+      --muted: #737373;
+      --accent: #22c55e;
+      --font: 'JetBrains Mono', monospace;
     }
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: var(--font); background: var(--background); max-width: 390px; margin: 0 auto; min-height: 100vh; padding: var(--spacing-lg); }
-    nav { display: flex; flex-wrap: wrap; gap: var(--spacing-md); margin-bottom: var(--spacing-lg); padding: var(--spacing-md); background: var(--surface); border-radius: var(--radius-md); }
-    nav a { color: var(--primary); text-decoration: none; font-weight: 500; }
-    nav a:hover { text-decoration: underline; }
-    h1 { font-size: 1.25rem; margin: 0 0 var(--spacing-md); color: var(--text); }
-    p { color: var(--muted); margin: 0 0 var(--spacing-md); font-size: 14px; }
+    body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--text); max-width: 390px; margin: 0 auto; min-height: 100vh; padding: 24px; }
+    nav { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; padding: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; }
+    nav a { color: var(--text); text-decoration: none; }
+    nav a:hover { color: var(--accent); }
+    h1 { font-size: 1.25rem; margin: 0 0 16px; }
+    p { color: var(--muted); margin: 0 0 16px; font-size: 14px; }
   </style>
 </head>
 <body>
   <nav>
-    <a href="/">Home</a>
+    <a href="/">B-Rite Console</a>
+    <a href="/console">Editor</a>
+    <a href="/downloads">Downloads</a>
+    <a href="/saved">Saved</a>
+    <a href="/privacy">Privacy</a>
     <a href="/login">Sign in</a>
     <a href="/signup">Sign up</a>
-    <a href="/profile">Profile</a>
   </nav>
   <main>
-    <h1>B-Rite-Web-App</h1>
-    <p>Welcome. Sign in or sign up to manage your profile.</p>
+    <h1>B-Rite Console</h1>
+    <p>Write, validate, and manage b-rite scripts. Auto-formatting, syntax validation, and downloads for the official template and SDK.</p>
   </main>
 </body>
 </html>
