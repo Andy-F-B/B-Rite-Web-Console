@@ -21,6 +21,19 @@ if the same issue appears 3+ times — consider adding a dedicated error handler
 
 ---
 
+### 2025-03-12 — Editor page client-side exception
+
+**date:** 2025-03-12
+**context note from user:** It built, but when I click the Editor button, Application error: a client-side exception has occurred. Has the page been created?
+**questions asked:** none (pre-satisfied)
+**diagnosis:** createClient() calls getSupabaseConfig() which throws if NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY are missing. On Vercel, if env vars not set, the page crashes with generic client-side error.
+**solution provided:** 1) Add env vars to Vercel → Settings → Environment Variables; redeploy. 2) Added try/catch in console page to show friendly config error instead of crashing.
+**resolved:** unclear
+**pattern flag:** —
+**notes:** Graceful fallback added to /console page.
+
+---
+
 ### 2025-03-12 — Vercel build error
 
 **date:** 2025-03-12

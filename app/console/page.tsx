@@ -13,10 +13,26 @@ function ConsoleContent() {
   const [editorContent, setEditorContent] = useState(DEFAULT_SCRIPT)
   const router = useRouter()
   const searchParams = useSearchParams()
-  const supabase = createClient()
+  let supabase: ReturnType<typeof createClient> | null = null
+  try {
+    supabase = createClient()
+  } catch (e) {
+    return (
+      <main style={{ padding: 24, maxWidth: 560 }}>
+        <h2 style={{ marginBottom: 16, color: 'var(--error)' }}>Configuration Error</h2>
+        <p style={{ color: 'var(--muted)', marginBottom: 16 }}>
+          {e instanceof Error ? e.message : 'Missing Supabase config.'}
+        </p>
+        <p style={{ fontSize: 14, color: 'var(--muted)' }}>
+          Add <code>NEXT_PUBLIC_SUPABASE_URL</code> and <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code> to Vercel → Settings → Environment Variables, then redeploy.
+        </p>
+      </main>
+    )
+  }
   const editorRef = useRef<ScriptEditorRef>(null)
 
   useEffect(() => {
+    if (!supabase) return
     const loadId = searchParams.get('load')
     if (loadId) {
       supabase.auth.getUser().then(({ data: { user } }) => {
