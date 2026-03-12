@@ -25,7 +25,7 @@
 - Components, lib, RLS in place
 
 ### Script Editor — PASS
-- ScriptEditor, brite-parser, AutoTypeSelector (Default, Task, Help), scripts save wired
+- ScriptEditor, brite-parser, Auto Prompt dropdown (from type scripts), auto-insert `{ ` after `br :`/`} :`, syntax errors with line numbers, insertAtCursor, save gate (redirect to login)
 
 ### Downloads — PASS
 - API routes, page, download cards, Install Plugins section

@@ -1,22 +1,20 @@
 'use client'
 
-import { Suspense, useState, useEffect } from 'react'
+import { Suspense, useState, useEffect, useRef } from 'react'
 import { ScriptEditor } from '@/components/ScriptEditor'
+import type { ScriptEditorRef } from '@/components/ScriptEditor'
 import { createClient } from '@/lib/supabase'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { AUTO_PROMPTS } from '@/lib/auto-prompts'
 
-const AUTO_TYPE_SCRIPTS = [
-  { id: 'default', name: 'Default template', content: 'br : { return; pt; "hello world." } :' },
-  { id: 'task', name: 'Task creation', content: 'br : { run; <task>; "task_0001" } :' },
-  { id: 'help', name: 'Help', content: 'br{sf} : { run; *sf*; <help> } :' },
-]
+const DEFAULT_SCRIPT = 'br : { return; pt; "hello world." } :\n'
 
 function ConsoleContent() {
-  const [selectedScript, setSelectedScript] = useState('default')
-  const [editorContent, setEditorContent] = useState(AUTO_TYPE_SCRIPTS[0].content)
+  const [editorContent, setEditorContent] = useState(DEFAULT_SCRIPT)
   const router = useRouter()
   const searchParams = useSearchParams()
   const supabase = createClient()
+  const editorRef = useRef<ScriptEditorRef>(null)
 
   useEffect(() => {
     const loadId = searchParams.get('load')
@@ -31,12 +29,14 @@ function ConsoleContent() {
     }
   }, [searchParams, supabase])
 
-  const loadScript = (id: string) => {
-    const script = AUTO_TYPE_SCRIPTS.find((s) => s.id === id)
-    if (script) {
-      setSelectedScript(id)
-      setEditorContent(script.content)
+  const handleAutoPromptSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const id = e.target.value
+    if (!id) return
+    const prompt = AUTO_PROMPTS.find((p) => p.id === id)
+    if (prompt) {
+      editorRef.current?.insertAtCursor(prompt.text)
     }
+    e.target.value = ''
   }
 
   const handleSave = async (content: string) => {
@@ -62,25 +62,35 @@ function ConsoleContent() {
       <div style={{ padding: '24px 24px 0' }}>
         <h2 style={{ marginBottom: 16 }}>Script Editor</h2>
         <div style={{ marginBottom: 16 }}>
-          <label style={{ marginRight: 8 }}>Auto-type script:</label>
+          <label style={{ marginRight: 8 }}>Auto Prompt:</label>
           <select
-            value={selectedScript}
-            onChange={(e) => loadScript(e.target.value)}
+            onChange={handleAutoPromptSelect}
             style={{
               padding: 8,
               background: 'var(--surface)',
               border: '1px solid var(--border)',
               color: 'var(--text)',
               borderRadius: 4,
+              minWidth: 220,
             }}
+            defaultValue=""
           >
-            {AUTO_TYPE_SCRIPTS.map((s) => (
-              <option key={s.id} value={s.id}>{s.name}</option>
+            <option value="">— Select to insert at cursor —</option>
+            {AUTO_PROMPTS.map((p) => (
+              <option key={p.id} value={p.id}>{p.name}</option>
             ))}
           </select>
+          <span style={{ marginLeft: 8, color: 'var(--muted)', fontSize: 13 }}>
+            Click to open, select option to insert
+          </span>
         </div>
       </div>
-      <ScriptEditor content={editorContent} onContentChange={setEditorContent} onSave={handleSave} />
+      <ScriptEditor
+        ref={editorRef}
+        content={editorContent}
+        onContentChange={setEditorContent}
+        onSave={handleSave}
+      />
     </main>
   )
 }

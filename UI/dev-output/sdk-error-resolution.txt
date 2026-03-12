@@ -1,0 +1,48 @@
+================================================================================
+SDK ERROR RESOLUTION — B-Rite Console Build Issues
+================================================================================
+Date: 2025-03-12
+
+--------------------------------------------------------------------------------
+ANALYSIS: Last Three Prompts (Build Issue)
+--------------------------------------------------------------------------------
+
+PROMPT 1 — User: "error building in vercel"
+- Help session invoked with context. Diagnosis: missing env vars in Vercel.
+- Solution provided: Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to Vercel Environment Variables.
+
+PROMPT 2 — User: Provided Supabase credentials (URL and anon key)
+- deployGuide: Created .env.example with credentials. User then asked for .env.local (couldn't find it). Created .env.local.
+
+PROMPT 3 — User: "This was the given error message when building - Failed to compile. ./lib/supabase-server.ts:16:16 Type error: Parameter 'cookiesToSet' implicitly has an 'any' type..."
+- Actual build failure: TypeScript strict mode flagged implicit any on cookiesToSet in lib/supabase-server.ts and middleware.ts. Also: useSearchParams() must be wrapped in Suspense at /console.
+- Resolution: (1) Added explicit type for cookiesToSet: { name: string; value: string; options?: Record<string, unknown> }[] in supabase-server.ts and { name: string; value: string }[] in middleware.ts. (2) Wrapped /console page content in Suspense boundary with ConsoleContent child component.
+
+--------------------------------------------------------------------------------
+ROOT CAUSE ASSESSMENT
+--------------------------------------------------------------------------------
+
+1. cookiesToSet implicit any
+   - SDK/package: @supabase/ssr createServerClient callback does not provide explicit types for the setAll(cookiesToSet) parameter in its type definitions.
+   - App config: TypeScript strict mode (noImplicitAny) in tsconfig causes the error.
+   - Verdict: COMBINATION — Supabase SSR types are loose; app uses strict TypeScript. Not a bug in sdk-web template per se; template assumes standard Next.js + Supabase setup. Fix: add explicit types at call site (app-specific).
+
+2. useSearchParams Suspense
+   - Next.js App Router requires useSearchParams() to be wrapped in <Suspense> when used in a page that can be statically prerendered.
+   - sdk-web template: The console page in the template may not have included this pattern if created before Next.js enforced it, or if the template was built when useSearchParams was used differently.
+   - Verdict: SDK TEMPLATE GAP — Template should be updated to wrap any page using useSearchParams in Suspense by default. This is a Next.js requirement, not optional.
+
+--------------------------------------------------------------------------------
+USER NOTE — Master Program Maker Pipeline
+--------------------------------------------------------------------------------
+
+When I, the User, was doing the master Program Maker function, after it pushed to git and installed npm, it paused halfway through and didn't run through the rest of the script until I prompted it to.
+
+Need to review the pipeline and keep the AI on track while in the loop. Somehow keep it bookmarked where along it is on the function.
+
+RECOMMENDATION: The masterProgramMaker workflow has multiple phases (Product/Interview, Specs, Anchors, Tasks, Migrations, UI, Backend, Security, Audit, Preview, GitHub). Each phase can involve user prompts (e.g., "Use current agent or switch?"). The AI may release context or stop after a phase completes, especially after terminal commands (npm install, git push). Consider:
+- Adding explicit "continue to next phase" checkpoints in the masterProgramMaker.br prompt.
+- Having the AI output a phase index (e.g., "Phase 3/11 complete. Next: Anchors.") so the user or a follow-up prompt can resume.
+- Reducing reliance on single-run completion; design for resumability with a clear "run; <masterProgramMaker>; resume; 4" style continuation.
+
+================================================================================

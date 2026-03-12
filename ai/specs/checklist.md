@@ -9,9 +9,11 @@
 
 ## Script Editor (/console)
 - [x] ScriptEditor component, Format, Auto-fill, Save
-- [x] lib/brite-parser.ts (validateBrite, formatBrite)
-- [ ] AutoTypeSelector dropdown (Default, Task, Help) — partial
-- [ ] scripts table integration for save — verify
+- [x] lib/brite-parser.ts (validateBrite, formatBrite, offsetToLineCol)
+- [x] Auto Prompt dropdown (from [root/ai/type scripts])
+- [x] Auto-insert `{ ` after `br :` / `} :`
+- [x] Syntax errors with line numbers
+- [x] scripts save wired, auth-gated (redirect to login)
 
 ## Downloads (/downloads)
 - [x] /api/downloads/template, /api/downloads/sdk

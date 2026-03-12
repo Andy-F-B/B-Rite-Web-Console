@@ -75,6 +75,12 @@ export function validateBrite(content: string): BriteError[] {
   return errors
 }
 
+export function offsetToLineCol(content: string, offset: number): { line: number; col: number } {
+  const before = content.slice(0, offset)
+  const lines = before.split('\n')
+  return { line: lines.length, col: lines[lines.length - 1].length + 1 }
+}
+
 export function formatBrite(content: string): string {
   let out = content
   // Fix command casing

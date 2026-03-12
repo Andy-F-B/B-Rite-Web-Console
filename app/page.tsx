@@ -14,6 +14,9 @@ export default function HomePage() {
         <Link href="/downloads" style={{ padding: '12px 24px', border: '1px solid var(--border)', borderRadius: 4 }}>
           Downloads
         </Link>
+        <Link href="/saved" style={{ padding: '12px 24px', border: '1px solid var(--border)', borderRadius: 4 }}>
+          Saved
+        </Link>
       </div>
     </main>
   )
