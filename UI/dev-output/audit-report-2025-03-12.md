@@ -45,3 +45,8 @@
 - lib/supabase-server.ts, middleware.ts: typed cookiesToSet (fix implicit any)
 - app/console/page.tsx: useSearchParams wrapped in Suspense boundary
 - Build: PASS
+
+## Env Config Troubleshooting (2025-03-12)
+- **Confirmed:** Error is real — `getEnv()` in lib/env.ts throws when `process.env.NEXT_PUBLIC_*` is missing; not static text.
+- **Added:** `/api/debug-config` — returns `{ hasUrl, hasKey }` (no secrets). If server has vars but client fails: `NEXT_PUBLIC_` vars are inlined at build time → clear Vercel build cache and redeploy.
+- **Updated:** Error message now mentions both .env.local (local) and Vercel (production). Console page includes advanced troubleshooting link.

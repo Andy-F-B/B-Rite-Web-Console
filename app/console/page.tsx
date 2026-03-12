@@ -23,8 +23,11 @@ function ConsoleContent() {
         <p style={{ color: 'var(--muted)', marginBottom: 16 }}>
           {e instanceof Error ? e.message : 'Missing Supabase config.'}
         </p>
-        <p style={{ fontSize: 14, color: 'var(--muted)' }}>
+        <p style={{ fontSize: 14, color: 'var(--muted)', marginBottom: 12 }}>
           Add <code>NEXT_PUBLIC_SUPABASE_URL</code> and <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code> to Vercel → Settings → Environment Variables, then redeploy.
+        </p>
+        <p style={{ fontSize: 13, color: 'var(--muted)', marginBottom: 8 }}>
+          <strong>Advanced:</strong> Visit <a href="/api/debug-config" target="_blank" rel="noopener">/api/debug-config</a> — if it shows hasUrl/hasKey true but this page still fails, <code>NEXT_PUBLIC_</code> vars are inlined at build time. In Vercel: Deployments → ⋮ → Redeploy with &quot;Clear build cache&quot;. Ensure vars exist for Production, Preview, and Development.
         </p>
       </main>
     )

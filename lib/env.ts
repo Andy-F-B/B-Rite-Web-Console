@@ -7,7 +7,7 @@ function getEnv(key: string): string {
   const value = process.env[key]
   if (!value || value.trim() === '') {
     throw new Error(
-      `Missing ${key}. Add it to .env.local. See README "First Run" section.`
+      `Missing ${key}. Local: add to .env.local. Production: add to Vercel → Settings → Environment Variables (all envs), then redeploy.`
     )
   }
   if (PLACEHOLDERS.some((p) => value.toLowerCase().includes(p))) {
