@@ -3,6 +3,8 @@
 import { Suspense, useState, useEffect, useRef } from 'react'
 import { ScriptEditor } from '@/components/ScriptEditor'
 import type { ScriptEditorRef } from '@/components/ScriptEditor'
+import { ConsoleEditorHeader, type ScriptMode, type SdkChoice, type SdkSubChoice } from '@/components/ConsoleEditorHeader'
+import { FunctionSearchBar } from '@/components/FunctionSearchBar'
 import { createClient } from '@/lib/supabase'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { AUTO_PROMPTS } from '@/lib/auto-prompts'
@@ -11,6 +13,10 @@ const DEFAULT_SCRIPT = 'br : { return; pt; "hello world." } :\n'
 
 function ConsoleContent() {
   const [editorContent, setEditorContent] = useState(DEFAULT_SCRIPT)
+  const [scriptMode, setScriptMode] = useState<ScriptMode>('native')
+  const [sdkChoice, setSdkChoice] = useState<SdkChoice>(null)
+  const [sdkSubChoice, setSdkSubChoice] = useState<SdkSubChoice>(null)
+  const [searchOpen, setSearchOpen] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   let supabase: ReturnType<typeof createClient> | null = null
@@ -76,10 +82,20 @@ function ConsoleContent() {
     }
   }
 
+  const searchMode = sdkChoice === 'web-sdk' ? 'sdk-web' : 'native'
+
   return (
     <main>
       <div style={{ padding: '24px 24px 0' }}>
         <h2 style={{ marginBottom: 16 }}>Script Editor</h2>
+        <ConsoleEditorHeader
+          scriptMode={scriptMode}
+          onScriptModeChange={setScriptMode}
+          sdkChoice={sdkChoice}
+          onSdkChoiceChange={setSdkChoice}
+          sdkSubChoice={sdkSubChoice}
+          onSdkSubChoiceChange={setSdkSubChoice}
+        />
         <div style={{ marginBottom: 16 }}>
           <label style={{ marginRight: 8 }}>Auto Prompt:</label>
           <select
@@ -109,6 +125,16 @@ function ConsoleContent() {
         content={editorContent}
         onContentChange={setEditorContent}
         onSave={handleSave}
+        onSearchOpen={() => setSearchOpen(true)}
+      />
+      <FunctionSearchBar
+        open={searchOpen}
+        onClose={() => setSearchOpen(false)}
+        onInsert={(text) => {
+          editorRef.current?.insertAtCursor(text)
+          setSearchOpen(false)
+        }}
+        mode={searchMode}
       />
     </main>
   )
