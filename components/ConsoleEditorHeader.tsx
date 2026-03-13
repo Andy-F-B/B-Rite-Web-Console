@@ -1,5 +1,8 @@
 'use client'
 
+import { useState } from 'react'
+import { FeatureLibraryInfoModal } from './FeatureLibraryInfoModal'
+
 const SDK_WEB_FUNCTIONS = [
   'sdkWebSetup', 'quickStart', 'specPhase', 'anchorPhase', 'taskPhase', 'migrationPhase',
   'buildPhase', 'auditPhase', 'previewPhase', 'runSinglePhase', 'runPhases', 'runFullPipeline',
@@ -47,6 +50,7 @@ export function ConsoleEditorHeader({
 }) {
   const showSdkDropdown = scriptMode === 'sdk'
   const showSdkSubDropdown = showSdkDropdown && sdkChoice === 'web-sdk'
+  const [featureLibraryOpen, setFeatureLibraryOpen] = useState(false)
 
   return (
     <div style={{ marginBottom: 16 }}>
@@ -116,13 +120,22 @@ export function ConsoleEditorHeader({
                   Create .br in sdk-web/functions/, add entry to functions.br. See nFunction.br process.
                 </div>
               )}
+              <button
+                type="button"
+                onClick={() => setFeatureLibraryOpen(true)}
+                style={{ ...select, minWidth: 'auto', padding: '6px 12px' }}
+              >
+                feature library info/commands
+              </button>
             </>
           )}
         </div>
       )}
 
+      <FeatureLibraryInfoModal open={featureLibraryOpen} onClose={() => setFeatureLibraryOpen(false)} />
+
       <div style={keybinds}>
-        <strong>Keybinds:</strong> Ctrl+Alt+D — Search functions | <code>:</code> after <code>br </code> or <code>{'}'} </code> → <code>{'{ '}</code>
+        <strong>Keybinds:</strong> Ctrl+Alt+D — Search functions{showSdkSubDropdown ? ' (incl. createFeaturePack)' : ''} | <code>:</code> after <code>br </code> or <code>{'}'} </code> → <code>{'{ '}</code>
       </div>
     </div>
   )

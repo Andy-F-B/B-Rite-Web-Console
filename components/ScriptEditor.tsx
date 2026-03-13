@@ -20,6 +20,7 @@ export const ScriptEditor = forwardRef<
     onSave?: (content: string) => void
     readOnly?: boolean
     onSearchOpen?: () => void
+    onInsertOpen?: () => void
   }
 >(function ScriptEditor(
   {
@@ -29,6 +30,7 @@ export const ScriptEditor = forwardRef<
     onSave,
     readOnly = false,
     onSearchOpen,
+    onInsertOpen,
   },
   ref
 ) {
@@ -168,19 +170,11 @@ export const ScriptEditor = forwardRef<
     setContent(formatted)
   }
 
-  const handleAutoFill = () => {
-    if (!content.trim()) {
-      setContent(DEFAULT_SCRIPT)
-    } else if (!content.includes('br :')) {
-      setContent(`br : { ${content.trim()} } :`)
-    }
-  }
-
   return (
     <div className="script-editor">
       <div className="editor-toolbar">
         <button type="button" onClick={handleFormat}>Format</button>
-        <button type="button" onClick={handleAutoFill}>Auto-fill</button>
+        {onInsertOpen && <button type="button" onClick={onInsertOpen}>Insert</button>}
         {onSave && <button type="button" onClick={() => onSave(content)}>Save</button>}
         <label>
           <input type="checkbox" checked={showErrors} onChange={(e) => setShowErrors(e.target.checked)} />

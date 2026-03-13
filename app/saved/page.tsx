@@ -17,6 +17,7 @@ export default function SavedPage() {
   const [showNewFolder, setShowNewFolder] = useState(false)
   const [copyFeedback, setCopyFeedback] = useState<string | null>(null)
   const [showArchived, setShowArchived] = useState(false)
+  const [selectedFolderId, setSelectedFolderId] = useState<string | null>(null)
   const router = useRouter()
   const supabase = createClient()
 
@@ -90,10 +91,14 @@ export default function SavedPage() {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return
     const { error } = await supabase.from('scripts').update({ folder_id: folderId }).eq('id', scriptId).eq('user_id', user.id)
-    if (!error) {
-      setMenuOpen(null)
-      fetchScripts()
-    }
+    if (!error) { setMenuOpen(null); fetchScripts() }
+  }
+
+  const handleRemoveFromFolder = async (scriptId: string) => {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return
+    const { error } = await supabase.from('scripts').update({ folder_id: null }).eq('id', scriptId).eq('user_id', user.id)
+    if (!error) { setMenuOpen(null); fetchScripts() }
   }
 
   const handleCreateFolder = async () => {
@@ -109,7 +114,11 @@ export default function SavedPage() {
     }
   }
 
-  const displayedScripts = scripts.filter((s) => (showArchived ? s.archived_at : !s.archived_at))
+  const displayedScripts = scripts.filter((s) => {
+    if (showArchived) return !!s.archived_at
+    if (selectedFolderId) return s.folder_id === selectedFolderId
+    return !s.archived_at && !s.folder_id
+  })
 
   if (loading) return <main style={{ padding: 48 }}>Loading...</main>
 
@@ -120,11 +129,28 @@ export default function SavedPage() {
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24, flexWrap: 'wrap' }}>
         <button
           type="button"
+          onClick={() => { setShowArchived(false); setSelectedFolderId(null) }}
+          style={{ padding: '8px 16px', borderRadius: 4, background: !showArchived && !selectedFolderId ? 'var(--accent)' : 'transparent', color: !showArchived && !selectedFolderId ? 'var(--bg)' : 'inherit', border: '1px solid var(--border)', cursor: 'pointer', fontSize: 14 }}
+        >
+          Unfiled
+        </button>
+        <button
+          type="button"
           onClick={() => setShowArchived(!showArchived)}
           style={{ padding: '8px 16px', borderRadius: 4, background: showArchived ? 'var(--accent)' : 'transparent', color: showArchived ? 'var(--bg)' : 'inherit', border: '1px solid var(--border)', cursor: 'pointer', fontSize: 14 }}
         >
           {showArchived ? 'Saved' : 'Archived'}
         </button>
+        {folders.map((f) => (
+          <button
+            key={f.id}
+            type="button"
+            onClick={() => { setShowArchived(false); setSelectedFolderId(selectedFolderId === f.id ? null : f.id) }}
+            style={{ padding: '8px 16px', borderRadius: 4, background: selectedFolderId === f.id ? 'var(--accent)' : 'transparent', color: selectedFolderId === f.id ? 'var(--bg)' : 'inherit', border: '1px solid var(--border)', cursor: 'pointer', fontSize: 14 }}
+          >
+            {f.name}
+          </button>
+        ))}
         <button
           type="button"
           onClick={() => setShowNewFolder(!showNewFolder)}
@@ -153,7 +179,7 @@ export default function SavedPage() {
 
       {displayedScripts.length === 0 ? (
         <p style={{ color: 'var(--muted)' }}>
-          {showArchived ? 'No archived scripts.' : 'No saved scripts. Save from the Editor.'}
+          {showArchived ? 'No archived scripts.' : selectedFolderId ? 'No scripts in this folder.' : 'No unfiled scripts. Save from the Editor or move from a folder.'}
         </p>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -210,20 +236,29 @@ export default function SavedPage() {
                         <button
                           type="button"
                           onClick={() => (showArchived ? handleUnarchive(s.id) : handleArchive(s.id))}
-                          style={{ display: 'block', width: '100%', textAlign: 'left', padding: '4px 0', background: 'none', border: 'none', cursor: 'pointer', fontSize: 14 }}
+                          style={{ display: 'block', width: '100%', textAlign: 'left', padding: '4px 0', background: 'none', border: 'none', cursor: 'pointer', fontSize: 14, color: 'white' }}
                         >
                           {showArchived ? 'Restore' : 'Archive'}
                         </button>
+                        {s.folder_id && (
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveFromFolder(s.id)}
+                            style={{ display: 'block', width: '100%', textAlign: 'left', padding: '4px 0', background: 'none', border: 'none', cursor: 'pointer', fontSize: 14, color: 'white' }}
+                          >
+                            Move to Unfiled
+                          </button>
+                        )}
                         {folders.length > 0 && (
                           <>
                             <div style={{ borderTop: '1px solid var(--border)', margin: '4px 0' }} />
-                            <span style={{ fontSize: 12, color: 'var(--muted)' }}>Save to folder:</span>
+                            <span style={{ fontSize: 12, color: 'white' }}>Save to folder:</span>
                             {folders.map((f) => (
                               <button
                                 key={f.id}
                                 type="button"
                                 onClick={() => handleSaveToFolder(s.id, f.id)}
-                                style={{ display: 'block', width: '100%', textAlign: 'left', padding: '4px 0', background: 'none', border: 'none', cursor: 'pointer', fontSize: 14 }}
+                                style={{ display: 'block', width: '100%', textAlign: 'left', padding: '4px 0', background: 'none', border: 'none', cursor: 'pointer', fontSize: 14, color: 'white' }}
                               >
                                 {f.name}
                               </button>

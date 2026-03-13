@@ -10,6 +10,6 @@ ask; (A1); "task name or path — e.g. misc_changes, task_misc_changes, or [root
 catch
 
 // derive camelCase from task filename: task_misc_changes -> taskMiscChanges (no task_ prefix in var, or include: taskMiscChanges)
-// strip .md, replace - with _, then to camelCase
-prompt; 'From arg1 {A1}: derive task filename (e.g. misc_changes -> task_misc_changes.md). Variable name: camelCase, no hyphens. E.g. task_misc_changes -> taskMiscChanges. Add to [root/ai/sdks/sdk-web/variables.br] under [taskVariables]: (varName) = [root/ai/tasks/task_{name}.md]. Return pt: "variable: (varName) = [root/ai/tasks/task_xxx.md]"'
-return; pt; "task variable created. check variables.br [taskVariables]."
+// strip .md, replace - with _, then to camelCase. root name = name for build command (task_xxx -> xxx, or full task_xxx)
+prompt; 'From arg1 {A1}: derive task filename (e.g. misc_changes -> task_misc_changes.md). Variable name: camelCase, no hyphens. E.g. task_misc_changes -> taskMiscChanges. Add to [root/ai/sdks/sdk-web/variables.br] under [taskVariables]: (varName) = [root/ai/tasks/task_{name}.md]. Derive root name: if filename is task_xxx, root = xxx (strip task_ prefix); else root = filename without .md. At end of response, always return on its own line: "Build: run; <buildPhase>; \"(root)\"" so user can paste into build command.'
+return; pt; "task variable created. check variables.br [taskVariables]. build command with root name included above."

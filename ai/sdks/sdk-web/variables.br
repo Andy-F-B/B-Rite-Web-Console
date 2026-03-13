@@ -51,3 +51,4 @@ createTaskVariable = [root/ai/sdks/sdk-web/functions/taskVariable.br]
 // task variables point to [root/ai/tasks/]. read; (varName) summarizes or pastes contents. camelCase from filename.
 taskMiscChanges = [root/ai/tasks/task_misc_changes.md]
 taskUiUpdates = [root/ai/tasks/task_ui_updates.md]
+taskScriptEditorUpdates = [root/ai/tasks/task_script_editor_updates.md]

@@ -5,6 +5,7 @@ import { ScriptEditor } from '@/components/ScriptEditor'
 import type { ScriptEditorRef } from '@/components/ScriptEditor'
 import { ConsoleEditorHeader, type ScriptMode, type SdkChoice, type SdkSubChoice } from '@/components/ConsoleEditorHeader'
 import { FunctionSearchBar } from '@/components/FunctionSearchBar'
+import { SavedScriptsPicker } from '@/components/SavedScriptsPicker'
 import { createClient } from '@/lib/supabase'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { AUTO_PROMPTS } from '@/lib/auto-prompts'
@@ -17,6 +18,7 @@ function ConsoleContent() {
   const [sdkChoice, setSdkChoice] = useState<SdkChoice>(null)
   const [sdkSubChoice, setSdkSubChoice] = useState<SdkSubChoice>(null)
   const [searchOpen, setSearchOpen] = useState(false)
+  const [insertOpen, setInsertOpen] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   let supabase: ReturnType<typeof createClient> | null = null
@@ -78,9 +80,10 @@ function ConsoleContent() {
         alert('Saved.')
       }
     } else {
+      const title = window.prompt('Name your script (optional):')?.trim() || `Script ${new Date().toISOString().slice(0, 10)}`
       const { error } = await supabase.from('scripts').insert({
         user_id: user.id,
-        title: `Script ${new Date().toISOString().slice(0, 10)}`,
+        title: title || `Script ${new Date().toISOString().slice(0, 10)}`,
         content,
       })
       if (error) {
@@ -92,6 +95,13 @@ function ConsoleContent() {
   }
 
   const searchMode = sdkChoice === 'web-sdk' ? 'sdk-web' : 'native'
+
+  const handleInsertOpen = () => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (!user) router.push('/login')
+      else setInsertOpen(true)
+    })
+  }
 
   return (
     <main>
@@ -135,6 +145,15 @@ function ConsoleContent() {
         onContentChange={setEditorContent}
         onSave={handleSave}
         onSearchOpen={() => setSearchOpen(true)}
+        onInsertOpen={handleInsertOpen}
+      />
+      <SavedScriptsPicker
+        open={insertOpen}
+        onClose={() => setInsertOpen(false)}
+        onInsert={(content) => {
+          editorRef.current?.insertAtCursor(content)
+          setInsertOpen(false)
+        }}
       />
       <FunctionSearchBar
         open={searchOpen}

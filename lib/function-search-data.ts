@@ -56,6 +56,7 @@ const SDK_WEB_FUNCTIONS: FunctionSearchEntry[] = [
   { name: '<runLocal>', type: 'function', description: 'Run app locally', example: 'run; <runLocal>', source: 'sdk', insertText: '<runLocal>' },
   { name: '<npmInstall>', type: 'function', description: 'Run npm install', example: 'run; <npmInstall>', source: 'sdk', insertText: '<npmInstall>' },
   { name: '<gitSetup>', type: 'function', description: 'Initial git setup and push', example: 'run; <gitSetup>', source: 'sdk', insertText: '<gitSetup>' },
+  { name: '<createFeaturePack>', type: 'function', description: 'Scaffold feature pack in feature-packs/', example: 'run; <createFeaturePack>', source: 'sdk', insertText: 'run; <createFeaturePack>' },
 ]
 
 export function getFunctionSearchIndex(mode: 'native' | 'sdk-web'): FunctionSearchEntry[] {

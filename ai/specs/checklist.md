@@ -8,7 +8,7 @@
 - [x] lib/profile.ts, profile.schema.ts
 
 ## Script Editor (/console)
-- [x] ScriptEditor component, Format, Auto-fill, Save
+- [x] ScriptEditor component, Format, Insert, Save
 - [x] lib/brite-parser.ts (validateBrite, formatBrite, offsetToLineCol)
 - [x] Auto Prompt dropdown (from [root/ai/type scripts])
 - [x] Auto-insert `{ ` after `br :` / `} :`
