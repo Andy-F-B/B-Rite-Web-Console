@@ -1,0 +1,18 @@
+# public/downloads Setup — 2025-03-12
+
+## New folder creation
+- public/
+- public/downloads/
+
+(public/downloads/ created via .gitkeep to ensure folder is tracked in git)
+
+## Links added to downloads page
+- /downloads/B-RITE NATIVE V.2.0.zip — B-Rite Script (zip) — Full b-rite language package (v2.0)
+- /downloads/B-RITE WEB SDK V.3.0.zip — Web SDK (zip) — Full sdk-web package (v3.0) for Next.js + Supabase
+
+## Next steps
+Place the zip files in public/downloads/:
+- B-RITE NATIVE V.2.0.zip
+- B-RITE WEB SDK V.3.0.zip
+
+Then commit and push. The downloads page will serve them at the links above.
