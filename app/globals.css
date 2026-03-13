@@ -177,6 +177,11 @@ a:hover {
   box-shadow: 0 0 0 1px var(--error);
 }
 
+.editor-textarea.has-warnings {
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 1px #f59e0b;
+}
+
 .editor-textarea:focus {
   outline: none;
   border-color: var(--accent);

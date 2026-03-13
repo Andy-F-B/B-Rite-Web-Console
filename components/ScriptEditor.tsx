@@ -226,7 +226,7 @@ export const ScriptEditor = forwardRef<
           onScroll={handleScroll}
           spellCheck={false}
           readOnly={readOnly}
-          className={`editor-textarea ${errors.length && showErrors ? 'has-errors' : ''} ${!greenText ? 'editor-textarea-overlay' : ''}`}
+          className={`editor-textarea ${errors.length && showErrors ? (errors.some((e) => (e.severity ?? 'error') === 'error') ? 'has-errors' : 'has-warnings') : ''} ${!greenText ? 'editor-textarea-overlay' : ''}`}
           data-gramm={false}
           />
         </div>
@@ -238,9 +238,11 @@ export const ScriptEditor = forwardRef<
         {showErrors && errors.length > 0 && (
           <div className="error-list">
             {errors.map((e, i) => {
-              const { line, col } = offsetToLineCol(content, e.start)
+              const { line } = offsetToLineCol(content, e.start)
+              const isWarning = e.severity === 'warning'
+              const borderColor = isWarning ? '#f59e0b' : '#ef4444'
               return (
-                <div key={i} className="error-item" style={{ borderLeftColor: '#ef4444' }}>
+                <div key={i} className="error-item" style={{ borderLeftColor: borderColor }}>
                   <strong>Line {line}:</strong> {e.message}
                 </div>
               )

@@ -1,0 +1,171 @@
+SYNTAX CHECK EXPANSION PLAN — B-Rite Script Editor
+Generated: 2026-03-13
+Source: brite-parser.ts, brite-tokenizer.ts, ScriptEditor.tsx, console/page.tsx, b-rite.md
+---
+
+== WHAT IS CURRENTLY CHECKED ==
+
+brite-parser.ts > validateBrite():
+1. Script opens with `br :` — regex /^\s*(br\s*:\s*)/
+   Error: "Expected br : at start"
+
+2. Script closes with `} :` — regex /\}\s*:\s*$/
+   Errors: "Script block incomplete. Expected } :" or "Expected } : to close script"
+
+3. Balanced braces { } — depth counter, skips inside strings
+   Errors: "Unexpected }" or "Unclosed {"
+
+4. Command casing — commands must be lowercase
+   Commands checked: read, run, return, ask, prompt, catch, write, edit, delete, fetch, do
+   Error: "Command must be lowercase: {cmd}"
+
+ScriptEditor.tsx > handleKeyDown() — interactive (not in error list):
+5. Auto-inserts `{ ` after `br :`
+6. `};` at cursor → auto-inserts new `{ ` block on next line
+7. `} ;` (with space) → pending semicolon state:
+   - next char `{` → compacts to `};` then inserts new block
+   - any other char → inline toast: "Code block must be ended with :"
+
+---
+
+== WHAT IS NOT CHECKED (GAPS FROM b-rite.md) ==
+
+--- PRIORITY 1: High value, straightforward to implement ---
+
+A. Empty literal string " "
+   Rule: b-rite.md §10 — `" "` with no text is a syntax error. `' '` with no text is valid.
+   How: Extend getStringRanges to return { start, end, quoteChar }. Use quoteChar to distinguish.
+   In validateBrite, if a double-quoted string has zero non-whitespace chars between quotes → error.
+   Error: "Empty literal string \" \" is a syntax error. Use ' ' for empty interpretive string."
+
+B. Missing `;` between code blocks
+   Rule: b-rite.md §3 — `;` is required between blocks. `{ }{ }` without `;` is invalid.
+   How: regex for `}\s*{` outside strings.
+   Error: "Missing ; between code blocks. Use }; to separate."
+
+C. Trailing `;` after final block
+   Rule: b-rite.md §3 — `;` never follows the final block.
+   How: regex for `};\s*:` at end of script (outside strings).
+   Error: "Trailing ; after final block. Remove the semicolon before the closing :."
+
+D. `run` with a non-.br file
+   Rule: b-rite.md §8 — `run` on a non-.br file routes to error.br.
+   How: Only check when `run` is followed by a path `[...]`. `run; <fn>` (function) needs no check.
+        Look for `run` followed by a path `[...]` where the path does NOT end in `.br`.
+   Warning: "run requires a .br file. Use `do` for .md or .txt files."
+
+E. `do` with a .br file
+   Rule: b-rite.md §8 — `do` on a `.br` file routes to error.br.
+   How: look for `do` followed by a path `[...]` where path ends in `.br`.
+   Warning: "do requires a .md or .txt file. Use `run` for .br scripts."
+
+--- PRIORITY 2: Medium, catches common mistakes ---
+
+F. `->` with spaces around it
+   Rule: b-rite.md §4 — "use exactly -> with no spaces between the two sides"
+   How: regex for ` -> ` (space on either side) outside strings.
+   Warning: "Points-to operator -> must have no spaces. Use identifier->path, not identifier -> path."
+
+H. Invalid entry point variant
+   Rule: b-rite.md §2 — valid entry points: br, br{f}, br{v}, br{sf}, br{sv}.
+   How: regex on `br\{[^}]*\}` — if the content inside {} is not one of f, v, sf, sv → error.
+   Error: "Invalid entry point. Valid options: br, br{f}, br{v}, br{sf}, br{sv}."
+
+--- PRIORITY 3: Spec completeness, naming conventions ---
+
+(Note: catch rule removed — catch can follow with strict and be separated; no ask/prompt requirement.)
+
+I. `*dev*` or `!ADMIN!` inside a code block
+   Rule: b-rite.md §18, §19 — *dev* and !ADMIN! must appear BEFORE the entry point, never inside { }.
+   How: scan for *dev* or !ADMIN! that appears after the first { and before the closing }.
+   Error: "*dev* / !ADMIN! must appear before the entry point, outside the script block."
+
+J. Anchor value format
+   Rule: b-rite.md §7 — anchor values are exactly (A1)–(Z9): one letter A-Z + one digit 1-9.
+   How: detect `(` followed by exactly 2 chars where char[0] is A-Z and char[1] is 1-9 — that's valid.
+        If a `( )` value is exactly 2 chars but doesn't match this pattern (e.g. lowercase letter,
+        digit 0, or non-alphanumeric) → warning.
+        Note: this is subtle — variables are never 2 chars, so any 2-char `( )` is an anchor.
+   Warning: "Anchor values must be format (A1)–(Z9): one uppercase letter + one digit 1-9."
+
+K. Underscore in function or variable names (should be camelCase)
+   Rule: b-rite.md §5 — two-word identifiers use camelCase. Underscore is not used.
+   How: regex for `<[a-z]+_[a-z]` or `([a-z]+_[a-z]` outside strings.
+   Warning: "Use camelCase for multi-word names: <taskMaker>, not <task_maker>."
+
+L. Modifier token casing: vt, ft, fi should be vT, fT, fI
+   Rule: b-rite.md §6 — token modifiers are camelCase: vT, fT, fI.
+   How: regex for word boundaries \bvt\b, \bft\b, \bfi\b outside strings.
+   Warning: "Token modifier must be camelCase: vT, fT, fI — not vt, ft, fi."
+
+---
+
+== IMPLEMENTATION NOTES ==
+
+All checks live in lib/brite-parser.ts > validateBrite().
+The component (ScriptEditor.tsx) and page (app/console/page.tsx) need no changes —
+error rendering is already wired and styled.
+
+REQUIRED: Add severity field to BriteError:
+  export interface BriteError {
+    message: string
+    start: number
+    end: number
+    severity?: 'error' | 'warning'   // default 'error' if omitted
+  }
+  In ScriptEditor render: use red border for error, amber (#f59e0b) for warning.
+
+REQUIRED: Extend getStringRanges to return { start, end, quoteChar }:
+  So the empty " " check (A) can distinguish single vs double quotes without re-scanning.
+
+REQUIRED: Extend formatBrite() to auto-fix:
+  - Command casing (already done)
+  - `->` spacing (strip spaces around ->)
+
+---
+
+== EXAMPLE VALID SCRIPTS (for reference) ==
+
+Minimal valid:
+  br : { return; pt; "hello world." } :
+
+Multi-block:
+  br : { read; [root/ai/brain.md] };
+       { return; pt; "done." } :
+
+With run + .br file:
+  br : { run; <taskMaker> } :
+  br{f} : { run; [root/ai/tasks/my-task.br] } :   // run must use .br
+
+With do + .md file:
+  br : { do; [root/ai/tasks/my-task.md] } :       // do must use .md or .txt
+
+With variable:
+  br{v} : { write; v; (myPath); [root/ai/tasks/] } :
+
+With anchor (ask/catch flow):
+  br : { ask; (A1); 'what is your project name?' };
+       { catch; (A1) };
+       { return; pt; (A1) } :
+
+With function:
+  br : { run; <specPhase>; "B1" } :
+
+With points-to:
+  br : { write; (archive)->[root/archived/my-file.br] } :   // no spaces around ->
+
+With SDK prefix:
+  !sdk|003| br : { run; <buildPhase> } :
+
+With system function:
+  br{sf} : { run; *sf*; <no-log> } :
+
+Empty interpretive string (valid):
+  br : { prompt; ' ' } :       // AI infers from context — valid
+
+Empty literal string (INVALID):
+  br : { return; pt; " " } :   // error — empty " " is a syntax error
+
+---
+
+END OF PLAN
