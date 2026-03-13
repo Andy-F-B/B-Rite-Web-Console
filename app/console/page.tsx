@@ -40,19 +40,19 @@ function ConsoleContent() {
   }
   const editorRef = useRef<ScriptEditorRef>(null)
 
+  const loadId = searchParams.get('load')
+  const isEditMode = searchParams.get('edit') === '1'
+
   useEffect(() => {
-    if (!supabase) return
-    const loadId = searchParams.get('load')
-    if (loadId) {
-      supabase.auth.getUser().then(({ data: { user } }) => {
-        if (user) {
-          supabase.from('scripts').select('content').eq('id', loadId).eq('user_id', user.id).single().then(({ data }) => {
-            if (data) setEditorContent(data.content)
-          })
-        }
-      })
-    }
-  }, [searchParams, supabase])
+    if (!supabase || !loadId) return
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) {
+        supabase.from('scripts').select('content').eq('id', loadId).eq('user_id', user.id).single().then(({ data }) => {
+          if (data) setEditorContent(data.content)
+        })
+      }
+    })
+  }, [loadId, supabase])
 
   const handleAutoPromptSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const id = e.target.value
@@ -70,15 +70,24 @@ function ConsoleContent() {
       router.push('/login')
       return
     }
-    const { error } = await supabase.from('scripts').insert({
-      user_id: user.id,
-      title: `Script ${new Date().toISOString().slice(0, 10)}`,
-      content,
-    })
-    if (error) {
-      alert('Failed to save: ' + error.message)
+    if (isEditMode && loadId) {
+      const { error } = await supabase.from('scripts').update({ content, updated_at: new Date().toISOString() }).eq('id', loadId).eq('user_id', user.id)
+      if (error) {
+        alert('Failed to save: ' + error.message)
+      } else {
+        alert('Saved.')
+      }
     } else {
-      alert('Saved.')
+      const { error } = await supabase.from('scripts').insert({
+        user_id: user.id,
+        title: `Script ${new Date().toISOString().slice(0, 10)}`,
+        content,
+      })
+      if (error) {
+        alert('Failed to save: ' + error.message)
+      } else {
+        alert('Saved.')
+      }
     }
   }
 

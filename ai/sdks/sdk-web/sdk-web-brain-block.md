@@ -30,3 +30,4 @@ key functions:
 - <runLocal> — run app locally (npm run dev)
 - <npmInstall>   — run npm install in project root (once per project)
 - <gitSetup>     — initial git setup + push (provide remote URL)
+- <taskVariable> — create task variable (camelCase) in [taskVariables]. read; (varName) summarizes task.

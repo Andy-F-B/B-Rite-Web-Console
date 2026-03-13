@@ -121,3 +121,9 @@ path: [root/ai/sdks/sdk-web/functions/gitSetup.br]
 action: run
 args: none
 notes: initial git setup and push. asks for remote URL. runs init, remote add, add, commit, push. user creates empty repo on GitHub first.
+
+<taskVariable>
+path: [root/ai/sdks/sdk-web/functions/taskVariable.br]
+action: run
+args: arg1 = task name or path
+notes: creates camelCase task variable in [taskVariables]. when read; (varName): summarize or paste task contents. return pt unless specified.

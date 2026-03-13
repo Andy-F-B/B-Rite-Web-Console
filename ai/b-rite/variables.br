@@ -57,3 +57,4 @@ versionFile = [root/ai/b-rite/lang/version.br]
 projectName = "B-Rite-Web-App"
 
 // user-defined variables added below this line
+summary = "Description - Summarize the executed code referenced inside the same code block as //(summary)//, or referenced file/text/directory as per the user's directions, in between 2 sentences and 2 paragraphs, depending on how much content is being summarized."

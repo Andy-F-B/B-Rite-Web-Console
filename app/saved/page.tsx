@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { createClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -13,7 +13,7 @@ export default function SavedPage() {
   const router = useRouter()
   const supabase = createClient()
 
-  useEffect(() => {
+  const fetchScripts = useCallback(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (!user) {
         router.push('/login')
@@ -30,6 +30,18 @@ export default function SavedPage() {
         })
     })
   }, [supabase, router])
+
+  useEffect(() => {
+    fetchScripts()
+  }, [fetchScripts])
+
+  const handleDelete = async (id: string) => {
+    if (!confirm('Delete this script?')) return
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return
+    const { error } = await supabase.from('scripts').delete().eq('id', id).eq('user_id', user.id)
+    if (!error) fetchScripts()
+  }
 
   if (loading) return <main style={{ padding: 48 }}>Loading...</main>
 
@@ -55,7 +67,17 @@ export default function SavedPage() {
                 {new Date(s.created_at).toLocaleString()}
               </p>
               <pre style={{ fontSize: 12, overflow: 'auto', maxHeight: 80 }}>{s.content.slice(0, 100)}...</pre>
-              <Link href={`/console?load=${s.id}`} style={{ fontSize: 14 }}>Open in Editor →</Link>
+              <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
+                <Link href={`/console?load=${s.id}&edit=1`} style={{ fontSize: 14 }}>Edit</Link>
+                <Link href={`/console?load=${s.id}`} style={{ fontSize: 14 }}>Open in Editor →</Link>
+                <button
+                  type="button"
+                  onClick={() => handleDelete(s.id)}
+                  style={{ fontSize: 14, background: 'none', border: 'none', color: 'var(--destructive, #ef4444)', cursor: 'pointer', padding: 0 }}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           ))}
         </div>

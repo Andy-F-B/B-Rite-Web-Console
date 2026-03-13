@@ -1,45 +1,75 @@
-# Security & Checklist Audit — B-Rite Console
-**Date:** 2025-03-13 | **Scope:** Full
+# Security & Checklist Audit Report
+**Date:** 2025-03-13  
+**Scope:** Full  
+**Post:** buildPhase task_misc_changes
+
+---
 
 ## Security Audit — PASS
 
-### RLS Status
+### RLS
 | Table | RLS | SELECT | INSERT | UPDATE | DELETE |
 |-------|-----|--------|--------|--------|--------|
-| profiles | ✓ | own | trigger | own | — |
-| scripts | ✓ | own | own | own | own |
-| saved_items | ✓ | own | own | own | own |
-| plugins | ✓ | authenticated | admin | admin | admin |
+| profiles | ✓ | ✓ (id = auth.uid()) | trigger | ✓ | — |
+| scripts | ✓ | ✓ | ✓ | ✓ | ✓ |
+| saved_items | ✓ | ✓ | ✓ | ✓ | ✓ |
+| plugins | ✓ | ✓ (authenticated) | ✓ (admin) | ✓ (admin) | ✓ (admin) |
 
-- No USING (TRUE) or anon public access
-- is_admin() used for plugins admin policies
-- handle_new_user trigger creates profile on signup
+### Policies
+- All user-owned tables use `user_id = auth.uid()` or `id = auth.uid()` (profiles)
+- No `USING (TRUE)` or `auth.role() = 'anon'`
+- Admin access via `is_admin()` SECURITY DEFINER
+- handle_new_user trigger for profile creation
 
-### Gaps
-- profiles: No user DELETE policy (intentional — profile deletion typically via auth)
+### Data Access
+- Saved page: `.eq('user_id', user.id)` — user sees only own scripts ✓
+- Delete: `.eq('id', id).eq('user_id', user.id)` — RLS enforced ✓
+- Console load: `.eq('id', loadId).eq('user_id', user.id)` — user loads only own ✓
+- Console update: `.eq('id', loadId).eq('user_id', user.id)` — user updates only own ✓
+
+### Storage
 - No storage buckets in use
+
+---
 
 ## Checklist Verification
 
-### Auth — PASS
-- Components, lib, RLS in place
+### Auth
+- [x] profiles, RLS, handle_new_user, is_admin
+- [x] SignInForm, SignUpForm, ProfileForm, AuthGuard
+- [x] lib/profile.ts, profile.schema.ts
 
-### Script Editor — PASS
-- ScriptEditor, brite-parser, Format, Auto-fill, Save
-- Auto Prompt dropdown, auto-insert `{ ` after `br :`/`} :`
-- Syntax errors with line numbers, insertAtCursor, save gate (redirect to login)
-- **New:** Script mode (native/SDKs), SDK dropdown, FunctionSearchBar (Ctrl+Alt+D)
-- **New:** Syntax highlighting (tokenizer, Green text toggle)
-- **New:** Auto-format `};` `} ;` `:` behaviors
+### Script Editor
+- [x] ScriptEditor, Format, Auto-fill, Save
+- [x] brite-parser, Auto Prompt dropdown
+- [x] scripts save, auth-gated
+- [x] Edit mode (update same slot)
+- [x] Auto prompts: "read" lowercase (syntax fix)
 
-### Downloads — PASS
-- API routes, page, download cards, Install Plugins section
+### Saved
+- [x] saved_items table, RLS
+- [x] Page integration: list, Edit, Delete
+- [x] Delete with confirmation, RLS-scoped
 
-### Saved — PARTIAL
-- Table, RLS exist; /saved page exists — full CRUD to verify
+### Downloads
+- [x] template, sdk APIs
+- [x] Downloads page
+- [x] Platform text: Windows, macOS, Linux
 
-### Plugins — PARTIAL
-- Table, RLS exist; install via b-rite <install> (documented on downloads)
+### Plugins
+- [x] plugins table, RLS
+- [ ] Install flow — verify (optional)
+
+### Code Quality
+- [x] No console.log in app/lib/components
+- [x] No TODO left unaddressed
+
+---
 
 ## Summary
-Security model unchanged. All tables have RLS. No policy gaps. Checklist reflects script editor enhancements (syntax highlighting, function search, green text toggle).
+
+**Security:** PASS. RLS on all tables, no unsafe policies, edit/delete scoped to user.
+
+**Checklist:** PASS. Misc changes (edit, delete, downloads platform, auto-prompt casing) implemented and verified.
+
+**Ready to ship.**

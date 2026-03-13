@@ -45,3 +45,8 @@ coreFeaturesPlan = [root/ai/sdks/sdk-web/core-features-plan.txt]
 deployGuide = [root/ai/sdks/sdk-web/functions/deployGuide.br]
 npmInstall = [root/ai/sdks/sdk-web/functions/npmInstall.br]
 gitSetup = [root/ai/sdks/sdk-web/functions/gitSetup.br]
+createTaskVariable = [root/ai/sdks/sdk-web/functions/taskVariable.br]
+
+[taskVariables]
+// task variables point to [root/ai/tasks/]. read; (varName) summarizes or pastes contents. camelCase from filename.
+taskMiscChanges = [root/ai/tasks/task_misc_changes.md]
