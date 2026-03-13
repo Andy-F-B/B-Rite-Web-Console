@@ -7,16 +7,6 @@ const DOWNLOADS = [
     href: '/api/downloads/template',
   },
   {
-    name: 'B-Rite Script (zip)',
-    description: 'Full b-rite language package (v2.0). Windows, macOS, Linux.',
-    href: '/downloads/B-RITE%20NATIVE%20V.2.0.zip',
-  },
-  {
-    name: 'Web SDK v2',
-    description: 'Current v2 web SDK for Next.js + Supabase. Windows, macOS, Linux.',
-    href: '/api/downloads/sdk',
-  },
-  {
     name: 'Web SDK (zip)',
     description: 'Full sdk-web package (v3.0) for Next.js + Supabase. Windows, macOS, Linux.',
     href: '/downloads/B-RITE%20WEB%20SDK%20V.3.0.zip',
