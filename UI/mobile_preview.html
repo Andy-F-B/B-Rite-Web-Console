@@ -13,15 +13,20 @@
       --text: #e5e5e5;
       --muted: #737373;
       --accent: #22c55e;
+      --error: #ef4444;
       --font: 'JetBrains Mono', monospace;
     }
     * { box-sizing: border-box; }
     body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--text); max-width: 390px; margin: 0 auto; min-height: 100vh; padding: 24px; }
-    nav { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; padding: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; }
-    nav a { color: var(--text); text-decoration: none; }
+    nav { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; padding: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; }
+    nav a { color: var(--text); text-decoration: none; font-size: 14px; }
     nav a:hover { color: var(--accent); }
-    h1 { font-size: 1.25rem; margin: 0 0 16px; }
-    p { color: var(--muted); margin: 0 0 16px; font-size: 14px; }
+    h1 { font-size: 1.5rem; margin: 0 0 16px; }
+    p { color: var(--muted); margin: 0 0 16px; font-size: 14px; line-height: 1.6; }
+    .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+    .cta a { padding: 12px 24px; border-radius: 4px; text-decoration: none; font-weight: 500; font-size: 14px; }
+    .cta .primary { background: var(--accent); color: var(--bg); }
+    .cta .secondary { border: 1px solid var(--border); color: var(--text); }
   </style>
 </head>
 <body>
@@ -36,7 +41,12 @@
   </nav>
   <main>
     <h1>B-Rite Console</h1>
-    <p>Write, validate, and manage b-rite scripts. Auto-formatting, syntax validation, and downloads for the official template and SDK.</p>
+    <p>Write, validate, and manage b-rite scripts. Auto-formatting, syntax highlighting, and downloads for the official template and SDK.</p>
+    <div class="cta">
+      <a href="/console" class="primary">Open Editor</a>
+      <a href="/downloads" class="secondary">Downloads</a>
+      <a href="/saved" class="secondary">Saved</a>
+    </div>
   </main>
 </body>
 </html>

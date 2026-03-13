@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useCallback, useEffect, useRef, useImperativeHandle, forwardRef } from 'react'
+import { useState, useCallback, useEffect, useRef, useImperativeHandle, forwardRef, useMemo } from 'react'
 import { validateBrite, formatBrite, offsetToLineCol, type BriteError } from '@/lib/brite-parser'
+import { tokenizeBrite } from '@/lib/brite-tokenizer'
 
 const DEFAULT_SCRIPT = `br : { return; pt; "hello world." } :
 `
@@ -36,9 +37,22 @@ export const ScriptEditor = forwardRef<
   const setContent = onContentChange ?? setInternalContent
   const [errors, setErrors] = useState<BriteError[]>([])
   const [showErrors, setShowErrors] = useState(true)
+  const [greenText, setGreenText] = useState(false)
   const [pendingSemicolon, setPendingSemicolon] = useState(false)
   const [blockEndError, setBlockEndError] = useState<string | null>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const highlightRef = useRef<HTMLDivElement>(null)
+
+  const tokens = useMemo(() => (greenText ? [] : tokenizeBrite(content)), [content, greenText])
+
+  const handleScroll = useCallback(() => {
+    const ta = textareaRef.current
+    const hl = highlightRef.current
+    if (ta && hl) {
+      hl.scrollTop = ta.scrollTop
+      hl.scrollLeft = ta.scrollLeft
+    }
+  }, [])
 
   const validate = useCallback(() => {
     const errs = validateBrite(content)
@@ -172,16 +186,39 @@ export const ScriptEditor = forwardRef<
           <input type="checkbox" checked={showErrors} onChange={(e) => setShowErrors(e.target.checked)} />
           Show errors
         </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={greenText}
+            onChange={(e) => setGreenText(e.target.checked)}
+            title="Raw green text (no syntax highlighting)"
+          />
+          Green text
+        </label>
       </div>
       <div className="editor-wrapper">
+        {!greenText && (
+          <div
+            ref={highlightRef}
+            className="editor-highlight"
+            aria-hidden
+          >
+            {tokens.map((t, k) => (
+              <span key={k} data-token={t.type}>
+                {t.value}
+              </span>
+            ))}
+          </div>
+        )}
         <textarea
           ref={textareaRef}
           value={content}
           onChange={(e) => setContent(e.target.value)}
           onKeyDown={handleKeyDown}
+          onScroll={handleScroll}
           spellCheck={false}
           readOnly={readOnly}
-          className={errors.length && showErrors ? 'has-errors' : ''}
+          className={`editor-textarea ${errors.length && showErrors ? 'has-errors' : ''} ${!greenText ? 'editor-textarea-overlay' : ''}`}
           data-gramm={false}
         />
         {blockEndError && (

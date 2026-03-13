@@ -79,7 +79,58 @@ a:hover {
   position: relative;
 }
 
-.editor-wrapper textarea {
+.editor-highlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow: auto;
+  pointer-events: none;
+  color: var(--text);
+}
+
+.editor-highlight [data-token="string"] {
+  font-style: italic;
+  color: #e5e5e5;
+}
+
+.editor-highlight [data-token="command"] {
+  font-weight: bold;
+  color: #3b82f6;
+}
+
+.editor-highlight [data-token="function"] {
+  color: #a78bfa;
+}
+
+.editor-highlight [data-token="systemFunction"] {
+  color: var(--error);
+}
+
+.editor-highlight [data-token="variable"] {
+  color: #f9a8d4;
+}
+
+.editor-highlight [data-token="path"] {
+  color: #facc15;
+}
+
+.editor-highlight [data-token="comment"] {
+  color: var(--muted);
+}
+
+.editor-highlight [data-token="sdkPrefix"] {
+  color: var(--accent);
+}
+
+.editor-textarea {
   width: 100%;
   min-height: 300px;
   padding: 16px;
@@ -93,12 +144,20 @@ a:hover {
   border-radius: 4px;
 }
 
-.editor-wrapper textarea.has-errors {
+.editor-textarea-overlay {
+  position: relative;
+  z-index: 1;
+  color: transparent;
+  caret-color: var(--accent);
+  background: transparent;
+}
+
+.editor-textarea.has-errors {
   border-color: var(--error);
   box-shadow: 0 0 0 1px var(--error);
 }
 
-.editor-wrapper textarea:focus {
+.editor-textarea:focus {
   outline: none;
   border-color: var(--accent);
 }
