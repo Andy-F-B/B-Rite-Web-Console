@@ -44,16 +44,20 @@ export const ScriptEditor = forwardRef<
   const [blockEndError, setBlockEndError] = useState<string | null>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const highlightRef = useRef<HTMLDivElement>(null)
+  const lineNumbersRef = useRef<HTMLDivElement>(null)
 
   const tokens = useMemo(() => (greenText ? [] : tokenizeBrite(content)), [content, greenText])
+  const lineCount = useMemo(() => Math.max(1, content.split('\n').length), [content])
 
   const handleScroll = useCallback(() => {
     const ta = textareaRef.current
     const hl = highlightRef.current
+    const ln = lineNumbersRef.current
     if (ta && hl) {
       hl.scrollTop = ta.scrollTop
       hl.scrollLeft = ta.scrollLeft
     }
+    if (ta && ln) ln.scrollTop = ta.scrollTop
   }, [])
 
   const validate = useCallback(() => {
@@ -191,20 +195,30 @@ export const ScriptEditor = forwardRef<
         </label>
       </div>
       <div className="editor-wrapper">
-        {!greenText && (
-          <div
-            ref={highlightRef}
-            className="editor-highlight"
-            aria-hidden
-          >
-            {tokens.map((t, k) => (
-              <span key={k} data-token={t.type}>
-                {t.value}
-              </span>
-            ))}
-          </div>
-        )}
-        <textarea
+        <div
+          ref={lineNumbersRef}
+          className="editor-line-numbers"
+          aria-hidden
+        >
+          {Array.from({ length: lineCount }, (_, i) => (
+            <div key={i}>{i + 1}</div>
+          ))}
+        </div>
+        <div className="editor-content">
+          {!greenText && (
+            <div
+              ref={highlightRef}
+              className="editor-highlight"
+              aria-hidden
+            >
+              {tokens.map((t, k) => (
+                <span key={k} data-token={t.type}>
+                  {t.value}
+                </span>
+              ))}
+            </div>
+          )}
+          <textarea
           ref={textareaRef}
           value={content}
           onChange={(e) => setContent(e.target.value)}
@@ -214,7 +228,8 @@ export const ScriptEditor = forwardRef<
           readOnly={readOnly}
           className={`editor-textarea ${errors.length && showErrors ? 'has-errors' : ''} ${!greenText ? 'editor-textarea-overlay' : ''}`}
           data-gramm={false}
-        />
+          />
+        </div>
         {blockEndError && (
           <div className="error-item" style={{ borderLeftColor: '#ef4444', marginTop: 8 }}>
             {blockEndError}

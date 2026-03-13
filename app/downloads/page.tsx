@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { useState } from 'react'
 
 const DOWNLOADS = [
   {
@@ -13,7 +16,22 @@ const DOWNLOADS = [
   },
 ]
 
+const DOCS = [
+  {
+    name: 'Web SDK Guide v.3.0 - PDF',
+    description: 'Complete guide to the sdk-web package: setup, phases, functions, and deployment.',
+    href: '/downloads/Web-SDK-Guide-v.3.0.pdf',
+  },
+  {
+    name: 'AI App Development Handbook v.2.1 - PDF',
+    description: 'Handbook for AI-assisted web app development with Next.js, Supabase, and b-rite.',
+    href: '/downloads/AI_App_Development_Handbook_V2_1.pdf',
+  },
+]
+
 export default function DownloadsPage() {
+  const [docsOpen, setDocsOpen] = useState(false)
+
   return (
     <main style={{ padding: 48, maxWidth: 720 }}>
       <h1 style={{ marginBottom: 24 }}>Downloads</h1>
@@ -38,6 +56,72 @@ export default function DownloadsPage() {
             </Link>
           </div>
         ))}
+      </section>
+
+      <section style={{ marginBottom: 32 }}>
+        <button
+          type="button"
+          onClick={() => setDocsOpen(!docsOpen)}
+          style={{
+            width: '100%',
+            padding: 14,
+            background: 'var(--surface)',
+            border: '1px solid var(--border)',
+            borderRadius: 4,
+            color: 'var(--text)',
+            fontSize: 15,
+            fontWeight: 600,
+            cursor: 'pointer',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <span style={{ color: 'var(--accent)' }}>Documentation</span>
+          <span>{docsOpen ? '▼' : '▶'}</span>
+        </button>
+        {docsOpen && (
+          <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 12 }}>
+            {DOCS.map((d) => (
+              <div
+                key={d.name}
+                style={{
+                  padding: 16,
+                  background: 'var(--surface)',
+                  border: '1px solid var(--border)',
+                  borderRadius: 4,
+                  display: 'flex',
+                  gap: 16,
+                  alignItems: 'flex-start',
+                }}
+              >
+                <div
+                  style={{
+                    width: 64,
+                    height: 84,
+                    minWidth: 64,
+                    background: 'var(--border)',
+                    borderRadius: 4,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: 24,
+                    color: 'var(--muted)',
+                  }}
+                >
+                  📄
+                </div>
+                <div style={{ flex: 1 }}>
+                  <strong>{d.name}</strong>
+                  <p style={{ color: 'var(--muted)', margin: '8px 0', fontSize: 13 }}>{d.description}</p>
+                  <Link href={d.href} download style={{ fontSize: 14 }}>
+                    Download PDF →
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </section>
 
       <section>

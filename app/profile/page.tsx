@@ -22,9 +22,12 @@ export default async function ProfilePage() {
     return <p>Profile not found.</p>
   }
 
+  const { count: postCount } = await supabase.from('public_posts').select('*', { count: 'exact', head: true }).eq('user_id', user.id)
+
   return (
     <main style={{ padding: 48, maxWidth: 400 }}>
       <h1 style={{ marginBottom: 24 }}>Profile</h1>
+      <p style={{ color: 'var(--muted)', marginBottom: 16 }}>{postCount ?? 0} posts in Public Library</p>
       <ProfileForm profile={profile} />
       <div style={{ marginTop: 24 }}>
         <SignOutButton />

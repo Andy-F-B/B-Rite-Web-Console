@@ -240,6 +240,13 @@ export default function SavedPage() {
                         >
                           {showArchived ? 'Restore' : 'Archive'}
                         </button>
+                        <Link
+                          href={`/library/new?content=${encodeURIComponent(s.content)}`}
+                          style={{ display: 'block', width: '100%', textAlign: 'left', padding: '4px 0', background: 'none', border: 'none', cursor: 'pointer', fontSize: 14, color: 'white', textDecoration: 'none' }}
+                          onClick={() => setMenuOpen(null)}
+                        >
+                          Post to Public Library
+                        </Link>
                         {s.folder_id && (
                           <button
                             type="button"

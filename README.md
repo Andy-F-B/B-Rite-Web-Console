@@ -38,6 +38,7 @@ Before the app can run, you need a Supabase project and env vars:
    - `db/migrations/001_initial_schema.sql`
    - `db/migrations/002_app_tables.sql`
    - `db/migrations/003_folders_archive.sql`
+   - `db/migrations/004_public_library.sql`
 3. **Get API keys** — Project Settings → API → copy **Project URL** and **anon public** key
 4. **Set env vars** — Copy `.env.example` to `.env.local` and replace placeholders with your URL and key
 5. **Install and run:**

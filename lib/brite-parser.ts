@@ -1,6 +1,7 @@
 /**
  * B-Rite syntax validator — code-based (no LLM).
  * Validates structure per b-rite.md: br : { } :, wrapping rules, casing.
+ * Skips validation inside quoted strings ' ' and " ".
  */
 
 export interface BriteError {
@@ -9,15 +10,41 @@ export interface BriteError {
   end: number
 }
 
+function getStringRanges(content: string): Array<[number, number]> {
+  const ranges: Array<[number, number]> = []
+  let i = 0
+  const len = content.length
+  while (i < len) {
+    if (content[i] === '"' || content[i] === "'") {
+      const quote = content[i]
+      let j = i + 1
+      while (j < len && content[j] !== quote) {
+        if (content[j] === '\\') j++
+        j++
+      }
+      if (j < len) j++
+      ranges.push([i, j])
+      i = j
+    } else {
+      i++
+    }
+  }
+  return ranges
+}
+
+function isInsideString(offset: number, ranges: Array<[number, number]>): boolean {
+  return ranges.some(([s, e]) => offset >= s && offset < e)
+}
+
 export function validateBrite(content: string): BriteError[] {
   const errors: BriteError[] = []
-  const lines = content.split('\n')
+  const stringRanges = getStringRanges(content)
 
   // Check script opens with br :
   const openMatch = content.match(/^\s*(br\s*:\s*)/)
   if (!openMatch && content.trim()) {
     const idx = content.indexOf('br')
-    if (idx === -1) {
+    if (idx === -1 && !isInsideString(0, stringRanges)) {
       errors.push({ message: 'Expected br : at start', start: 0, end: Math.min(10, content.length) })
     }
   }
@@ -27,7 +54,7 @@ export function validateBrite(content: string): BriteError[] {
   if (!closeMatch && content.trim()) {
     const lastBrace = content.lastIndexOf('}')
     const lastColon = content.lastIndexOf(':')
-    if (lastBrace >= 0 && lastColon < lastBrace) {
+    if (lastBrace >= 0 && lastColon < lastBrace && !isInsideString(lastBrace, stringRanges)) {
       errors.push({
         message: 'Script block incomplete. Expected } :',
         start: lastBrace,
@@ -42,9 +69,10 @@ export function validateBrite(content: string): BriteError[] {
     }
   }
 
-  // Check for balanced { }
+  // Check for balanced { } — skip inside strings
   let depth = 0
   for (let i = 0; i < content.length; i++) {
+    if (isInsideString(i, stringRanges)) continue
     if (content[i] === '{') depth++
     else if (content[i] === '}') depth--
     if (depth < 0) {
@@ -54,14 +82,17 @@ export function validateBrite(content: string): BriteError[] {
   }
   if (depth > 0 && !errors.length) {
     const lastOpen = content.lastIndexOf('{')
-    errors.push({ message: 'Unclosed {', start: lastOpen, end: lastOpen + 1 })
+    if (!isInsideString(lastOpen, stringRanges)) {
+      errors.push({ message: 'Unclosed {', start: lastOpen, end: lastOpen + 1 })
+    }
   }
 
-  // Casing: commands lowercase (read, run, return, ask, etc.)
+  // Casing: commands lowercase — skip inside strings
   const commands = ['read', 'run', 'return', 'ask', 'prompt', 'catch', 'write', 'edit', 'delete', 'fetch', 'do']
   const commandRegex = new RegExp(`\\b(${commands.join('|')})\\b`, 'gi')
   let m
   while ((m = commandRegex.exec(content)) !== null) {
+    if (isInsideString(m.index, stringRanges)) continue
     const lower = m[1].toLowerCase()
     if (m[1] !== lower) {
       errors.push({

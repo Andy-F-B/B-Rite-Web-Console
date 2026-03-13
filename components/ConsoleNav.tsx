@@ -7,11 +7,22 @@ import { BRLogo } from './BRLogo'
 
 type Profile = { name: string | null; avatar: string | null }
 
+const MOBILE_BREAKPOINT = 600
+
 export function ConsoleNav() {
   const [user, setUser] = useState<{ id: string } | null>(null)
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState(true)
+  const [mobile, setMobile] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const supabase = createClient()
+
+  useEffect(() => {
+    const check = () => setMobile(typeof window !== 'undefined' && window.innerWidth < MOBILE_BREAKPOINT)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user: u } }) => {
@@ -73,16 +84,88 @@ export function ConsoleNav() {
     </span>
   )
 
+  const navLinks = (
+    <>
+      <Link href="/" onClick={() => setDrawerOpen(false)}>B-Rite Console</Link>
+      <Link href="/console" onClick={() => setDrawerOpen(false)}>Editor</Link>
+      <Link href="/downloads" onClick={() => setDrawerOpen(false)}>Downloads</Link>
+      <Link href="/saved" onClick={() => setDrawerOpen(false)}>Saved</Link>
+      <Link href="/library" onClick={() => setDrawerOpen(false)}>Library</Link>
+      <Link href="/privacy" onClick={() => setDrawerOpen(false)}>Privacy</Link>
+    </>
+  )
+
+  if (mobile) {
+    return (
+      <>
+        <nav className="console-nav" style={{ justifyContent: 'space-between' }}>
+          <Link href="/">
+            <BRLogo size={28} />
+          </Link>
+          <button
+            type="button"
+            onClick={() => setDrawerOpen(true)}
+            style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', padding: 8, fontSize: 20 }}
+            aria-label="Open menu"
+          >
+            ☰
+          </button>
+        </nav>
+        {drawerOpen && (
+          <div
+            style={{
+              position: 'fixed',
+              inset: 0,
+              zIndex: 1000,
+              background: 'rgba(0,0,0,0.4)',
+            }}
+            onClick={() => setDrawerOpen(false)}
+          >
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                bottom: 0,
+                width: 260,
+                background: 'var(--surface)',
+                borderLeft: '1px solid var(--border)',
+                padding: 24,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 16,
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Link href="/" onClick={() => setDrawerOpen(false)}>
+                  <BRLogo size={24} />
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => setDrawerOpen(false)}
+                  style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', fontSize: 20 }}
+                >
+                  ×
+                </button>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>{navLinks}</div>
+              <div style={{ marginTop: 'auto', borderTop: '1px solid var(--border)', paddingTop: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {rightSide}
+              </div>
+            </div>
+          </div>
+        )}
+      </>
+    )
+  }
+
   return (
     <nav className="console-nav">
       <Link href="/">
         <BRLogo size={28} />
       </Link>
-      <Link href="/">B-Rite Console</Link>
-      <Link href="/console">Editor</Link>
-      <Link href="/downloads">Downloads</Link>
-      <Link href="/saved">Saved</Link>
-      <Link href="/privacy">Privacy</Link>
+      {navLinks}
       <span style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 16 }}>
         {rightSide}
       </span>
