@@ -178,7 +178,7 @@ export default function SavedPage() {
                   <button
                     type="button"
                     onClick={() => handleCopy(s.content)}
-                    style={{ fontSize: 14, background: 'none', border: 'none', cursor: 'pointer', padding: 4 }}
+                    style={{ fontSize: 14, background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'white' }}
                     title="Copy"
                   >
                     Copy
@@ -187,7 +187,7 @@ export default function SavedPage() {
                     <button
                       type="button"
                       onClick={(e) => { e.stopPropagation(); setMenuOpen(menuOpen === s.id ? null : s.id) }}
-                      style={{ fontSize: 14, background: 'none', border: 'none', cursor: 'pointer', padding: 4 }}
+                      style={{ fontSize: 14, background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'white' }}
                       title="More"
                     >
                       ⋯
